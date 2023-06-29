@@ -1,0 +1,4 @@
+.. automodule:: mwutils.server.datastorage
+   :members:
+   :undoc-members:
+   :show-inheritance:

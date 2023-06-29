@@ -1,0 +1,256 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.18.1: http://docutils.sourceforge.net/" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>&lt;no title&gt; &mdash; mwutils 1.0 documentation</title>
+      <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+      <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
+  <!--[if lt IE 9]>
+    <script src="_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script data-url_root="./" id="documentation_options" src="_static/documentation_options.js"></script>
+        <script src="_static/jquery.js"></script>
+        <script src="_static/underscore.js"></script>
+        <script src="_static/_sphinx_javascript_frameworks_compat.js"></script>
+        <script src="_static/doctools.js"></script>
+        <script src="_static/sphinx_highlight.js"></script>
+        <script>window.MathJax = {"options": {"processHtmlClass": "tex2jax_process|mathjax_process|math|output_area"}}</script>
+        <script defer="defer" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+        <script src="https://unpkg.com/mermaid@9.4.0/dist/mermaid.min.js"></script>
+        <script>mermaid.initialize({startOnLoad:true});</script>
+    <script src="_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="&lt;no title&gt;" href="mwutils.command_and_control.helper.html" />
+    <link rel="prev" title="&lt;no title&gt;" href="mwutils.command_and_control.asymmetric_cryptography.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="index.html" class="icon icon-home">
+            mwutils
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">Contents:</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="README.html">About the Package</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Documentation.html">Documentation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Logging.html">Logging</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="modules.html">mwutils</a><ul class="current">
+<li class="toctree-l2 current"><a class="reference internal" href="mwutils.html">mwutils package</a><ul class="current">
+<li class="toctree-l3 current"><a class="reference internal" href="mwutils.html#subpackages">Subpackages</a><ul class="current">
+<li class="toctree-l4"><a class="reference internal" href="mwutils.collection.html">mwutils.collection package</a></li>
+<li class="toctree-l4 current"><a class="reference internal" href="mwutils.command_and_control.html">mwutils.command_and_control package</a></li>
+<li class="toctree-l4"><a class="reference internal" href="mwutils.credential_access.html">mwutils.credential_access package</a></li>
+<li class="toctree-l4"><a class="reference internal" href="mwutils.defense_evasion.html">mwutils.defense_evasion package</a></li>
+<li class="toctree-l4"><a class="reference internal" href="mwutils.discovery.html">mwutils.discovery package</a></li>
+<li class="toctree-l4"><a class="reference internal" href="mwutils.execution.html">mwutils.execution package</a></li>
+<li class="toctree-l4"><a class="reference internal" href="mwutils.exfiltration.html">mwutils.exfiltration package</a></li>
+<li class="toctree-l4"><a class="reference internal" href="mwutils.gui.html">mwutils.gui package</a></li>
+<li class="toctree-l4"><a class="reference internal" href="mwutils.impact.html">mwutils.impact package</a></li>
+<li class="toctree-l4"><a class="reference internal" href="mwutils.initial_access.html">mwutils.initial_access package</a></li>
+<li class="toctree-l4"><a class="reference internal" href="mwutils.lateral_movement.html">mwutils.lateral_movement package</a></li>
+<li class="toctree-l4"><a class="reference internal" href="mwutils.persistence.html">mwutils.persistence package</a></li>
+<li class="toctree-l4"><a class="reference internal" href="mwutils.privilege_escalation.html">mwutils.privilege_escalation package</a></li>
+<li class="toctree-l4"><a class="reference internal" href="mwutils.reconnaissance.html">mwutils.reconnaissance package</a></li>
+<li class="toctree-l4"><a class="reference internal" href="mwutils.resource_development.html">mwutils.resource_development package</a></li>
+<li class="toctree-l4"><a class="reference internal" href="mwutils.server.html">mwutils.server package</a></li>
+<li class="toctree-l4"><a class="reference internal" href="mwutils.utils.html">mwutils.utils package</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="index.html">mwutils</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="index.html" class="icon icon-home" aria-label="Home"></a></li>
+          <li class="breadcrumb-item"><a href="modules.html">mwutils</a></li>
+          <li class="breadcrumb-item"><a href="mwutils.html">mwutils package</a></li>
+          <li class="breadcrumb-item"><a href="mwutils.command_and_control.html">mwutils.command_and_control package</a></li>
+      <li class="breadcrumb-item active">&lt;no title&gt;</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="_sources/mwutils.command_and_control.dns.rst.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <span class="target" id="module-mwutils.command_and_control.dns"></span><p>Application Layer Protocol: DNS</p>
+<p>Adversaries may communicate using the Domain Name System (DNS) application layer protocol
+to avoid detection/network filtering by blending in with existing traffic.
+Commands to the remote system, and often the results of those commands,
+will be embedded within the protocol traffic between the client and server.</p>
+<p>The DNS protocol serves an administrative function in computer networking
+and thus may be very common in environments.
+DNS traffic may also be allowed even before network authentication is completed.
+DNS packets contain many fields and headers in which data can be concealed.
+Often known as DNS tunneling, adversaries may abuse DNS to communicate with systems
+under their control within a victim network while also mimicking normal, expected traffic.</p>
+<p>Mitre: <a class="reference external" href="https://attack.mitre.org/versions/v12/techniques/T1071/004/">T1071.004</a></p>
+<div class="mermaid">
+            sequenceDiagram
+   participant C as Client
+   participant S as DNS Nameserver
+   Note left of C: Client information &lt;br/&gt; IP: 192.168.178.2 = MTkyLjE2OC4xNzguMg
+   C-&gt;&gt;S: DNS Request: &lt;br/&gt;Type: TXT &lt;br/&gt;MTkyLjE2OC4xNzguMg.example.com
+   S--&gt;&gt;C:DNS Response: &lt;br/&gt;Type: TXT &lt;br/&gt; Code: NOERROR &lt;data&gt;
+        </div><p>Useful packages for dns are:</p>
+<ol class="arabic simple">
+<li><p><a class="reference external" href="https://github.com/rthalley/dnspython">dnspython</a></p></li>
+<li><p><a class="reference external" href="https://github.com/nhairs/nserver">nserver</a></p></li>
+<li><p><a class="reference external" href="https://github.com/paulc/dnslib">dnslib</a></p></li>
+</ol>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>A subdomain can have up to 63 characters.
+This means that the data you can send can not be longer than 63 characters per subdomain.
+Note that this does’t mean that you can’t use multiple subdomains.
+But be aware that a domain has a maximum of 253 characters.</p>
+</div>
+<p># <a class="reference external" href="https://stackoverflow.com/questions/10552665/names-and-maximum-lengths-of-the-parts-of-a-url">https://stackoverflow.com/questions/10552665/names-and-maximum-lengths-of-the-parts-of-a-url</a></p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>A TXT Records can have up to 255 characters.
+There can be more than 255 characters by adding multiple strings together.</p>
+</div>
+<p># <a class="reference external" href="https://support.google.com/a/answer/11613097?hl=en#:~:text=Most%20TXT%20records%20can%20have,with%20a%20255%2Dcharacter%20limit">https://support.google.com/a/answer/11613097?hl=en#:~:text=Most%20TXT%20records%20can%20have,with%20a%20255%2Dcharacter%20limit</a>.</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>When sending data embedded in the URL it must be encoded in a URL safe manner.
+Base64 can be used.
+But be aware of the = and == padding characters.</p>
+<div class="math notranslate nohighlight">
+\[\lceil \frac{n}{3} \rceil\]</div>
+</div>
+<p>The following code implements a simple DNS Nameserver that can be used to receive the sent requests.</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="k">if</span> <span class="vm">__name__</span> <span class="o">==</span> <span class="s2">&quot;__main__&quot;</span><span class="p">:</span>
+    <span class="c1"># Client</span>
+    <span class="c1"># dns_send(&quot;data.example.com&quot;)</span>
+
+    <span class="c1"># Server</span>
+    <span class="k">def</span> <span class="nf">dummy</span><span class="p">(</span><span class="n">data</span><span class="p">):</span>
+        <span class="k">return</span> <span class="sa">f</span><span class="s2">&quot;response of: </span><span class="si">{</span><span class="n">data</span><span class="si">}</span><span class="s2">&quot;</span>
+
+    <span class="n">dns_factory</span><span class="p">(</span><span class="n">dummy</span><span class="p">)</span><span class="o">.</span><span class="n">run</span><span class="p">()</span>
+</pre></div>
+</div>
+<dl class="py function">
+<dt class="sig sig-object py" id="mwutils.command_and_control.dns.dns_factory">
+<span class="sig-name descname"><span class="pre">dns_factory</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">func</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">callable</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">domain</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">'example.com'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">port</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">53</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">NameServer</span></span></span><a class="reference internal" href="_modules/mwutils/command_and_control/dns.html#dns_factory"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#mwutils.command_and_control.dns.dns_factory" title="Permalink to this definition"></a></dt>
+<dd><p>Return a DNS Nameserver according to the passed parameters.</p>
+<p>Supply a function that has one parameter.
+The passed argument is list of strings which represent the subdomains in a request.
+For example [“subsub”, “sub”].</p>
+<dl class="simple">
+<dt>example function:</dt><dd><dl class="simple">
+<dt>def dummy(data):</dt><dd><p>return f’response of: {data}’</p>
+</dd>
+</dl>
+</dd>
+</dl>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>func</strong> (<em>callable</em>) – A function containing the logic for a dns request.
+Its parameter takes a list of strings.
+Returns a string which is sent back to the client.</p></li>
+<li><p><strong>domain</strong> (<em>str</em><em>, </em><em>optional</em>) – The base domain which clients want to resolve.
+Defaults to “example.com”.</p></li>
+<li><p><strong>port</strong> (<em>int</em><em>, </em><em>optional</em>) – The port to which a request is sent. Defaults to 53.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>The NameServer.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>NameServer</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="mwutils.command_and_control.dns.dns_send">
+<span class="sig-name descname"><span class="pre">dns_send</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">args</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">address</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">list</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">['127.0.0.1']</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">port</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">53</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">str</span></span></span><a class="reference internal" href="_modules/mwutils/command_and_control/dns.html#dns_send"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#mwutils.command_and_control.dns.dns_send" title="Permalink to this definition"></a></dt>
+<dd><p>Takes (sub-)domain and assembles a FQDN.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>*args</strong> (<em>str</em>) – The (sub-)domains that are used to build the FQDN.</p></li>
+<li><p><strong>address</strong> (<em>list</em><em>, </em><em>optional</em>) – List of DNS-Nameserver IP’s . Defaults to [“127.0.0.1”].</p></li>
+<li><p><strong>port</strong> (<em>int</em><em>, </em><em>optional</em>) – Port of DNS-Nameserver to send requests to. Defaults to 53.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>Answer of the DNS-Nameserver.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>str</p>
+</dd>
+</dl>
+</dd></dl>
+
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="mwutils.command_and_control.asymmetric_cryptography.html" class="btn btn-neutral float-left" title="&lt;no title&gt;" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="mwutils.command_and_control.helper.html" class="btn btn-neutral float-right" title="&lt;no title&gt;" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2023, wenzelfe.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

@@ -1,0 +1,4 @@
+.. automodule:: mwutils.discovery.file_and_directory_discovery
+   :members:
+   :undoc-members:
+   :show-inheritance:

@@ -1,0 +1,222 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.18.1: http://docutils.sourceforge.net/" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>&lt;no title&gt; &mdash; mwutils 1.0 documentation</title>
+      <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+      <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
+  <!--[if lt IE 9]>
+    <script src="_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script data-url_root="./" id="documentation_options" src="_static/documentation_options.js"></script>
+        <script src="_static/jquery.js"></script>
+        <script src="_static/underscore.js"></script>
+        <script src="_static/_sphinx_javascript_frameworks_compat.js"></script>
+        <script src="_static/doctools.js"></script>
+        <script src="_static/sphinx_highlight.js"></script>
+        <script src="https://unpkg.com/mermaid@9.4.0/dist/mermaid.min.js"></script>
+        <script>mermaid.initialize({startOnLoad:true});</script>
+    <script src="_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="&lt;no title&gt;" href="mwutils.gui.playaudio.html" />
+    <link rel="prev" title="mwutils.gui package" href="mwutils.gui.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="index.html" class="icon icon-home">
+            mwutils
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">Contents:</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="README.html">About the Package</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Documentation.html">Documentation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Logging.html">Logging</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="modules.html">mwutils</a><ul class="current">
+<li class="toctree-l2 current"><a class="reference internal" href="mwutils.html">mwutils package</a><ul class="current">
+<li class="toctree-l3 current"><a class="reference internal" href="mwutils.html#subpackages">Subpackages</a><ul class="current">
+<li class="toctree-l4"><a class="reference internal" href="mwutils.collection.html">mwutils.collection package</a></li>
+<li class="toctree-l4"><a class="reference internal" href="mwutils.command_and_control.html">mwutils.command_and_control package</a></li>
+<li class="toctree-l4"><a class="reference internal" href="mwutils.credential_access.html">mwutils.credential_access package</a></li>
+<li class="toctree-l4"><a class="reference internal" href="mwutils.defense_evasion.html">mwutils.defense_evasion package</a></li>
+<li class="toctree-l4"><a class="reference internal" href="mwutils.discovery.html">mwutils.discovery package</a></li>
+<li class="toctree-l4"><a class="reference internal" href="mwutils.execution.html">mwutils.execution package</a></li>
+<li class="toctree-l4"><a class="reference internal" href="mwutils.exfiltration.html">mwutils.exfiltration package</a></li>
+<li class="toctree-l4 current"><a class="reference internal" href="mwutils.gui.html">mwutils.gui package</a></li>
+<li class="toctree-l4"><a class="reference internal" href="mwutils.impact.html">mwutils.impact package</a></li>
+<li class="toctree-l4"><a class="reference internal" href="mwutils.initial_access.html">mwutils.initial_access package</a></li>
+<li class="toctree-l4"><a class="reference internal" href="mwutils.lateral_movement.html">mwutils.lateral_movement package</a></li>
+<li class="toctree-l4"><a class="reference internal" href="mwutils.persistence.html">mwutils.persistence package</a></li>
+<li class="toctree-l4"><a class="reference internal" href="mwutils.privilege_escalation.html">mwutils.privilege_escalation package</a></li>
+<li class="toctree-l4"><a class="reference internal" href="mwutils.reconnaissance.html">mwutils.reconnaissance package</a></li>
+<li class="toctree-l4"><a class="reference internal" href="mwutils.resource_development.html">mwutils.resource_development package</a></li>
+<li class="toctree-l4"><a class="reference internal" href="mwutils.server.html">mwutils.server package</a></li>
+<li class="toctree-l4"><a class="reference internal" href="mwutils.utils.html">mwutils.utils package</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="index.html">mwutils</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="index.html" class="icon icon-home" aria-label="Home"></a></li>
+          <li class="breadcrumb-item"><a href="modules.html">mwutils</a></li>
+          <li class="breadcrumb-item"><a href="mwutils.html">mwutils package</a></li>
+          <li class="breadcrumb-item"><a href="mwutils.gui.html">mwutils.gui package</a></li>
+      <li class="breadcrumb-item active">&lt;no title&gt;</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="_sources/mwutils.gui.gui_main.rst.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <span class="target" id="module-mwutils.gui.gui_main"></span><p>Tkinter App</p>
+<p>A main/wrapper module for tkinter frames.</p>
+<p>Tkinter Frames that can be used and are included in this subpackage are:</p>
+<ol class="arabic simple">
+<li><p>ransomware</p></li>
+<li><p>playaudio</p></li>
+</ol>
+<p>The following example code gives an idea how to work with this module.</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">sys</span>
+
+<span class="kn">from</span> <span class="nn">mwutils.gui.ransomware</span> <span class="kn">import</span> <span class="n">RW</span>
+<span class="kn">from</span> <span class="nn">mwutils.gui.playaudio</span> <span class="kn">import</span> <span class="n">Audio</span>
+<span class="kn">from</span> <span class="nn">mwutils.gui.gui_main</span> <span class="kn">import</span> <span class="n">App</span>
+
+<span class="k">if</span> <span class="vm">__name__</span> <span class="o">==</span> <span class="s2">&quot;__main__&quot;</span><span class="p">:</span>
+
+    <span class="n">FORMAT</span> <span class="o">=</span> <span class="s2">&quot;[</span><span class="si">%(asctime)s</span><span class="s2">] [</span><span class="si">%(funcName)-30s</span><span class="s2">] [</span><span class="si">%(levelname)-8s</span><span class="s2">] [</span><span class="si">%(message)s</span><span class="s2">]&quot;</span>
+    <span class="n">logging</span><span class="o">.</span><span class="n">basicConfig</span><span class="p">(</span><span class="n">stream</span><span class="o">=</span><span class="n">sys</span><span class="o">.</span><span class="n">stderr</span><span class="p">,</span> <span class="n">encoding</span><span class="o">=</span><span class="s2">&quot;utf-8&quot;</span><span class="p">,</span> <span class="nb">format</span><span class="o">=</span><span class="n">FORMAT</span><span class="p">,</span> <span class="n">level</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
+
+
+    <span class="k">def</span> <span class="nf">rw_func</span><span class="p">():</span>
+        <span class="n">logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s2">&quot;executing rw_func&quot;</span><span class="p">)</span>
+        <span class="n">app</span><span class="o">.</span><span class="n">show_frame</span><span class="p">(</span><span class="n">RW</span><span class="o">.</span><span class="vm">__name__</span><span class="p">)</span>
+
+    <span class="k">def</span> <span class="nf">rw_dec_func</span><span class="p">():</span>
+        <span class="n">logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s2">&quot;executing rw_dec_func&quot;</span><span class="p">)</span>
+
+
+    <span class="n">frames</span> <span class="o">=</span> <span class="p">(</span>
+        <span class="p">{</span><span class="s2">&quot;class&quot;</span><span class="p">:</span> <span class="n">RW</span><span class="p">,</span> <span class="s2">&quot;para&quot;</span><span class="p">:</span> <span class="p">{</span><span class="s2">&quot;decrypt_function&quot;</span><span class="p">:</span> <span class="n">rw_dec_func</span><span class="p">}},</span>
+        <span class="p">{</span><span class="s1">&#39;class&#39;</span><span class="p">:</span> <span class="n">Audio</span><span class="p">,</span> <span class="s1">&#39;para&#39;</span><span class="p">:</span> <span class="p">{}},</span>
+    <span class="p">)</span>
+    <span class="n">app</span> <span class="o">=</span> <span class="n">App</span><span class="p">(</span>
+        <span class="n">tk_frames</span><span class="o">=</span><span class="n">frames</span><span class="p">,</span>
+        <span class="n">visible_frame</span><span class="o">=</span><span class="n">Audio</span><span class="p">,</span>
+        <span class="n">window_width</span><span class="o">=</span><span class="mi">800</span><span class="p">,</span> <span class="n">window_height</span><span class="o">=</span><span class="mi">300</span>
+    <span class="p">)</span>
+
+    <span class="c1"># runs after the loop and can execute your code</span>
+    <span class="n">app</span><span class="o">.</span><span class="n">after</span><span class="p">(</span><span class="mi">2000</span><span class="p">,</span> <span class="n">rw_func</span><span class="p">)</span>
+    <span class="n">app</span><span class="o">.</span><span class="n">mainloop</span><span class="p">()</span>
+</pre></div>
+</div>
+<dl class="py class">
+<dt class="sig sig-object py" id="mwutils.gui.gui_main.App">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">App</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">tk_frames</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">tuple</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">visible_frame</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Type</span><span class="p"><span class="pre">[</span></span><span class="pre">Frame</span><span class="p"><span class="pre">]</span></span></span></em>, <em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">args</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">window_width</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">500</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">window_height</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">500</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/mwutils/gui/gui_main.html#App"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#mwutils.gui.gui_main.App" title="Permalink to this definition"></a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">Tk</span></code></p>
+<p>The main gui app</p>
+<p class="rubric">Example</p>
+<dl class="simple">
+<dt>frames = (</dt><dd><p>{‘class’: Audio, ‘para’: {}},</p>
+</dd>
+</dl>
+<p>)</p>
+<dl class="simple">
+<dt>app = App(</dt><dd><p>tk_frames=frames,
+visible_frame=Audio,
+window_width=270,
+window_height=140,</p>
+</dd>
+</dl>
+<p>)</p>
+<p>app.mainloop()</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>Tk</strong> (<em>_type_</em>) – Tkinter app</p>
+</dd>
+</dl>
+<dl class="py method">
+<dt class="sig sig-object py" id="mwutils.gui.gui_main.App.show_frame">
+<span class="sig-name descname"><span class="pre">show_frame</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">frame_name</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/mwutils/gui/gui_main.html#App.show_frame"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#mwutils.gui.gui_main.App.show_frame" title="Permalink to this definition"></a></dt>
+<dd><p>The Tkinter Frame to show.</p>
+<p>Tipp: use <cite>&lt;class&gt;.__name__</cite> to get the name of the frame.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>frame_name</strong> (<em>str</em>) – The frame to show.</p>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="mwutils.gui.html" class="btn btn-neutral float-left" title="mwutils.gui package" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="mwutils.gui.playaudio.html" class="btn btn-neutral float-right" title="&lt;no title&gt;" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2023, wenzelfe.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

@@ -1,0 +1,4 @@
+.. automodule:: mwutils.defense_evasion.virtualization_sandbox_evasion
+   :members:
+   :undoc-members:
+   :show-inheritance:

@@ -1,0 +1,61 @@
+[project]
+name = "mwutils"
+version = "1.0.0"
+authors = [
+  { name="wenzfe", email="wenzfe@noreply.com" },
+]
+description = "A package implementing MITRE ATT&CK techniques"
+readme = "README.md"
+requires-python = ">=3.10"
+classifiers = [
+    "Programming Language :: Python :: 3.10",
+    "License :: OSI Approved :: MIT License",
+    "Operating System :: OS Independent",
+    "Development Status :: 3 - Alpha",
+    "Intended Audience :: Education",
+    "Operating System :: POSIX",
+    "Operating System :: Microsoft :: Windows",
+]
+dependencies = [
+  "pycryptodome",
+  "dnslib",
+  "dnspython",
+  "nserver",
+  "Pillow",
+  "tkhtmlview",
+  "audioplayer",
+  "SQLAlchemy",
+  "auto-py-to-exe",
+  "pyarmor",
+  "setuptools",
+  "wheel",
+  "Flask",
+  "Flask-Session",
+  "Flask-SQLAlchemy",
+  "croniter",
+  "pipdeptree",
+]
+
+[project.urls]
+"Homepage" = "https://github.com/wenzfe/sampleproject"
+"Bug Tracker" = "https://github.com/pypa/sampleproject/issues"
+
+
+[build-system]
+requires = ["setuptools>=61.0"]
+build-backend = "setuptools.build_meta"
+
+
+[tool.setuptools]
+# ...
+# By default, include-package-data is true in pyproject.toml, so you do
+# NOT have to specify this line.
+include-package-data = true
+
+#[tool.setuptools.packages.find]
+#where = ["mwutils"]
+
+[tool.setuptools.package-data]
+"mwutils.server.templates" = ["*.html"]
+"mwutils.server.static" = ["ransomware.png"]
+"mwutils.gui" = ["lock.png", "music.ico"]

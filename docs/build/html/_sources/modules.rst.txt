@@ -1,0 +1,7 @@
+mwutils
+=======
+
+.. toctree::
+   :maxdepth: 4
+
+   mwutils

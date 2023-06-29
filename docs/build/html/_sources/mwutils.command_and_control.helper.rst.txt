@@ -1,0 +1,4 @@
+.. automodule:: mwutils.command_and_control.helper
+   :members:
+   :undoc-members:
+   :show-inheritance:

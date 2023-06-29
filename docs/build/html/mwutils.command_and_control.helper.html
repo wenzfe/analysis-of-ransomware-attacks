@@ -1,0 +1,289 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.18.1: http://docutils.sourceforge.net/" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>&lt;no title&gt; &mdash; mwutils 1.0 documentation</title>
+      <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+      <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
+  <!--[if lt IE 9]>
+    <script src="_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script data-url_root="./" id="documentation_options" src="_static/documentation_options.js"></script>
+        <script src="_static/jquery.js"></script>
+        <script src="_static/underscore.js"></script>
+        <script src="_static/_sphinx_javascript_frameworks_compat.js"></script>
+        <script src="_static/doctools.js"></script>
+        <script src="_static/sphinx_highlight.js"></script>
+        <script src="https://unpkg.com/mermaid@9.4.0/dist/mermaid.min.js"></script>
+        <script>mermaid.initialize({startOnLoad:true});</script>
+    <script src="_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="&lt;no title&gt;" href="mwutils.command_and_control.symmetric_cryptography.html" />
+    <link rel="prev" title="&lt;no title&gt;" href="mwutils.command_and_control.dns.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="index.html" class="icon icon-home">
+            mwutils
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">Contents:</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="README.html">About the Package</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Documentation.html">Documentation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Logging.html">Logging</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="modules.html">mwutils</a><ul class="current">
+<li class="toctree-l2 current"><a class="reference internal" href="mwutils.html">mwutils package</a><ul class="current">
+<li class="toctree-l3 current"><a class="reference internal" href="mwutils.html#subpackages">Subpackages</a><ul class="current">
+<li class="toctree-l4"><a class="reference internal" href="mwutils.collection.html">mwutils.collection package</a></li>
+<li class="toctree-l4 current"><a class="reference internal" href="mwutils.command_and_control.html">mwutils.command_and_control package</a></li>
+<li class="toctree-l4"><a class="reference internal" href="mwutils.credential_access.html">mwutils.credential_access package</a></li>
+<li class="toctree-l4"><a class="reference internal" href="mwutils.defense_evasion.html">mwutils.defense_evasion package</a></li>
+<li class="toctree-l4"><a class="reference internal" href="mwutils.discovery.html">mwutils.discovery package</a></li>
+<li class="toctree-l4"><a class="reference internal" href="mwutils.execution.html">mwutils.execution package</a></li>
+<li class="toctree-l4"><a class="reference internal" href="mwutils.exfiltration.html">mwutils.exfiltration package</a></li>
+<li class="toctree-l4"><a class="reference internal" href="mwutils.gui.html">mwutils.gui package</a></li>
+<li class="toctree-l4"><a class="reference internal" href="mwutils.impact.html">mwutils.impact package</a></li>
+<li class="toctree-l4"><a class="reference internal" href="mwutils.initial_access.html">mwutils.initial_access package</a></li>
+<li class="toctree-l4"><a class="reference internal" href="mwutils.lateral_movement.html">mwutils.lateral_movement package</a></li>
+<li class="toctree-l4"><a class="reference internal" href="mwutils.persistence.html">mwutils.persistence package</a></li>
+<li class="toctree-l4"><a class="reference internal" href="mwutils.privilege_escalation.html">mwutils.privilege_escalation package</a></li>
+<li class="toctree-l4"><a class="reference internal" href="mwutils.reconnaissance.html">mwutils.reconnaissance package</a></li>
+<li class="toctree-l4"><a class="reference internal" href="mwutils.resource_development.html">mwutils.resource_development package</a></li>
+<li class="toctree-l4"><a class="reference internal" href="mwutils.server.html">mwutils.server package</a></li>
+<li class="toctree-l4"><a class="reference internal" href="mwutils.utils.html">mwutils.utils package</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="index.html">mwutils</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="index.html" class="icon icon-home" aria-label="Home"></a></li>
+          <li class="breadcrumb-item"><a href="modules.html">mwutils</a></li>
+          <li class="breadcrumb-item"><a href="mwutils.html">mwutils package</a></li>
+          <li class="breadcrumb-item"><a href="mwutils.command_and_control.html">mwutils.command_and_control package</a></li>
+      <li class="breadcrumb-item active">&lt;no title&gt;</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="_sources/mwutils.command_and_control.helper.rst.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <span class="target" id="module-mwutils.command_and_control.helper"></span><p>Helper</p>
+<p>A module intended to help with communication related tasks.
+This module allows to split data into chunks (packets) and also assemble them back together.
+To simplify working with data chunks this module provides uses a Packet dataclass as output.
+This matches the MITRE technique <a class="reference external" href="https://attack.mitre.org/techniques/T1030/">T1030</a> .</p>
+<p>This module also provides functions to decode / encode Base64 in a url-safe way.</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">packets</span> <span class="o">=</span> <span class="n">build_packets</span><span class="p">(</span><span class="s2">&quot;prefix&quot;</span><span class="p">,</span> <span class="s2">&quot;This is the message 👋.&quot;</span><span class="o">.</span><span class="n">encode</span><span class="p">(</span><span class="s2">&quot;utf-8&quot;</span><span class="p">),</span> <span class="mi">20</span><span class="p">)</span>
+<span class="n">message</span> <span class="o">=</span> <span class="sa">b</span><span class="s2">&quot;&quot;</span>
+<span class="k">for</span> <span class="n">packet</span> <span class="ow">in</span> <span class="n">packets</span><span class="p">:</span>
+    <span class="n">chunk</span> <span class="o">=</span> <span class="n">unpack_packet</span><span class="p">(</span><span class="n">packet</span><span class="p">)</span>
+    <span class="nb">print</span><span class="p">(</span><span class="n">chunk</span><span class="p">)</span>
+    <span class="n">message</span> <span class="o">+=</span> <span class="n">chunk</span><span class="o">.</span><span class="n">message_chunk</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">message</span><span class="o">.</span><span class="n">decode</span><span class="p">(</span><span class="s2">&quot;utf-8&quot;</span><span class="p">))</span>
+</pre></div>
+</div>
+<dl class="py class">
+<dt class="sig sig-object py" id="mwutils.command_and_control.helper.Packet">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">Packet</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">prefix</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">typ</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">number</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">message_chunk</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">bytes</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">eof</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">bool</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/mwutils/command_and_control/helper.html#Packet"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#mwutils.command_and_control.helper.Packet" title="Permalink to this definition"></a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<p>Datastructure for Packets</p>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="mwutils.command_and_control.helper.Packet.eof">
+<span class="sig-name descname"><span class="pre">eof</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">bool</span></em><a class="headerlink" href="#mwutils.command_and_control.helper.Packet.eof" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="mwutils.command_and_control.helper.Packet.message_chunk">
+<span class="sig-name descname"><span class="pre">message_chunk</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">bytes</span></em><a class="headerlink" href="#mwutils.command_and_control.helper.Packet.message_chunk" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="mwutils.command_and_control.helper.Packet.number">
+<span class="sig-name descname"><span class="pre">number</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">int</span></em><a class="headerlink" href="#mwutils.command_and_control.helper.Packet.number" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="mwutils.command_and_control.helper.Packet.prefix">
+<span class="sig-name descname"><span class="pre">prefix</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">str</span></em><a class="headerlink" href="#mwutils.command_and_control.helper.Packet.prefix" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="mwutils.command_and_control.helper.Packet.typ">
+<span class="sig-name descname"><span class="pre">typ</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">str</span></em><a class="headerlink" href="#mwutils.command_and_control.helper.Packet.typ" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="mwutils.command_and_control.helper.build_packets">
+<span class="sig-name descname"><span class="pre">build_packets</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">prefix</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">message</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Union</span><span class="p"><span class="pre">[</span></span><span class="pre">bytes</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">str</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">BufferedRandom</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">BufferedReader</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">BufferedWriter</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">BytesIO</span><span class="p"><span class="pre">]</span></span></span></em>, <em class="sig-param"><span class="n"><span class="pre">packet_size</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">eof</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">bytes</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">b'_EOF_'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">packet_number_size_in_bytes</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">1</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">typ_size_in_bytes</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">1</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">prefix_delimiter</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">bytes</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">b'::'</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">List</span><span class="p"><span class="pre">[</span></span><span class="pre">bytes</span><span class="p"><span class="pre">]</span></span></span></span><a class="reference internal" href="_modules/mwutils/command_and_control/helper.html#build_packets"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#mwutils.command_and_control.helper.build_packets" title="Permalink to this definition"></a></dt>
+<dd><p>Converts the message to the packets of the specified size.</p>
+<p>Converts the message into packets of the specified size.
+These (binary) packets have the structure &lt;prefix&gt;&lt;typ&gt;&lt;ctr&gt;&lt;delimiter&gt;&lt;message&gt;.
+The typ represents the type of the message.
+The ctr is the counter starting at 0 up to the maximum possible value
+(packet_number_size_in_bytes). When maximal value in the ctr is reached it starts again at 0.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>prefix</strong> (<em>str</em>) – Is included in all packets.</p></li>
+<li><p><strong>message</strong> (<em>Union</em><em>[</em><em>bytes</em><em>, </em><em>str</em><em>, </em><em>BufferedRandom</em><em>, </em><em>BufferedReader</em><em>, </em><em>BufferedWriter</em><em>, </em><em>BytesIO</em><em>]</em>) – The actual data to be used.</p></li>
+<li><p><strong>packet_size</strong> (<em>int</em>) – The number of bytes the packet can have at maximum.</p></li>
+<li><p><strong>eof</strong> (<em>bytes</em><em>, </em><em>optional</em>) – The bytes used as a signal for beeing the last package.
+Defaults to EOF.</p></li>
+<li><p><strong>packet_number_size_in_bytes</strong> (<em>int</em><em>, </em><em>optional</em>) – The number of bytes used for the counter.
+Defaults to PACKET_NUMBER_SIZE_IN_BYTES.</p></li>
+<li><p><strong>typ_size_in_bytes</strong> (<em>int</em><em>, </em><em>optional</em>) – The number of bytes used for the typ.
+Defaults to TYP_SIZE_IN_BYTES.</p></li>
+<li><p><strong>prefix_delimiter</strong> (<em>bytes</em><em>, </em><em>optional</em>) – The delimiter separating the header and the message.
+Defaults to PREFIX_DELIMITER.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Raises<span class="colon">:</span></dt>
+<dd class="field-even"><p><strong>NotImplementedError</strong> – If the message can’t be encoded into a packet.</p>
+</dd>
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p>List of packets.</p>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p>List[bytes]</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="mwutils.command_and_control.helper.domainsafe_b64decode">
+<span class="sig-name descname"><span class="pre">domainsafe_b64decode</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">data</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">bytes</span></span></span><a class="reference internal" href="_modules/mwutils/command_and_control/helper.html#domainsafe_b64decode"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#mwutils.command_and_control.helper.domainsafe_b64decode" title="Permalink to this definition"></a></dt>
+<dd><p>Base64 decodes a string without the padding (= and ==) to bytes.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>data</strong> (<em>str</em>) – The base64 string.</p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>Decoded string.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>bytes</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="mwutils.command_and_control.helper.domainsafe_b64encode">
+<span class="sig-name descname"><span class="pre">domainsafe_b64encode</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">data</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">bytes</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">str</span></span></span><a class="reference internal" href="_modules/mwutils/command_and_control/helper.html#domainsafe_b64encode"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#mwutils.command_and_control.helper.domainsafe_b64encode" title="Permalink to this definition"></a></dt>
+<dd><p>Encodes the bytes using base64 but removes the padding (= and ==).</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>data</strong> (<em>bytes</em>) – The bytes to encode.</p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>The encoded bytes.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>str</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="mwutils.command_and_control.helper.unpack_packet">
+<span class="sig-name descname"><span class="pre">unpack_packet</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">packet</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">bytes</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">eof</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">b'_EOF_'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">prefix_delimiter</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">bytes</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">b'::'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">packet_number_size_in_bytes</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">1</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">typ_size_in_bytes</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">1</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference internal" href="#mwutils.command_and_control.helper.Packet" title="mwutils.command_and_control.helper.Packet"><span class="pre">Packet</span></a></span></span><a class="reference internal" href="_modules/mwutils/command_and_control/helper.html#unpack_packet"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#mwutils.command_and_control.helper.unpack_packet" title="Permalink to this definition"></a></dt>
+<dd><p>Convert/decode bytes to a packet dataclass object.</p>
+<p>Note that the prefix can’t contain the prefix delimiter!</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>packet</strong> (<em>bytes</em>) – The bytes to decode and convert to the package dataclass.</p></li>
+<li><p><strong>eof</strong> (<em>str</em><em>, </em><em>optional</em>) – The bytes used as a signal for beeing the last package.
+Defaults to EOF.</p></li>
+<li><p><strong>prefix_delimiter</strong> (<em>bytes</em><em>, </em><em>optional</em>) – The delimiter separating the header and the message.
+Defaults to PREFIX_DELIMITER.</p></li>
+<li><p><strong>packet_number_size_in_bytes</strong> (<em>int</em><em>, </em><em>optional</em>) – The number of bytes used for the counter.
+Defaults to PACKET_NUMBER_SIZE_IN_BYTES.</p></li>
+<li><p><strong>typ_size_in_bytes</strong> (<em>int</em><em>, </em><em>optional</em>) – The number of bytes used for the typ.
+Defaults to TYP_SIZE_IN_BYTES.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Raises<span class="colon">:</span></dt>
+<dd class="field-even"><p><strong>NotImplementedError</strong> – If the message contains a unknown typ.</p>
+</dd>
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p>The destructed message as a dataclass packet.</p>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p><a class="reference internal" href="#mwutils.command_and_control.helper.Packet" title="mwutils.command_and_control.helper.Packet">Packet</a></p>
+</dd>
+</dl>
+</dd></dl>
+
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="mwutils.command_and_control.dns.html" class="btn btn-neutral float-left" title="&lt;no title&gt;" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="mwutils.command_and_control.symmetric_cryptography.html" class="btn btn-neutral float-right" title="&lt;no title&gt;" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2023, wenzelfe.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

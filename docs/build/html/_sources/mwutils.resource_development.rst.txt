@@ -1,0 +1,7 @@
+mwutils.resource\_development package
+=====================================
+
+.. automodule:: mwutils.resource_development
+   :members:
+   :undoc-members:
+   :show-inheritance:

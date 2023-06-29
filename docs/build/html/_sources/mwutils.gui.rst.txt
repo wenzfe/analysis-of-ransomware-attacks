@@ -1,0 +1,17 @@
+mwutils.gui package
+===================
+
+.. automodule:: mwutils.gui
+   :members:
+   :undoc-members:
+   :show-inheritance:
+
+Submodules
+----------
+
+.. toctree::
+   :maxdepth: 4
+
+   mwutils.gui.gui_main
+   mwutils.gui.playaudio
+   mwutils.gui.ransomware

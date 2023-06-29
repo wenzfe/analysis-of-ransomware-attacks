@@ -1,0 +1,4 @@
+.. automodule:: mwutils.command_and_control.web_protocols
+   :members:
+   :undoc-members:
+   :show-inheritance:

@@ -1,0 +1,4 @@
+.. automodule:: mwutils.persistence.registry_run_keys_startup_folder
+   :members:
+   :undoc-members:
+   :show-inheritance:

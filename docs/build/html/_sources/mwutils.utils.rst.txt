@@ -1,0 +1,15 @@
+mwutils.utils package
+=====================
+
+.. automodule:: mwutils.utils
+   :members:
+   :undoc-members:
+   :show-inheritance:
+
+Submodules
+----------
+
+.. toctree::
+   :maxdepth: 4
+
+   mwutils.utils.helper

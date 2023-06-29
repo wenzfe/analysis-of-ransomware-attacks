@@ -1,0 +1,7 @@
+mwutils.privilege\_escalation package
+=====================================
+
+.. automodule:: mwutils.privilege_escalation
+   :members:
+   :undoc-members:
+   :show-inheritance:

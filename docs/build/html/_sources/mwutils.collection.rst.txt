@@ -1,0 +1,7 @@
+mwutils.collection package
+==========================
+
+.. automodule:: mwutils.collection
+   :members:
+   :undoc-members:
+   :show-inheritance:

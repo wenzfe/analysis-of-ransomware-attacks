@@ -1,0 +1,17 @@
+mwutils.server package
+======================
+
+.. automodule:: mwutils.server
+   :members:
+   :undoc-members:
+   :show-inheritance:
+
+Submodules
+----------
+
+.. toctree::
+   :maxdepth: 4
+
+   mwutils.server.datastorage
+   mwutils.server.db
+   mwutils.server.webserver

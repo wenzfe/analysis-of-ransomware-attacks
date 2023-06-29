@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Leaked Data</title>
+</head>
+<body>
+    <div class="main">
+        <h1>Leaked Data</h1>
+        <h3>Last fetched at {{ dt|datetime }}</h3>
+
+        {% for client in clients %}
+        <a href="/leak/{{ client.guid }}">
+            <div class="client">
+                <h4>{{ client.guid }}</h4>
+                <p>{{ client.description }}</p>
+            </div>
+        </a>
+        {% endfor %}
+        
+    </div>
+    <script lang="js">
+        (function() {
+            // your page initialization code here
+            // the DOM will be available here
+        })();        
+    </script>
+    <style>
+        body {
+            font-size: 2em;
+            color: rgb(255, 255, 255);
+            background-color: rgb(21, 32, 43);
+        }
+
+        .main {
+            background-color: rgb(25, 39, 52);
+            border-radius: 10px;
+            margin: 20px;
+            padding: 20px;            
+        }
+        
+        h1,h2,h3 {
+            text-align: center;
+        }
+        
+        .client{
+            /* background-color: rgb(34, 48, 60); */
+            background-color: rgb(136, 153, 166);
+            border-radius: 10px;
+            padding-left: 15px;
+            padding-right: 5px;
+        }
+
+        a {
+            text-decoration: none;
+        }        
+    </style>
+</body>
+</html>

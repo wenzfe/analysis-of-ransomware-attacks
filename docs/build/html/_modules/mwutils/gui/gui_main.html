@@ -1,0 +1,246 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>mwutils.gui.gui_main &mdash; mwutils 1.0 documentation</title>
+      <link rel="stylesheet" href="../../../_static/pygments.css" type="text/css" />
+      <link rel="stylesheet" href="../../../_static/css/theme.css" type="text/css" />
+  <!--[if lt IE 9]>
+    <script src="../../../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script data-url_root="../../../" id="documentation_options" src="../../../_static/documentation_options.js"></script>
+        <script src="../../../_static/jquery.js"></script>
+        <script src="../../../_static/underscore.js"></script>
+        <script src="../../../_static/_sphinx_javascript_frameworks_compat.js"></script>
+        <script src="../../../_static/doctools.js"></script>
+        <script src="../../../_static/sphinx_highlight.js"></script>
+        <script src="https://unpkg.com/mermaid@9.4.0/dist/mermaid.min.js"></script>
+        <script>mermaid.initialize({startOnLoad:true});</script>
+    <script src="../../../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../../../genindex.html" />
+    <link rel="search" title="Search" href="../../../search.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="../../../index.html" class="icon icon-home">
+            mwutils
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">Contents:</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../README.html">About the Package</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../Documentation.html">Documentation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../Logging.html">Logging</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../modules.html">mwutils</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../../index.html">mwutils</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../../../index.html" class="icon icon-home" aria-label="Home"></a></li>
+          <li class="breadcrumb-item"><a href="../../index.html">Module code</a></li>
+      <li class="breadcrumb-item active">mwutils.gui.gui_main</li>
+      <li class="wy-breadcrumbs-aside">
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <h1>Source code for mwutils.gui.gui_main</h1><div class="highlight"><pre>
+<span></span><span class="sd">&quot;&quot;&quot;Tkinter App</span>
+
+<span class="sd">A main/wrapper module for tkinter frames.</span>
+
+
+<span class="sd">Tkinter Frames that can be used and are included in this subpackage are:</span>
+
+<span class="sd">#. ransomware</span>
+
+<span class="sd">#. playaudio</span>
+
+<span class="sd">The following example code gives an idea how to work with this module.</span>
+
+<span class="sd">.. code:: python</span>
+
+<span class="sd">    import sys</span>
+<span class="sd">    </span>
+<span class="sd">    from mwutils.gui.ransomware import RW</span>
+<span class="sd">    from mwutils.gui.playaudio import Audio</span>
+<span class="sd">    from mwutils.gui.gui_main import App</span>
+
+<span class="sd">    if __name__ == &quot;__main__&quot;:</span>
+
+<span class="sd">        FORMAT = &quot;[%(asctime)s] [%(funcName)-30s] [%(levelname)-8s] [%(message)s]&quot;</span>
+<span class="sd">        logging.basicConfig(stream=sys.stderr, encoding=&quot;utf-8&quot;, format=FORMAT, level=0)</span>
+
+
+<span class="sd">        def rw_func():</span>
+<span class="sd">            logger.info(&quot;executing rw_func&quot;)</span>
+<span class="sd">            app.show_frame(RW.__name__)</span>
+
+<span class="sd">        def rw_dec_func():</span>
+<span class="sd">            logger.info(&quot;executing rw_dec_func&quot;)</span>
+
+
+<span class="sd">        frames = (</span>
+<span class="sd">            {&quot;class&quot;: RW, &quot;para&quot;: {&quot;decrypt_function&quot;: rw_dec_func}},</span>
+<span class="sd">            {&#39;class&#39;: Audio, &#39;para&#39;: {}},</span>
+<span class="sd">        )</span>
+<span class="sd">        app = App(</span>
+<span class="sd">            tk_frames=frames,</span>
+<span class="sd">            visible_frame=Audio,</span>
+<span class="sd">            window_width=800, window_height=300</span>
+<span class="sd">        )</span>
+
+<span class="sd">        # runs after the loop and can execute your code</span>
+<span class="sd">        app.after(2000, rw_func)</span>
+<span class="sd">        app.mainloop()</span>
+<span class="sd">&quot;&quot;&quot;</span>
+
+<span class="kn">import</span> <span class="nn">logging</span>
+<span class="kn">from</span> <span class="nn">tkinter</span> <span class="kn">import</span> <span class="n">Frame</span><span class="p">,</span> <span class="n">Tk</span>
+<span class="kn">from</span> <span class="nn">typing</span> <span class="kn">import</span> <span class="n">Type</span>
+
+<span class="n">logger</span> <span class="o">=</span> <span class="n">logging</span><span class="o">.</span><span class="n">getLogger</span><span class="p">(</span><span class="vm">__name__</span><span class="p">)</span>
+
+
+<div class="viewcode-block" id="App"><a class="viewcode-back" href="../../../mwutils.gui.gui_main.html#mwutils.gui.gui_main.App">[docs]</a><span class="k">class</span> <span class="nc">App</span><span class="p">(</span><span class="n">Tk</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;The main gui app</span>
+
+<span class="sd">    Example:</span>
+<span class="sd">        frames = (</span>
+<span class="sd">            {&#39;class&#39;: Audio, &#39;para&#39;: {}},</span>
+<span class="sd">        )</span>
+
+<span class="sd">        app = App(</span>
+<span class="sd">            tk_frames=frames,</span>
+<span class="sd">            visible_frame=Audio,</span>
+<span class="sd">            window_width=270,</span>
+<span class="sd">            window_height=140,</span>
+<span class="sd">        )</span>
+
+<span class="sd">        app.mainloop()</span>
+
+<span class="sd">    Args:</span>
+<span class="sd">        Tk (_type_): Tkinter app</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span>
+        <span class="bp">self</span><span class="p">,</span>
+        <span class="n">tk_frames</span><span class="p">:</span> <span class="nb">tuple</span><span class="p">,</span>
+        <span class="n">visible_frame</span><span class="p">:</span> <span class="n">Type</span><span class="p">[</span><span class="n">Frame</span><span class="p">],</span>
+        <span class="o">*</span><span class="n">args</span><span class="p">,</span>
+        <span class="n">window_width</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">500</span><span class="p">,</span>
+        <span class="n">window_height</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">500</span><span class="p">,</span>
+        <span class="o">**</span><span class="n">kwargs</span><span class="p">,</span>
+    <span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Tkinter App</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            tk_frames (tuple): Of dicts with the class and the parameters for the frame.</span>
+<span class="sd">                See example.</span>
+<span class="sd">            visible_frame (Type[Frame]): The tkinter frame to show initially.</span>
+<span class="sd">            window_width (int, optional): Window width. Defaults to 500.</span>
+<span class="sd">            window_height (int, optional): Window height. Defaults to 500.</span>
+
+<span class="sd">        Example:</span>
+<span class="sd">            frames = (</span>
+<span class="sd">                {&#39;class&#39;: Audio, &#39;para&#39;: {}},</span>
+<span class="sd">            )</span>
+
+<span class="sd">            app = App(</span>
+<span class="sd">                tk_frames=frames,</span>
+<span class="sd">                visible_frame=Audio,</span>
+<span class="sd">                window_width=270,</span>
+<span class="sd">                window_height=140,</span>
+<span class="sd">            )</span>
+
+<span class="sd">            app.mainloop()</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">Tk</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
+
+        <span class="n">screen_width</span> <span class="o">=</span> <span class="nb">int</span><span class="p">((</span><span class="bp">self</span><span class="o">.</span><span class="n">winfo_screenwidth</span><span class="p">()</span> <span class="o">/</span> <span class="mi">2</span><span class="p">)</span> <span class="o">-</span> <span class="p">(</span><span class="n">window_width</span> <span class="o">/</span> <span class="mi">2</span><span class="p">))</span>
+        <span class="n">screen_height</span> <span class="o">=</span> <span class="nb">int</span><span class="p">((</span><span class="bp">self</span><span class="o">.</span><span class="n">winfo_screenheight</span><span class="p">()</span> <span class="o">/</span> <span class="mi">2</span><span class="p">)</span> <span class="o">-</span> <span class="p">(</span><span class="n">window_height</span> <span class="o">/</span> <span class="mi">2</span><span class="p">))</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">geometry</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">window_width</span><span class="si">}</span><span class="s2">x</span><span class="si">{</span><span class="n">window_height</span><span class="si">}</span><span class="s2">+</span><span class="si">{</span><span class="n">screen_width</span><span class="si">}</span><span class="s2">+</span><span class="si">{</span><span class="n">screen_height</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">resizable</span><span class="p">(</span><span class="n">width</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">height</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+
+        <span class="n">container</span> <span class="o">=</span> <span class="n">Frame</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span>
+        <span class="n">container</span><span class="o">.</span><span class="n">pack</span><span class="p">(</span><span class="n">side</span><span class="o">=</span><span class="s2">&quot;top&quot;</span><span class="p">,</span> <span class="n">fill</span><span class="o">=</span><span class="s2">&quot;both&quot;</span><span class="p">,</span> <span class="n">expand</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">frames</span> <span class="o">=</span> <span class="p">{}</span>
+        <span class="k">for</span> <span class="n">F</span> <span class="ow">in</span> <span class="n">tk_frames</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">frames</span><span class="p">[</span><span class="n">F</span><span class="p">[</span><span class="s2">&quot;class&quot;</span><span class="p">]</span><span class="o">.</span><span class="vm">__name__</span><span class="p">]</span> <span class="o">=</span> <span class="n">F</span><span class="p">[</span><span class="s2">&quot;class&quot;</span><span class="p">](</span>
+                <span class="n">parent</span><span class="o">=</span><span class="n">container</span><span class="p">,</span> <span class="n">controller</span><span class="o">=</span><span class="bp">self</span><span class="p">,</span> <span class="o">**</span><span class="n">F</span><span class="p">[</span><span class="s2">&quot;para&quot;</span><span class="p">]</span>
+            <span class="p">)</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">frames</span><span class="p">[</span><span class="n">F</span><span class="p">[</span><span class="s2">&quot;class&quot;</span><span class="p">]</span><span class="o">.</span><span class="vm">__name__</span><span class="p">]</span><span class="o">.</span><span class="n">grid</span><span class="p">(</span><span class="n">row</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">column</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">sticky</span><span class="o">=</span><span class="s2">&quot;nsew&quot;</span><span class="p">)</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">show_frame</span><span class="p">(</span><span class="n">visible_frame</span><span class="o">.</span><span class="vm">__name__</span><span class="p">)</span>
+
+<div class="viewcode-block" id="App.show_frame"><a class="viewcode-back" href="../../../mwutils.gui.gui_main.html#mwutils.gui.gui_main.App.show_frame">[docs]</a>    <span class="k">def</span> <span class="nf">show_frame</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">frame_name</span><span class="p">:</span> <span class="nb">str</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;The Tkinter Frame to show.</span>
+
+<span class="sd">        Tipp: use `&lt;class&gt;.__name__` to get the name of the frame.</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            frame_name (str): The frame to show.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">frame</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">frames</span><span class="p">[</span><span class="n">frame_name</span><span class="p">]</span>
+        <span class="n">frame</span><span class="o">.</span><span class="n">tkraise</span><span class="p">()</span></div></div>
+</pre></div>
+
+           </div>
+          </div>
+          <footer>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2023, wenzelfe.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

@@ -1,0 +1,320 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>mwutils.defense_evasion.virtualization_sandbox_evasion &mdash; mwutils 1.0 documentation</title>
+      <link rel="stylesheet" href="../../../_static/pygments.css" type="text/css" />
+      <link rel="stylesheet" href="../../../_static/css/theme.css" type="text/css" />
+  <!--[if lt IE 9]>
+    <script src="../../../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script data-url_root="../../../" id="documentation_options" src="../../../_static/documentation_options.js"></script>
+        <script src="../../../_static/jquery.js"></script>
+        <script src="../../../_static/underscore.js"></script>
+        <script src="../../../_static/_sphinx_javascript_frameworks_compat.js"></script>
+        <script src="../../../_static/doctools.js"></script>
+        <script src="../../../_static/sphinx_highlight.js"></script>
+        <script src="https://unpkg.com/mermaid@9.4.0/dist/mermaid.min.js"></script>
+        <script>mermaid.initialize({startOnLoad:true});</script>
+    <script src="../../../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../../../genindex.html" />
+    <link rel="search" title="Search" href="../../../search.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="../../../index.html" class="icon icon-home">
+            mwutils
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">Contents:</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../README.html">About the Package</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../Documentation.html">Documentation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../Logging.html">Logging</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../modules.html">mwutils</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../../index.html">mwutils</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../../../index.html" class="icon icon-home" aria-label="Home"></a></li>
+          <li class="breadcrumb-item"><a href="../../index.html">Module code</a></li>
+      <li class="breadcrumb-item active">mwutils.defense_evasion.virtualization_sandbox_evasion</li>
+      <li class="wy-breadcrumbs-aside">
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <h1>Source code for mwutils.defense_evasion.virtualization_sandbox_evasion</h1><div class="highlight"><pre>
+<span></span><span class="sd">&quot;&quot;&quot;Virtualization/Sandbox Evasion</span>
+
+<span class="sd">Adversaries may employ various means to detect and avoid virtualization and analysis environments. </span>
+<span class="sd">This may include changing behaviors based on the results of checks for the presence of artifacts </span>
+<span class="sd">indicative of a virtual machine environment (VME) or sandbox. </span>
+<span class="sd">If the adversary detects a VME, they may alter their malware to disengage from the victim </span>
+<span class="sd">or conceal the core functions of the implant. </span>
+<span class="sd">They may also search for VME artifacts before dropping secondary or additional payloads. </span>
+<span class="sd">Adversaries may use the information learned from Virtualization/Sandbox Evasion during </span>
+<span class="sd">automated discovery to shape follow-on behaviors.</span>
+
+<span class="sd">Adversaries may use several methods to accomplish Virtualization/Sandbox Evasion such as checking </span>
+<span class="sd">for security monitoring tools (e.g., Sysinternals, Wireshark, etc.) or other system artifacts </span>
+<span class="sd">associated with analysis or virtualization. </span>
+<span class="sd">Adversaries may also check for legitimate user activity to help determine if it is in an </span>
+<span class="sd">analysis environment. </span>
+<span class="sd">Additional methods include use of sleep timers or loops within malware code to avoid operating </span>
+<span class="sd">within a temporary sandbox.</span>
+
+<span class="sd">Mitre: `T1497 &lt;https://attack.mitre.org/techniques/T1497/&gt;`_</span>
+<span class="sd">&quot;&quot;&quot;</span>
+<span class="kn">import</span> <span class="nn">json</span>
+<span class="kn">import</span> <span class="nn">logging</span>
+<span class="kn">import</span> <span class="nn">os</span>
+<span class="kn">from</span> <span class="nn">subprocess</span> <span class="kn">import</span> <span class="n">PIPE</span><span class="p">,</span> <span class="n">STDOUT</span><span class="p">,</span> <span class="n">run</span>
+
+<span class="kn">import</span> <span class="nn">dns.resolver</span> <span class="k">as</span> <span class="nn">dnsr</span>
+
+<span class="n">logger</span> <span class="o">=</span> <span class="n">logging</span><span class="o">.</span><span class="n">getLogger</span><span class="p">(</span><span class="vm">__name__</span><span class="p">)</span>
+
+
+<div class="viewcode-block" id="Sandbox"><a class="viewcode-back" href="../../../mwutils.defense_evasion.virtualization_sandbox_evasion.html#mwutils.defense_evasion.virtualization_sandbox_evasion.Sandbox">[docs]</a><span class="k">class</span> <span class="nc">Sandbox</span><span class="p">:</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Methods to detect sandboxing.&quot;&quot;&quot;</span>
+
+<div class="viewcode-block" id="Sandbox.via_dns"><a class="viewcode-back" href="../../../mwutils.defense_evasion.virtualization_sandbox_evasion.html#mwutils.defense_evasion.virtualization_sandbox_evasion.Sandbox.via_dns">[docs]</a>    <span class="nd">@staticmethod</span>
+    <span class="k">def</span> <span class="nf">via_dns</span><span class="p">()</span> <span class="o">-&gt;</span> <span class="nb">float</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Checks if a list of domains is resolvable.</span>
+
+<span class="sd">        Overrides system default DNS server and use public ones such as 8.8.8.8 or 8.8.4.4.</span>
+<span class="sd">        Then it checks for the number of records that were resolved.</span>
+
+
+<span class="sd">        Mitre: `T1497.001 &lt;https://attack.mitre.org/versions/v12/techniques/T1497/001/&gt;`_</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            float: number of domains that could not be resolved / total number of checked domains</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">check_domain</span> <span class="o">=</span> <span class="p">[</span>
+            <span class="s2">&quot;www.google.com&quot;</span><span class="p">,</span>
+            <span class="s2">&quot;yahoo.com&quot;</span><span class="p">,</span>
+            <span class="s2">&quot;microsoft.com&quot;</span><span class="p">,</span>
+            <span class="s2">&quot;YouTube.com&quot;</span><span class="p">,</span>
+            <span class="s2">&quot;Facebook.com&quot;</span><span class="p">,</span>
+            <span class="s2">&quot;Wikipedia.org&quot;</span><span class="p">,</span>
+            <span class="s2">&quot;Amazon.com&quot;</span><span class="p">,</span>
+        <span class="p">]</span>
+
+        <span class="n">count_unresolved_requests</span> <span class="o">=</span> <span class="mi">0</span>
+        <span class="n">count_requests</span> <span class="o">=</span> <span class="mi">0</span>
+        <span class="n">dns_resolver</span> <span class="o">=</span> <span class="n">dnsr</span><span class="o">.</span><span class="n">Resolver</span><span class="p">(</span><span class="n">configure</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+        <span class="n">dns_resolver</span><span class="o">.</span><span class="n">nameservers</span> <span class="o">=</span> <span class="p">[</span><span class="s2">&quot;8.8.8.8&quot;</span><span class="p">,</span> <span class="s2">&quot;8.8.4.4&quot;</span><span class="p">]</span>
+        <span class="k">try</span><span class="p">:</span>
+            <span class="k">for</span> <span class="n">domain</span> <span class="ow">in</span> <span class="n">check_domain</span><span class="p">:</span>
+                <span class="k">try</span><span class="p">:</span>
+                    <span class="k">for</span> <span class="n">ip_address</span> <span class="ow">in</span> <span class="n">dns_resolver</span><span class="o">.</span><span class="n">resolve</span><span class="p">(</span><span class="n">domain</span><span class="p">):</span>
+                        <span class="n">count_requests</span> <span class="o">+=</span> <span class="mi">1</span>
+                <span class="k">except</span> <span class="ne">Exception</span><span class="p">:</span>
+                    <span class="n">logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s2">&quot;Could not resolve </span><span class="si">%s</span><span class="s2">&quot;</span><span class="p">,</span> <span class="n">domain</span><span class="p">)</span>
+                    <span class="n">count_unresolved_requests</span> <span class="o">+=</span> <span class="mi">1</span>
+        <span class="k">except</span> <span class="ne">Exception</span> <span class="k">as</span> <span class="n">ex</span><span class="p">:</span>
+            <span class="n">logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="n">ex</span><span class="p">)</span>
+
+        <span class="k">return</span> <span class="n">count_unresolved_requests</span> <span class="o">/</span> <span class="nb">len</span><span class="p">(</span><span class="n">check_domain</span><span class="p">)</span></div></div>
+
+
+<div class="viewcode-block" id="Virtualization"><a class="viewcode-back" href="../../../mwutils.defense_evasion.virtualization_sandbox_evasion.html#mwutils.defense_evasion.virtualization_sandbox_evasion.Virtualization">[docs]</a><span class="k">class</span> <span class="nc">Virtualization</span><span class="p">:</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Methods to detect virtualization&quot;&quot;&quot;</span>
+
+<div class="viewcode-block" id="Virtualization.Linux"><a class="viewcode-back" href="../../../mwutils.defense_evasion.virtualization_sandbox_evasion.html#mwutils.defense_evasion.virtualization_sandbox_evasion.Virtualization.Linux">[docs]</a>    <span class="k">class</span> <span class="nc">Linux</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Methods to detect if a Linux operation system is virtualized.&quot;&quot;&quot;</span>
+
+        <span class="c1"># https://wiki.tcl-lang.org/page/%2Fdev%2Fdisk#:~:text=On%20Linux%20systems%2C%20%2Fdev%2F,in%20more%20user%2Dfriendly%20names.</span>
+        <span class="c1"># https://unix.stackexchange.com/questions/89714/easy-way-to-determine-the-virtualization-technology-of-a-linux-machine</span>
+<div class="viewcode-block" id="Virtualization.Linux.detect_through_dev_disk_by_id"><a class="viewcode-back" href="../../../mwutils.defense_evasion.virtualization_sandbox_evasion.html#mwutils.defense_evasion.virtualization_sandbox_evasion.Virtualization.Linux.detect_through_dev_disk_by_id">[docs]</a>        <span class="nd">@staticmethod</span>
+        <span class="k">def</span> <span class="nf">detect_through_dev_disk_by_id</span><span class="p">()</span> <span class="o">-&gt;</span> <span class="nb">bool</span><span class="p">:</span>
+<span class="w">            </span><span class="sd">&quot;&quot;&quot;Detect Linux virtualization.</span>
+
+<span class="sd">            Detect Linux virtualization through (internal or external) disks </span>
+<span class="sd">            that are connected to the system under `/dev/disk/by-id`.</span>
+
+<span class="sd">            Returns:</span>
+<span class="sd">                bool: True if virtualization is detected.</span>
+<span class="sd">                        False if not.</span>
+<span class="sd">            &quot;&quot;&quot;</span>
+            <span class="n">vms</span> <span class="o">=</span> <span class="p">[</span><span class="s2">&quot;vbox&quot;</span><span class="p">,</span> <span class="s2">&quot;qemu&quot;</span><span class="p">]</span>
+            <span class="n">cmd</span> <span class="o">=</span> <span class="s2">&quot;ls -l /dev/disk/by-id/ | awk &#39;{ print $9 }&#39; &quot;</span>
+            <span class="n">output</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">popen</span><span class="p">(</span><span class="n">cmd</span><span class="p">)</span><span class="o">.</span><span class="n">read</span><span class="p">()</span><span class="o">.</span><span class="n">lower</span><span class="p">()</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2">&quot;</span><span class="p">)</span>
+            <span class="k">for</span> <span class="n">line</span> <span class="ow">in</span> <span class="n">output</span><span class="p">:</span>
+                <span class="k">for</span> <span class="n">vm</span> <span class="ow">in</span> <span class="n">vms</span><span class="p">:</span>
+                    <span class="k">if</span> <span class="n">vm</span> <span class="ow">in</span> <span class="n">line</span><span class="p">:</span>
+                        <span class="n">logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s2">&quot;Found virtualization: </span><span class="si">%s</span><span class="s2">&quot;</span><span class="p">,</span> <span class="n">vm</span><span class="p">)</span>
+                        <span class="k">return</span> <span class="kc">True</span>
+            <span class="n">logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s2">&quot;Found no virtualization&quot;</span><span class="p">)</span>
+            <span class="k">return</span> <span class="kc">False</span></div>
+
+        <span class="c1"># https://unix.stackexchange.com/questions/89714/easy-way-to-determine-the-virtualization-technology-of-a-linux-machine</span>
+        <span class="c1"># https://www.freedesktop.org/software/systemd/man/systemd-detect-virt.html</span>
+<div class="viewcode-block" id="Virtualization.Linux.detect_through_system_detect_virt"><a class="viewcode-back" href="../../../mwutils.defense_evasion.virtualization_sandbox_evasion.html#mwutils.defense_evasion.virtualization_sandbox_evasion.Virtualization.Linux.detect_through_system_detect_virt">[docs]</a>        <span class="nd">@staticmethod</span>
+        <span class="k">def</span> <span class="nf">detect_through_system_detect_virt</span><span class="p">()</span> <span class="o">-&gt;</span> <span class="nb">bool</span><span class="p">:</span>
+<span class="w">            </span><span class="sd">&quot;&quot;&quot;Detect Linux virtualization.</span>
+
+<span class="sd">            Detect Linux virtualization via the `systemd-detect-virt` command.</span>
+
+<span class="sd">            Returns:</span>
+<span class="sd">                bool: True if virtualization is detected.</span>
+<span class="sd">                        False if not.</span>
+<span class="sd">            &quot;&quot;&quot;</span>
+            <span class="n">vms</span> <span class="o">=</span> <span class="p">[</span>
+                <span class="s2">&quot;qemu&quot;</span><span class="p">,</span>
+                <span class="s2">&quot;kvm&quot;</span><span class="p">,</span>
+                <span class="s2">&quot;amazon&quot;</span><span class="p">,</span>
+                <span class="s2">&quot;zvm&quot;</span><span class="p">,</span>
+                <span class="s2">&quot;vmware&quot;</span><span class="p">,</span>
+                <span class="s2">&quot;microsoft&quot;</span><span class="p">,</span>
+                <span class="s2">&quot;oracle&quot;</span><span class="p">,</span>
+                <span class="s2">&quot;powervm&quot;</span><span class="p">,</span>
+                <span class="s2">&quot;xen&quot;</span><span class="p">,</span>
+                <span class="s2">&quot;bochs&quot;</span><span class="p">,</span>
+                <span class="s2">&quot;uml&quot;</span><span class="p">,</span>
+                <span class="s2">&quot;parrallels&quot;</span><span class="p">,</span>
+                <span class="s2">&quot;bhyve&quot;</span><span class="p">,</span>
+                <span class="s2">&quot;qnx&quot;</span><span class="p">,</span>
+                <span class="s2">&quot;acrn&quot;</span><span class="p">,</span>
+            <span class="p">]</span>
+            <span class="n">cmd</span> <span class="o">=</span> <span class="s2">&quot;systemd-detect-virt&quot;</span>
+            <span class="n">output</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">popen</span><span class="p">(</span><span class="n">cmd</span><span class="p">)</span><span class="o">.</span><span class="n">read</span><span class="p">()</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2">&quot;</span><span class="p">,</span> <span class="s2">&quot;&quot;</span><span class="p">)</span>
+            <span class="k">if</span> <span class="n">output</span> <span class="ow">in</span> <span class="n">vms</span><span class="p">:</span>
+                <span class="n">logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s2">&quot;Found virtualization: </span><span class="si">%s</span><span class="s2">&quot;</span><span class="p">,</span> <span class="n">output</span><span class="p">)</span>
+                <span class="k">return</span> <span class="kc">True</span>
+            <span class="n">logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s2">&quot;Found no virtualization&quot;</span><span class="p">)</span>
+            <span class="k">return</span> <span class="kc">False</span></div></div>
+
+<div class="viewcode-block" id="Virtualization.Windows"><a class="viewcode-back" href="../../../mwutils.defense_evasion.virtualization_sandbox_evasion.html#mwutils.defense_evasion.virtualization_sandbox_evasion.Virtualization.Windows">[docs]</a>    <span class="k">class</span> <span class="nc">Windows</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Methods to detect if a Windows operation system is virtualized.&quot;&quot;&quot;</span>
+
+<div class="viewcode-block" id="Virtualization.Windows.run_powershell"><a class="viewcode-back" href="../../../mwutils.defense_evasion.virtualization_sandbox_evasion.html#mwutils.defense_evasion.virtualization_sandbox_evasion.Virtualization.Windows.run_powershell">[docs]</a>        <span class="nd">@staticmethod</span>
+        <span class="k">def</span> <span class="nf">run_powershell</span><span class="p">(</span><span class="n">cmd</span><span class="p">:</span> <span class="nb">str</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
+<span class="w">            </span><span class="sd">&quot;&quot;&quot;Methord to execute a powershell command.</span>
+
+<span class="sd">            Args:</span>
+<span class="sd">                cmd (str): The powershell command to run.</span>
+
+<span class="sd">            Returns:</span>
+<span class="sd">                str: The string containing the response of the powershell command.</span>
+<span class="sd">            &quot;&quot;&quot;</span>
+            <span class="n">completed</span> <span class="o">=</span> <span class="n">run</span><span class="p">(</span>
+                <span class="p">[</span><span class="s2">&quot;powershell&quot;</span><span class="p">,</span> <span class="s2">&quot;-Command&quot;</span><span class="p">,</span> <span class="n">cmd</span><span class="p">],</span> <span class="n">stdout</span><span class="o">=</span><span class="n">PIPE</span><span class="p">,</span> <span class="n">stderr</span><span class="o">=</span><span class="n">STDOUT</span><span class="p">,</span> <span class="n">check</span><span class="o">=</span><span class="kc">False</span>
+            <span class="p">)</span>
+            <span class="k">return</span> <span class="n">completed</span><span class="o">.</span><span class="n">stdout</span><span class="o">.</span><span class="n">decode</span><span class="p">(</span><span class="s2">&quot;utf-8&quot;</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="Virtualization.Windows.run_powershell_dict"><a class="viewcode-back" href="../../../mwutils.defense_evasion.virtualization_sandbox_evasion.html#mwutils.defense_evasion.virtualization_sandbox_evasion.Virtualization.Windows.run_powershell_dict">[docs]</a>        <span class="nd">@staticmethod</span>
+        <span class="k">def</span> <span class="nf">run_powershell_dict</span><span class="p">(</span><span class="n">cmd</span><span class="p">:</span> <span class="nb">str</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">dict</span><span class="p">:</span>
+<span class="w">            </span><span class="sd">&quot;&quot;&quot;Runs the supplied powershell command and returns a dict.</span>
+
+<span class="sd">            This is done by appending &#39;| ConvertTo-Json -Compress&#39; and converting</span>
+<span class="sd">            the output to a dict.</span>
+
+<span class="sd">            Args:</span>
+<span class="sd">                cmd (str): The powershell command to run.</span>
+
+<span class="sd">            Returns:</span>
+<span class="sd">                dict: The dict containing the response of the powershell command.</span>
+<span class="sd">            &quot;&quot;&quot;</span>
+            <span class="k">return</span> <span class="n">json</span><span class="o">.</span><span class="n">loads</span><span class="p">(</span>
+                <span class="vm">__class__</span><span class="o">.</span><span class="n">run_powershell</span><span class="p">(</span><span class="n">cmd</span> <span class="o">+</span> <span class="s2">&quot; | ConvertTo-Json -Compress&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">strip</span><span class="p">()</span>
+            <span class="p">)</span></div>
+
+<div class="viewcode-block" id="Virtualization.Windows.is_virtualized"><a class="viewcode-back" href="../../../mwutils.defense_evasion.virtualization_sandbox_evasion.html#mwutils.defense_evasion.virtualization_sandbox_evasion.Virtualization.Windows.is_virtualized">[docs]</a>        <span class="nd">@staticmethod</span>
+        <span class="k">def</span> <span class="nf">is_virtualized</span><span class="p">():</span>
+<span class="w">            </span><span class="sd">&quot;&quot;&quot;Detect Windows virtualization.</span>
+
+<span class="sd">            Via WMI Objects win32_computersystem and win32_bios.</span>
+
+<span class="sd">            Mitre: `T1497.001 &lt;https://attack.mitre.org/versions/v12/techniques/T1497/001/&gt;`_</span>
+
+<span class="sd">            Returns:</span>
+<span class="sd">                bool: True if virtualization is detected.</span>
+<span class="sd">                        False if not.</span>
+<span class="sd">            &quot;&quot;&quot;</span>
+            <span class="n">win_computersystem</span> <span class="o">=</span> <span class="vm">__class__</span><span class="o">.</span><span class="n">run_powershell_dict</span><span class="p">(</span>
+                <span class="s2">&quot;Get-WmiObject win32_computersystem | Select-Object Manufacturer, Model&quot;</span>
+            <span class="p">)</span>
+            <span class="n">win_bios</span> <span class="o">=</span> <span class="vm">__class__</span><span class="o">.</span><span class="n">run_powershell_dict</span><span class="p">(</span>
+                <span class="s2">&quot;Get-WmiObject win32_bios | Select-Object SerialNumber, Version&quot;</span>
+            <span class="p">)</span>
+
+            <span class="n">models</span> <span class="o">=</span> <span class="p">[</span><span class="s2">&quot;VirtualBox&quot;</span><span class="p">]</span>
+            <span class="k">if</span> <span class="n">win_computersystem</span><span class="p">[</span><span class="s2">&quot;Model&quot;</span><span class="p">]</span> <span class="ow">in</span> <span class="n">models</span><span class="p">:</span>
+                <span class="k">return</span> <span class="kc">True</span>
+
+            <span class="n">manufacturers</span> <span class="o">=</span> <span class="p">[</span><span class="s2">&quot;innotek GmbH&quot;</span><span class="p">,</span> <span class="s2">&quot;VMware, Inc.&quot;</span><span class="p">]</span>
+            <span class="k">if</span> <span class="n">win_computersystem</span><span class="p">[</span><span class="s2">&quot;Manufacturer&quot;</span><span class="p">]</span> <span class="ow">in</span> <span class="n">manufacturers</span><span class="p">:</span>
+                <span class="k">return</span> <span class="kc">True</span>
+
+            <span class="n">serial_numbers</span> <span class="o">=</span> <span class="p">[</span><span class="s2">&quot;0&quot;</span><span class="p">]</span>
+            <span class="k">if</span> <span class="n">win_bios</span><span class="p">[</span><span class="s2">&quot;SerialNumber&quot;</span><span class="p">]</span> <span class="ow">in</span> <span class="n">serial_numbers</span><span class="p">:</span>
+                <span class="k">return</span> <span class="kc">True</span>
+
+            <span class="k">return</span> <span class="kc">False</span></div></div></div>
+
+
+<span class="k">if</span> <span class="vm">__name__</span> <span class="o">==</span> <span class="s2">&quot;__main__&quot;</span><span class="p">:</span>
+    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Probability of sandbox based on resolved DNS records: </span><span class="si">{</span><span class="n">Sandbox</span><span class="o">.</span><span class="n">via_dns</span><span class="p">()</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+</pre></div>
+
+           </div>
+          </div>
+          <footer>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2023, wenzelfe.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

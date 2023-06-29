@@ -1,0 +1,46 @@
+[project]
+name = "updater"
+version = "0.9.0"
+authors = [
+  { name="wenzfe", email="wenzfe@noreply.com" },
+]
+description = "A small package capable of updating all packages that include this package"
+readme = "README.md"
+requires-python = ">=3.10"
+classifiers = [
+    "Programming Language :: Python :: 3.10",
+    "License :: OSI Approved :: MIT License",
+    "Operating System :: OS Independent",
+    "Development Status :: 3 - Alpha",
+    "Intended Audience :: Education",
+    "Operating System :: POSIX",
+    "Operating System :: Microsoft :: Windows",
+]
+dependencies = [
+  "croniter",
+  "pipdeptree",
+]
+
+[project.urls]
+"Homepage" = "https://github.com/wenzfe/sampleproject"
+"Bug Tracker" = "https://github.com/wenzfe/sampleproject/issues"
+
+
+[build-system]
+requires = ["setuptools>=61.0"]
+build-backend = "setuptools.build_meta"
+
+[tool.setuptools]
+# ...
+# By default, include-package-data is true in pyproject.toml, so you do
+# NOT have to specify this line.
+include-package-data = true
+
+#[tool.setuptools.packages.find]
+#where = ["updater"]
+
+[tool.setuptools.package-data]
+"updater" = ["conf.toml"]
+
+[project.scripts]
+updater = "updater.updater:run"

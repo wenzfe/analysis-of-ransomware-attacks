@@ -1,0 +1,7 @@
+mwutils.execution package
+=========================
+
+.. automodule:: mwutils.execution
+   :members:
+   :undoc-members:
+   :show-inheritance:

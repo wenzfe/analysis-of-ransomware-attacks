@@ -1,0 +1,18 @@
+mwutils.impact package
+======================
+
+.. automodule:: mwutils.impact
+   :members:
+   :undoc-members:
+   :show-inheritance:
+
+Submodules
+----------
+
+.. toctree::
+   :maxdepth: 4
+
+   mwutils.impact.data_encrypted_for_impact
+   mwutils.impact.helper
+   mwutils.impact.inhibit_system_recovery
+   mwutils.impact.internal_defacement

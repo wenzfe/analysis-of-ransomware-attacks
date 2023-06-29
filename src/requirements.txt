@@ -1,0 +1,30 @@
+pycryptodome==3.17
+# PyExfil
+dnslib==0.9.23
+dnspython==2.2.1
+nserver==0.3.1
+Pillow==9.3.0
+tkhtmlview==0.1.1.post5
+audioplayer==0.6
+SQLAlchemy==1.4.46
+auto-py-to-exe==2.26.1
+pyarmor==7.7.4
+setuptools
+wheel
+Flask==2.2.2
+Flask-Session==0.4.0
+Flask-SQLAlchemy==3.0.2
+croniter==1.3.8
+pipdeptree==2.3.3
+
+
+pylint==2.17.0
+black==23.1.0
+isort==5.12.0
+
+# for documentation / sphinx
+Sphinx==5.3.0
+sphinx-rtd-theme==1.2.0
+myst-parser==0.18.1
+sphinxcontrib-mermaid==0.8
+

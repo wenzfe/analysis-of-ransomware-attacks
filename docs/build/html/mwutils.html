@@ -1,0 +1,287 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.18.1: http://docutils.sourceforge.net/" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>mwutils package &mdash; mwutils 1.0 documentation</title>
+      <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+      <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
+  <!--[if lt IE 9]>
+    <script src="_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script data-url_root="./" id="documentation_options" src="_static/documentation_options.js"></script>
+        <script src="_static/jquery.js"></script>
+        <script src="_static/underscore.js"></script>
+        <script src="_static/_sphinx_javascript_frameworks_compat.js"></script>
+        <script src="_static/doctools.js"></script>
+        <script src="_static/sphinx_highlight.js"></script>
+        <script src="https://unpkg.com/mermaid@9.4.0/dist/mermaid.min.js"></script>
+        <script>mermaid.initialize({startOnLoad:true});</script>
+    <script src="_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="mwutils.collection package" href="mwutils.collection.html" />
+    <link rel="prev" title="mwutils" href="modules.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="index.html" class="icon icon-home">
+            mwutils
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">Contents:</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="README.html">About the Package</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Documentation.html">Documentation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Logging.html">Logging</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="modules.html">mwutils</a><ul class="current">
+<li class="toctree-l2 current"><a class="current reference internal" href="#">mwutils package</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#subpackages">Subpackages</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="mwutils.collection.html">mwutils.collection package</a></li>
+<li class="toctree-l4"><a class="reference internal" href="mwutils.command_and_control.html">mwutils.command_and_control package</a></li>
+<li class="toctree-l4"><a class="reference internal" href="mwutils.credential_access.html">mwutils.credential_access package</a></li>
+<li class="toctree-l4"><a class="reference internal" href="mwutils.defense_evasion.html">mwutils.defense_evasion package</a></li>
+<li class="toctree-l4"><a class="reference internal" href="mwutils.discovery.html">mwutils.discovery package</a></li>
+<li class="toctree-l4"><a class="reference internal" href="mwutils.execution.html">mwutils.execution package</a></li>
+<li class="toctree-l4"><a class="reference internal" href="mwutils.exfiltration.html">mwutils.exfiltration package</a></li>
+<li class="toctree-l4"><a class="reference internal" href="mwutils.gui.html">mwutils.gui package</a></li>
+<li class="toctree-l4"><a class="reference internal" href="mwutils.impact.html">mwutils.impact package</a></li>
+<li class="toctree-l4"><a class="reference internal" href="mwutils.initial_access.html">mwutils.initial_access package</a></li>
+<li class="toctree-l4"><a class="reference internal" href="mwutils.lateral_movement.html">mwutils.lateral_movement package</a></li>
+<li class="toctree-l4"><a class="reference internal" href="mwutils.persistence.html">mwutils.persistence package</a></li>
+<li class="toctree-l4"><a class="reference internal" href="mwutils.privilege_escalation.html">mwutils.privilege_escalation package</a></li>
+<li class="toctree-l4"><a class="reference internal" href="mwutils.reconnaissance.html">mwutils.reconnaissance package</a></li>
+<li class="toctree-l4"><a class="reference internal" href="mwutils.resource_development.html">mwutils.resource_development package</a></li>
+<li class="toctree-l4"><a class="reference internal" href="mwutils.server.html">mwutils.server package</a></li>
+<li class="toctree-l4"><a class="reference internal" href="mwutils.utils.html">mwutils.utils package</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="index.html">mwutils</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="index.html" class="icon icon-home" aria-label="Home"></a></li>
+          <li class="breadcrumb-item"><a href="modules.html">mwutils</a></li>
+      <li class="breadcrumb-item active">mwutils package</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="_sources/mwutils.rst.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="module-mwutils">
+<span id="mwutils-package"></span><h1>mwutils package<a class="headerlink" href="#module-mwutils" title="Permalink to this heading"></a></h1>
+<section id="subpackages">
+<h2>Subpackages<a class="headerlink" href="#subpackages" title="Permalink to this heading"></a></h2>
+<div class="toctree-wrapper compound">
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="mwutils.collection.html">mwutils.collection package</a></li>
+<li class="toctree-l1"><a class="reference internal" href="mwutils.command_and_control.html">mwutils.command_and_control package</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="mwutils.command_and_control.html#submodules">Submodules</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="mwutils.command_and_control.asymmetric_cryptography.html"><code class="docutils literal notranslate"><span class="pre">gen_rsa()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="mwutils.command_and_control.asymmetric_cryptography.html#mwutils.command_and_control.asymmetric_cryptography.rsa_dec"><code class="docutils literal notranslate"><span class="pre">rsa_dec()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="mwutils.command_and_control.asymmetric_cryptography.html#mwutils.command_and_control.asymmetric_cryptography.rsa_enc"><code class="docutils literal notranslate"><span class="pre">rsa_enc()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="mwutils.command_and_control.dns.html"><code class="docutils literal notranslate"><span class="pre">dns_factory()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="mwutils.command_and_control.dns.html#mwutils.command_and_control.dns.dns_send"><code class="docutils literal notranslate"><span class="pre">dns_send()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="mwutils.command_and_control.helper.html"><code class="docutils literal notranslate"><span class="pre">Packet</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="mwutils.command_and_control.helper.html#mwutils.command_and_control.helper.Packet.eof"><code class="docutils literal notranslate"><span class="pre">Packet.eof</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="mwutils.command_and_control.helper.html#mwutils.command_and_control.helper.Packet.message_chunk"><code class="docutils literal notranslate"><span class="pre">Packet.message_chunk</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="mwutils.command_and_control.helper.html#mwutils.command_and_control.helper.Packet.number"><code class="docutils literal notranslate"><span class="pre">Packet.number</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="mwutils.command_and_control.helper.html#mwutils.command_and_control.helper.Packet.prefix"><code class="docutils literal notranslate"><span class="pre">Packet.prefix</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="mwutils.command_and_control.helper.html#mwutils.command_and_control.helper.Packet.typ"><code class="docutils literal notranslate"><span class="pre">Packet.typ</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="mwutils.command_and_control.helper.html#mwutils.command_and_control.helper.build_packets"><code class="docutils literal notranslate"><span class="pre">build_packets()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="mwutils.command_and_control.helper.html#mwutils.command_and_control.helper.domainsafe_b64decode"><code class="docutils literal notranslate"><span class="pre">domainsafe_b64decode()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="mwutils.command_and_control.helper.html#mwutils.command_and_control.helper.domainsafe_b64encode"><code class="docutils literal notranslate"><span class="pre">domainsafe_b64encode()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="mwutils.command_and_control.helper.html#mwutils.command_and_control.helper.unpack_packet"><code class="docutils literal notranslate"><span class="pre">unpack_packet()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="mwutils.command_and_control.symmetric_cryptography.html"><code class="docutils literal notranslate"><span class="pre">aes256_decrypt()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="mwutils.command_and_control.symmetric_cryptography.html#mwutils.command_and_control.symmetric_cryptography.aes256_encrypt"><code class="docutils literal notranslate"><span class="pre">aes256_encrypt()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="mwutils.command_and_control.symmetric_cryptography.html#mwutils.command_and_control.symmetric_cryptography.gen_aes256_key"><code class="docutils literal notranslate"><span class="pre">gen_aes256_key()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="mwutils.command_and_control.web_protocols.html"><code class="docutils literal notranslate"><span class="pre">http_cookie()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="mwutils.command_and_control.web_protocols.html#mwutils.command_and_control.web_protocols.webserver_factory"><code class="docutils literal notranslate"><span class="pre">webserver_factory()</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="mwutils.credential_access.html">mwutils.credential_access package</a></li>
+<li class="toctree-l1"><a class="reference internal" href="mwutils.defense_evasion.html">mwutils.defense_evasion package</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="mwutils.defense_evasion.html#submodules">Submodules</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="mwutils.defense_evasion.debugger_evasion.html"><code class="docutils literal notranslate"><span class="pre">Windows</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="mwutils.defense_evasion.debugger_evasion.html#mwutils.defense_evasion.debugger_evasion.Windows.is_debugger_present"><code class="docutils literal notranslate"><span class="pre">Windows.is_debugger_present()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="mwutils.defense_evasion.debugger_evasion.html#mwutils.defense_evasion.debugger_evasion.detect_debugger_gettrace"><code class="docutils literal notranslate"><span class="pre">detect_debugger_gettrace()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="mwutils.defense_evasion.debugger_evasion.html#mwutils.defense_evasion.debugger_evasion.detect_debugger_stack"><code class="docutils literal notranslate"><span class="pre">detect_debugger_stack()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="mwutils.defense_evasion.debugger_evasion.html#mwutils.defense_evasion.debugger_evasion.detect_venv"><code class="docutils literal notranslate"><span class="pre">detect_venv()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="mwutils.defense_evasion.indicator_removal.html"><code class="docutils literal notranslate"><span class="pre">clear_windows_event_logs()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="mwutils.defense_evasion.virtualization_sandbox_evasion.html"><code class="docutils literal notranslate"><span class="pre">Sandbox</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="mwutils.defense_evasion.virtualization_sandbox_evasion.html#mwutils.defense_evasion.virtualization_sandbox_evasion.Sandbox.via_dns"><code class="docutils literal notranslate"><span class="pre">Sandbox.via_dns()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="mwutils.defense_evasion.virtualization_sandbox_evasion.html#mwutils.defense_evasion.virtualization_sandbox_evasion.Virtualization"><code class="docutils literal notranslate"><span class="pre">Virtualization</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="mwutils.defense_evasion.virtualization_sandbox_evasion.html#mwutils.defense_evasion.virtualization_sandbox_evasion.Virtualization.Linux"><code class="docutils literal notranslate"><span class="pre">Virtualization.Linux</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="mwutils.defense_evasion.virtualization_sandbox_evasion.html#mwutils.defense_evasion.virtualization_sandbox_evasion.Virtualization.Windows"><code class="docutils literal notranslate"><span class="pre">Virtualization.Windows</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="mwutils.discovery.html">mwutils.discovery package</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="mwutils.discovery.html#submodules">Submodules</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="mwutils.discovery.file_and_directory_discovery.html"><code class="docutils literal notranslate"><span class="pre">explore_directories()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="mwutils.discovery.file_and_directory_discovery.html#mwutils.discovery.file_and_directory_discovery.explore_single_directory"><code class="docutils literal notranslate"><span class="pre">explore_single_directory()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="mwutils.discovery.file_and_directory_discovery.html#mwutils.discovery.file_and_directory_discovery.get_drive_letters"><code class="docutils literal notranslate"><span class="pre">get_drive_letters()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="mwutils.discovery.file_and_directory_discovery.html#mwutils.discovery.file_and_directory_discovery.get_home_directories"><code class="docutils literal notranslate"><span class="pre">get_home_directories()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="mwutils.discovery.system_owner_user_discovery.html"><code class="docutils literal notranslate"><span class="pre">has_elevated_privileges()</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="mwutils.execution.html">mwutils.execution package</a></li>
+<li class="toctree-l1"><a class="reference internal" href="mwutils.exfiltration.html">mwutils.exfiltration package</a></li>
+<li class="toctree-l1"><a class="reference internal" href="mwutils.gui.html">mwutils.gui package</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="mwutils.gui.html#submodules">Submodules</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="mwutils.gui.gui_main.html"><code class="docutils literal notranslate"><span class="pre">App</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="mwutils.gui.gui_main.html#mwutils.gui.gui_main.App.show_frame"><code class="docutils literal notranslate"><span class="pre">App.show_frame()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="mwutils.gui.playaudio.html"><code class="docutils literal notranslate"><span class="pre">Audio</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="mwutils.gui.playaudio.html#mwutils.gui.playaudio.Audio.changevolume"><code class="docutils literal notranslate"><span class="pre">Audio.changevolume()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="mwutils.gui.playaudio.html#mwutils.gui.playaudio.Audio.load"><code class="docutils literal notranslate"><span class="pre">Audio.load()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="mwutils.gui.playaudio.html#mwutils.gui.playaudio.Audio.play"><code class="docutils literal notranslate"><span class="pre">Audio.play()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="mwutils.gui.playaudio.html#mwutils.gui.playaudio.Audio.stop"><code class="docutils literal notranslate"><span class="pre">Audio.stop()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="mwutils.gui.playaudio.html#mwutils.gui.playaudio.Audio.tooglepause"><code class="docutils literal notranslate"><span class="pre">Audio.tooglepause()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="mwutils.gui.ransomware.html"><code class="docutils literal notranslate"><span class="pre">RW</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="mwutils.gui.ransomware.html#mwutils.gui.ransomware.RW.decrypt"><code class="docutils literal notranslate"><span class="pre">RW.decrypt()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="mwutils.gui.ransomware.html#mwutils.gui.ransomware.default_decrypt_function"><code class="docutils literal notranslate"><span class="pre">default_decrypt_function()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="mwutils.gui.ransomware.html#mwutils.gui.ransomware.load_image"><code class="docutils literal notranslate"><span class="pre">load_image()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="mwutils.gui.ransomware.html#mwutils.gui.ransomware.resource_path"><code class="docutils literal notranslate"><span class="pre">resource_path()</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="mwutils.impact.html">mwutils.impact package</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="mwutils.impact.html#submodules">Submodules</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="mwutils.impact.data_encrypted_for_impact.html"><code class="docutils literal notranslate"><span class="pre">aes_decrypt()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="mwutils.impact.data_encrypted_for_impact.html#mwutils.impact.data_encrypted_for_impact.aes_encrypt"><code class="docutils literal notranslate"><span class="pre">aes_encrypt()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="mwutils.impact.data_encrypted_for_impact.html#mwutils.impact.data_encrypted_for_impact.key_gen"><code class="docutils literal notranslate"><span class="pre">key_gen()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="mwutils.impact.helper.html"><code class="docutils literal notranslate"><span class="pre">add_extension()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="mwutils.impact.helper.html#mwutils.impact.helper.remove_extension"><code class="docutils literal notranslate"><span class="pre">remove_extension()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="mwutils.impact.inhibit_system_recovery.html"><code class="docutils literal notranslate"><span class="pre">vssadmin_shadow()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="mwutils.impact.internal_defacement.html"><code class="docutils literal notranslate"><span class="pre">change_desktop_background()</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="mwutils.initial_access.html">mwutils.initial_access package</a></li>
+<li class="toctree-l1"><a class="reference internal" href="mwutils.lateral_movement.html">mwutils.lateral_movement package</a></li>
+<li class="toctree-l1"><a class="reference internal" href="mwutils.persistence.html">mwutils.persistence package</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="mwutils.persistence.html#submodules">Submodules</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="mwutils.persistence.registry_run_keys_startup_folder.html"><code class="docutils literal notranslate"><span class="pre">add_registry_entry()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="mwutils.persistence.registry_run_keys_startup_folder.html#mwutils.persistence.registry_run_keys_startup_folder.persist_via_HKCU_key"><code class="docutils literal notranslate"><span class="pre">persist_via_HKCU_key()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="mwutils.persistence.registry_run_keys_startup_folder.html#mwutils.persistence.registry_run_keys_startup_folder.persist_via_HKLM_key"><code class="docutils literal notranslate"><span class="pre">persist_via_HKLM_key()</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="mwutils.privilege_escalation.html">mwutils.privilege_escalation package</a></li>
+<li class="toctree-l1"><a class="reference internal" href="mwutils.reconnaissance.html">mwutils.reconnaissance package</a></li>
+<li class="toctree-l1"><a class="reference internal" href="mwutils.resource_development.html">mwutils.resource_development package</a></li>
+<li class="toctree-l1"><a class="reference internal" href="mwutils.server.html">mwutils.server package</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="mwutils.server.html#submodules">Submodules</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="mwutils.server.datastorage.html"><code class="docutils literal notranslate"><span class="pre">get_toc_of_zip()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="mwutils.server.datastorage.html#mwutils.server.datastorage.list_zip_contents"><code class="docutils literal notranslate"><span class="pre">list_zip_contents()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="mwutils.server.datastorage.html#mwutils.server.datastorage.read_file_from_zip"><code class="docutils literal notranslate"><span class="pre">read_file_from_zip()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="mwutils.server.datastorage.html#mwutils.server.datastorage.write_file_to_zip"><code class="docutils literal notranslate"><span class="pre">write_file_to_zip()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="mwutils.server.db.html"><code class="docutils literal notranslate"><span class="pre">client_class_factory()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="mwutils.server.db.html#mwutils.server.db.connect_to_database"><code class="docutils literal notranslate"><span class="pre">connect_to_database()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="mwutils.server.db.html#mwutils.server.db.iso8601"><code class="docutils literal notranslate"><span class="pre">iso8601()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="mwutils.server.webserver.html"><code class="docutils literal notranslate"><span class="pre">webserver_factory()</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="mwutils.utils.html">mwutils.utils package</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="mwutils.utils.html#submodules">Submodules</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="mwutils.utils.helper.html"><code class="docutils literal notranslate"><span class="pre">sha256_hash()</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</div>
+</section>
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="modules.html" class="btn btn-neutral float-left" title="mwutils" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="mwutils.collection.html" class="btn btn-neutral float-right" title="mwutils.collection package" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2023, wenzelfe.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

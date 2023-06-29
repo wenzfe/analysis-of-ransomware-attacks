@@ -1,0 +1,4 @@
+.. automodule:: mwutils.impact.inhibit_system_recovery
+   :members:
+   :undoc-members:
+   :show-inheritance:

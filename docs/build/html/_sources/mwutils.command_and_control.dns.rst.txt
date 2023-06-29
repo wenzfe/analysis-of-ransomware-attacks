@@ -1,0 +1,4 @@
+.. automodule:: mwutils.command_and_control.dns
+   :members:
+   :undoc-members:
+   :show-inheritance:

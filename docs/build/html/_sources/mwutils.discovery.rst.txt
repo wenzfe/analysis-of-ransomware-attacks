@@ -1,0 +1,16 @@
+mwutils.discovery package
+=========================
+
+.. automodule:: mwutils.discovery
+   :members:
+   :undoc-members:
+   :show-inheritance:
+
+Submodules
+----------
+
+.. toctree::
+   :maxdepth: 4
+
+   mwutils.discovery.file_and_directory_discovery
+   mwutils.discovery.system_owner_user_discovery

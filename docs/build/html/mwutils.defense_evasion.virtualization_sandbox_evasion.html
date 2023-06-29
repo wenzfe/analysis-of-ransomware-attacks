@@ -1,0 +1,297 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.18.1: http://docutils.sourceforge.net/" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>&lt;no title&gt; &mdash; mwutils 1.0 documentation</title>
+      <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+      <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
+  <!--[if lt IE 9]>
+    <script src="_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script data-url_root="./" id="documentation_options" src="_static/documentation_options.js"></script>
+        <script src="_static/jquery.js"></script>
+        <script src="_static/underscore.js"></script>
+        <script src="_static/_sphinx_javascript_frameworks_compat.js"></script>
+        <script src="_static/doctools.js"></script>
+        <script src="_static/sphinx_highlight.js"></script>
+        <script src="https://unpkg.com/mermaid@9.4.0/dist/mermaid.min.js"></script>
+        <script>mermaid.initialize({startOnLoad:true});</script>
+    <script src="_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="mwutils.discovery package" href="mwutils.discovery.html" />
+    <link rel="prev" title="&lt;no title&gt;" href="mwutils.defense_evasion.indicator_removal.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="index.html" class="icon icon-home">
+            mwutils
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">Contents:</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="README.html">About the Package</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Documentation.html">Documentation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Logging.html">Logging</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="modules.html">mwutils</a><ul class="current">
+<li class="toctree-l2 current"><a class="reference internal" href="mwutils.html">mwutils package</a><ul class="current">
+<li class="toctree-l3 current"><a class="reference internal" href="mwutils.html#subpackages">Subpackages</a><ul class="current">
+<li class="toctree-l4"><a class="reference internal" href="mwutils.collection.html">mwutils.collection package</a></li>
+<li class="toctree-l4"><a class="reference internal" href="mwutils.command_and_control.html">mwutils.command_and_control package</a></li>
+<li class="toctree-l4"><a class="reference internal" href="mwutils.credential_access.html">mwutils.credential_access package</a></li>
+<li class="toctree-l4 current"><a class="reference internal" href="mwutils.defense_evasion.html">mwutils.defense_evasion package</a></li>
+<li class="toctree-l4"><a class="reference internal" href="mwutils.discovery.html">mwutils.discovery package</a></li>
+<li class="toctree-l4"><a class="reference internal" href="mwutils.execution.html">mwutils.execution package</a></li>
+<li class="toctree-l4"><a class="reference internal" href="mwutils.exfiltration.html">mwutils.exfiltration package</a></li>
+<li class="toctree-l4"><a class="reference internal" href="mwutils.gui.html">mwutils.gui package</a></li>
+<li class="toctree-l4"><a class="reference internal" href="mwutils.impact.html">mwutils.impact package</a></li>
+<li class="toctree-l4"><a class="reference internal" href="mwutils.initial_access.html">mwutils.initial_access package</a></li>
+<li class="toctree-l4"><a class="reference internal" href="mwutils.lateral_movement.html">mwutils.lateral_movement package</a></li>
+<li class="toctree-l4"><a class="reference internal" href="mwutils.persistence.html">mwutils.persistence package</a></li>
+<li class="toctree-l4"><a class="reference internal" href="mwutils.privilege_escalation.html">mwutils.privilege_escalation package</a></li>
+<li class="toctree-l4"><a class="reference internal" href="mwutils.reconnaissance.html">mwutils.reconnaissance package</a></li>
+<li class="toctree-l4"><a class="reference internal" href="mwutils.resource_development.html">mwutils.resource_development package</a></li>
+<li class="toctree-l4"><a class="reference internal" href="mwutils.server.html">mwutils.server package</a></li>
+<li class="toctree-l4"><a class="reference internal" href="mwutils.utils.html">mwutils.utils package</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="index.html">mwutils</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="index.html" class="icon icon-home" aria-label="Home"></a></li>
+          <li class="breadcrumb-item"><a href="modules.html">mwutils</a></li>
+          <li class="breadcrumb-item"><a href="mwutils.html">mwutils package</a></li>
+          <li class="breadcrumb-item"><a href="mwutils.defense_evasion.html">mwutils.defense_evasion package</a></li>
+      <li class="breadcrumb-item active">&lt;no title&gt;</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="_sources/mwutils.defense_evasion.virtualization_sandbox_evasion.rst.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <span class="target" id="module-mwutils.defense_evasion.virtualization_sandbox_evasion"></span><p>Virtualization/Sandbox Evasion</p>
+<p>Adversaries may employ various means to detect and avoid virtualization and analysis environments.
+This may include changing behaviors based on the results of checks for the presence of artifacts
+indicative of a virtual machine environment (VME) or sandbox.
+If the adversary detects a VME, they may alter their malware to disengage from the victim
+or conceal the core functions of the implant.
+They may also search for VME artifacts before dropping secondary or additional payloads.
+Adversaries may use the information learned from Virtualization/Sandbox Evasion during
+automated discovery to shape follow-on behaviors.</p>
+<p>Adversaries may use several methods to accomplish Virtualization/Sandbox Evasion such as checking
+for security monitoring tools (e.g., Sysinternals, Wireshark, etc.) or other system artifacts
+associated with analysis or virtualization.
+Adversaries may also check for legitimate user activity to help determine if it is in an
+analysis environment.
+Additional methods include use of sleep timers or loops within malware code to avoid operating
+within a temporary sandbox.</p>
+<p>Mitre: <a class="reference external" href="https://attack.mitre.org/techniques/T1497/">T1497</a></p>
+<dl class="py class">
+<dt class="sig sig-object py" id="mwutils.defense_evasion.virtualization_sandbox_evasion.Sandbox">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">Sandbox</span></span><a class="reference internal" href="_modules/mwutils/defense_evasion/virtualization_sandbox_evasion.html#Sandbox"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#mwutils.defense_evasion.virtualization_sandbox_evasion.Sandbox" title="Permalink to this definition"></a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<p>Methods to detect sandboxing.</p>
+<dl class="py method">
+<dt class="sig sig-object py" id="mwutils.defense_evasion.virtualization_sandbox_evasion.Sandbox.via_dns">
+<em class="property"><span class="pre">static</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">via_dns</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">float</span></span></span><a class="reference internal" href="_modules/mwutils/defense_evasion/virtualization_sandbox_evasion.html#Sandbox.via_dns"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#mwutils.defense_evasion.virtualization_sandbox_evasion.Sandbox.via_dns" title="Permalink to this definition"></a></dt>
+<dd><p>Checks if a list of domains is resolvable.</p>
+<p>Overrides system default DNS server and use public ones such as 8.8.8.8 or 8.8.4.4.
+Then it checks for the number of records that were resolved.</p>
+<p>Mitre: <a class="reference external" href="https://attack.mitre.org/versions/v12/techniques/T1497/001/">T1497.001</a></p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p>number of domains that could not be resolved / total number of checked domains</p>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p>float</p>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="mwutils.defense_evasion.virtualization_sandbox_evasion.Virtualization">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">Virtualization</span></span><a class="reference internal" href="_modules/mwutils/defense_evasion/virtualization_sandbox_evasion.html#Virtualization"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#mwutils.defense_evasion.virtualization_sandbox_evasion.Virtualization" title="Permalink to this definition"></a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<p>Methods to detect virtualization</p>
+<dl class="py class">
+<dt class="sig sig-object py" id="mwutils.defense_evasion.virtualization_sandbox_evasion.Virtualization.Linux">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">Linux</span></span><a class="reference internal" href="_modules/mwutils/defense_evasion/virtualization_sandbox_evasion.html#Virtualization.Linux"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#mwutils.defense_evasion.virtualization_sandbox_evasion.Virtualization.Linux" title="Permalink to this definition"></a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<p>Methods to detect if a Linux operation system is virtualized.</p>
+<dl class="py method">
+<dt class="sig sig-object py" id="mwutils.defense_evasion.virtualization_sandbox_evasion.Virtualization.Linux.detect_through_dev_disk_by_id">
+<em class="property"><span class="pre">static</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">detect_through_dev_disk_by_id</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">bool</span></span></span><a class="reference internal" href="_modules/mwutils/defense_evasion/virtualization_sandbox_evasion.html#Virtualization.Linux.detect_through_dev_disk_by_id"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#mwutils.defense_evasion.virtualization_sandbox_evasion.Virtualization.Linux.detect_through_dev_disk_by_id" title="Permalink to this definition"></a></dt>
+<dd><p>Detect Linux virtualization.</p>
+<p>Detect Linux virtualization through (internal or external) disks
+that are connected to the system under <cite>/dev/disk/by-id</cite>.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p><dl class="simple">
+<dt>True if virtualization is detected.</dt><dd><p>False if not.</p>
+</dd>
+</dl>
+</p>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p>bool</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="mwutils.defense_evasion.virtualization_sandbox_evasion.Virtualization.Linux.detect_through_system_detect_virt">
+<em class="property"><span class="pre">static</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">detect_through_system_detect_virt</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">bool</span></span></span><a class="reference internal" href="_modules/mwutils/defense_evasion/virtualization_sandbox_evasion.html#Virtualization.Linux.detect_through_system_detect_virt"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#mwutils.defense_evasion.virtualization_sandbox_evasion.Virtualization.Linux.detect_through_system_detect_virt" title="Permalink to this definition"></a></dt>
+<dd><p>Detect Linux virtualization.</p>
+<p>Detect Linux virtualization via the <cite>systemd-detect-virt</cite> command.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p><dl class="simple">
+<dt>True if virtualization is detected.</dt><dd><p>False if not.</p>
+</dd>
+</dl>
+</p>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p>bool</p>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="mwutils.defense_evasion.virtualization_sandbox_evasion.Virtualization.Windows">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">Windows</span></span><a class="reference internal" href="_modules/mwutils/defense_evasion/virtualization_sandbox_evasion.html#Virtualization.Windows"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#mwutils.defense_evasion.virtualization_sandbox_evasion.Virtualization.Windows" title="Permalink to this definition"></a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<p>Methods to detect if a Windows operation system is virtualized.</p>
+<dl class="py method">
+<dt class="sig sig-object py" id="mwutils.defense_evasion.virtualization_sandbox_evasion.Virtualization.Windows.is_virtualized">
+<em class="property"><span class="pre">static</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">is_virtualized</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/mwutils/defense_evasion/virtualization_sandbox_evasion.html#Virtualization.Windows.is_virtualized"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#mwutils.defense_evasion.virtualization_sandbox_evasion.Virtualization.Windows.is_virtualized" title="Permalink to this definition"></a></dt>
+<dd><p>Detect Windows virtualization.</p>
+<p>Via WMI Objects win32_computersystem and win32_bios.</p>
+<p>Mitre: <a class="reference external" href="https://attack.mitre.org/versions/v12/techniques/T1497/001/">T1497.001</a></p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p><dl class="simple">
+<dt>True if virtualization is detected.</dt><dd><p>False if not.</p>
+</dd>
+</dl>
+</p>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p>bool</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="mwutils.defense_evasion.virtualization_sandbox_evasion.Virtualization.Windows.run_powershell">
+<em class="property"><span class="pre">static</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">run_powershell</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">cmd</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">str</span></span></span><a class="reference internal" href="_modules/mwutils/defense_evasion/virtualization_sandbox_evasion.html#Virtualization.Windows.run_powershell"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#mwutils.defense_evasion.virtualization_sandbox_evasion.Virtualization.Windows.run_powershell" title="Permalink to this definition"></a></dt>
+<dd><p>Methord to execute a powershell command.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>cmd</strong> (<em>str</em>) – The powershell command to run.</p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>The string containing the response of the powershell command.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>str</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="mwutils.defense_evasion.virtualization_sandbox_evasion.Virtualization.Windows.run_powershell_dict">
+<em class="property"><span class="pre">static</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">run_powershell_dict</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">cmd</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">dict</span></span></span><a class="reference internal" href="_modules/mwutils/defense_evasion/virtualization_sandbox_evasion.html#Virtualization.Windows.run_powershell_dict"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#mwutils.defense_evasion.virtualization_sandbox_evasion.Virtualization.Windows.run_powershell_dict" title="Permalink to this definition"></a></dt>
+<dd><p>Runs the supplied powershell command and returns a dict.</p>
+<p>This is done by appending ‘| ConvertTo-Json -Compress’ and converting
+the output to a dict.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>cmd</strong> (<em>str</em>) – The powershell command to run.</p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>The dict containing the response of the powershell command.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>dict</p>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+</dd></dl>
+
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="mwutils.defense_evasion.indicator_removal.html" class="btn btn-neutral float-left" title="&lt;no title&gt;" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="mwutils.discovery.html" class="btn btn-neutral float-right" title="mwutils.discovery package" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2023, wenzelfe.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

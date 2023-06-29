@@ -1,0 +1,188 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>mwutils.command_and_control.web_protocols &mdash; mwutils 1.0 documentation</title>
+      <link rel="stylesheet" href="../../../_static/pygments.css" type="text/css" />
+      <link rel="stylesheet" href="../../../_static/css/theme.css" type="text/css" />
+  <!--[if lt IE 9]>
+    <script src="../../../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script data-url_root="../../../" id="documentation_options" src="../../../_static/documentation_options.js"></script>
+        <script src="../../../_static/jquery.js"></script>
+        <script src="../../../_static/underscore.js"></script>
+        <script src="../../../_static/_sphinx_javascript_frameworks_compat.js"></script>
+        <script src="../../../_static/doctools.js"></script>
+        <script src="../../../_static/sphinx_highlight.js"></script>
+        <script src="https://unpkg.com/mermaid@9.4.0/dist/mermaid.min.js"></script>
+        <script>mermaid.initialize({startOnLoad:true});</script>
+    <script src="../../../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../../../genindex.html" />
+    <link rel="search" title="Search" href="../../../search.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="../../../index.html" class="icon icon-home">
+            mwutils
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">Contents:</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../README.html">About the Package</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../Documentation.html">Documentation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../Logging.html">Logging</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../modules.html">mwutils</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../../index.html">mwutils</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../../../index.html" class="icon icon-home" aria-label="Home"></a></li>
+          <li class="breadcrumb-item"><a href="../../index.html">Module code</a></li>
+      <li class="breadcrumb-item active">mwutils.command_and_control.web_protocols</li>
+      <li class="wy-breadcrumbs-aside">
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <h1>Source code for mwutils.command_and_control.web_protocols</h1><div class="highlight"><pre>
+<span></span><span class="sd">&quot;&quot;&quot;Application Layer Protocol: Web Protocols</span>
+
+<span class="sd">Adversaries may communicate using application layer protocols associated with web traffic </span>
+<span class="sd">to avoid detection/network filtering by blending in with existing traffic. </span>
+<span class="sd">Commands to the remote system, and often the results of those commands, </span>
+<span class="sd">will be embedded within the protocol traffic between the client and server.</span>
+
+<span class="sd">Protocols such as HTTP and HTTPS that carry web traffic may be very common in environments. </span>
+<span class="sd">HTTP/S packets have many fields and headers in which data can be concealed. </span>
+<span class="sd">An adversary may abuse these protocols to communicate with systems under their control within </span>
+<span class="sd">a victim network while also mimicking normal, expected traffic.</span>
+
+<span class="sd">Mitre: `T1071.001 &lt;https://attack.mitre.org/versions/v12/techniques/T1071/004/&gt;`_</span>
+<span class="sd">&quot;&quot;&quot;</span>
+
+<span class="kn">import</span> <span class="nn">logging</span>
+<span class="kn">import</span> <span class="nn">warnings</span>
+
+<span class="kn">import</span> <span class="nn">requests</span>
+<span class="kn">from</span> <span class="nn">flask</span> <span class="kn">import</span> <span class="n">Flask</span><span class="p">,</span> <span class="n">Response</span><span class="p">,</span> <span class="n">request</span>
+
+<span class="n">warnings</span><span class="o">.</span><span class="n">filterwarnings</span><span class="p">(</span><span class="s2">&quot;error&quot;</span><span class="p">)</span>
+<span class="n">logger</span> <span class="o">=</span> <span class="n">logging</span><span class="o">.</span><span class="n">getLogger</span><span class="p">(</span><span class="vm">__name__</span><span class="p">)</span>
+
+
+<div class="viewcode-block" id="http_cookie"><a class="viewcode-back" href="../../../mwutils.command_and_control.web_protocols.html#mwutils.command_and_control.web_protocols.http_cookie">[docs]</a><span class="k">def</span> <span class="nf">http_cookie</span><span class="p">(</span><span class="n">url</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">data</span><span class="p">:</span> <span class="nb">dict</span><span class="p">,</span> <span class="n">timeout</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">1</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">dict</span><span class="p">:</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Make a http request to the url with the data set as cookies.</span>
+
+<span class="sd">    A cookie can have a maximum size of 4096 bytes (recommended).</span>
+
+<span class="sd">    Args:</span>
+<span class="sd">        url (str): The url to whicht the post request is sent to.</span>
+<span class="sd">        data (dict): The data which gets set in the HTTP-Header as cookies.</span>
+<span class="sd">        timeout (int): The overall timeout for a request.</span>
+
+<span class="sd">    Returns:</span>
+<span class="sd">        dict: Containing the request response cookies.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">req</span> <span class="o">=</span> <span class="n">requests</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">url</span><span class="p">,</span> <span class="n">cookies</span><span class="o">=</span><span class="n">data</span><span class="p">,</span> <span class="n">timeout</span><span class="o">=</span><span class="n">timeout</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">req</span><span class="o">.</span><span class="n">cookies</span><span class="o">.</span><span class="n">get_dict</span><span class="p">()</span></div>
+
+
+<div class="viewcode-block" id="webserver_factory"><a class="viewcode-back" href="../../../mwutils.command_and_control.web_protocols.html#mwutils.command_and_control.web_protocols.webserver_factory">[docs]</a><span class="k">def</span> <span class="nf">webserver_factory</span><span class="p">(</span><span class="n">func</span><span class="p">:</span> <span class="n">callable</span><span class="p">,</span> <span class="n">path</span><span class="o">=</span><span class="s2">&quot;/api&quot;</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Flask</span><span class="p">:</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;A webserver for a HTTP cookie based communication.</span>
+
+<span class="sd">    Example:</span>
+<span class="sd">        def dummy_func(cookie_jar:dict):  # pylint: disable=W0613</span>
+<span class="sd">            return {&quot;response&quot;: &quot;&lt;response data&gt;&quot;}</span>
+<span class="sd">        webserver_factory(dummy_func).run()</span>
+
+<span class="sd">    Args:</span>
+<span class="sd">        func (callable): A function with one argument representing</span>
+<span class="sd">            the cookies (a dict) a client sent.</span>
+<span class="sd">            The function returns the cookies as a dict to be returned to the client in the response.</span>
+<span class="sd">        path (str, optional): Path of the endpoint. Defaults to &quot;/api&quot;.</span>
+
+<span class="sd">    Raises:</span>
+<span class="sd">        ValueError: Is raised when a cookie contains to many characters.</span>
+
+<span class="sd">    Returns:</span>
+<span class="sd">        Flask: The webserver</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">app</span> <span class="o">=</span> <span class="n">Flask</span><span class="p">(</span><span class="vm">__name__</span><span class="p">)</span>
+
+    <span class="nd">@app</span><span class="o">.</span><span class="n">route</span><span class="p">(</span><span class="n">path</span><span class="p">)</span>
+    <span class="k">def</span> <span class="nf">api</span><span class="p">():</span>
+        <span class="n">app</span><span class="o">.</span><span class="n">logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s2">&quot;Cookies: &quot;</span><span class="p">,</span> <span class="n">request</span><span class="o">.</span><span class="n">cookies</span><span class="p">)</span>  <span class="c1"># pylint: disable=E1101</span>
+        <span class="n">cookie_jar</span><span class="p">:</span> <span class="nb">dict</span> <span class="o">=</span> <span class="n">func</span><span class="p">(</span><span class="n">request</span><span class="o">.</span><span class="n">cookies</span><span class="p">)</span>
+        <span class="n">response</span> <span class="o">=</span> <span class="n">Response</span><span class="p">()</span>
+        <span class="k">try</span><span class="p">:</span>
+            <span class="k">for</span> <span class="n">key</span><span class="p">,</span> <span class="n">val</span> <span class="ow">in</span> <span class="n">cookie_jar</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
+                <span class="n">response</span><span class="o">.</span><span class="n">set_cookie</span><span class="p">(</span><span class="n">key</span><span class="p">,</span> <span class="n">val</span><span class="p">)</span>
+        <span class="k">except</span> <span class="ne">Warning</span> <span class="k">as</span> <span class="n">warning</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;Cookie value to long.&quot;</span><span class="p">)</span> <span class="kn">from</span> <span class="nn">warning</span>
+        <span class="k">return</span> <span class="n">response</span>
+
+    <span class="k">return</span> <span class="n">app</span></div>
+
+
+<span class="k">if</span> <span class="vm">__name__</span> <span class="o">==</span> <span class="s2">&quot;__main__&quot;</span><span class="p">:</span>
+    <span class="k">pass</span>
+</pre></div>
+
+           </div>
+          </div>
+          <footer>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2023, wenzelfe.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

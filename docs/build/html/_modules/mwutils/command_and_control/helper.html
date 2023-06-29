@@ -1,0 +1,352 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>mwutils.command_and_control.helper &mdash; mwutils 1.0 documentation</title>
+      <link rel="stylesheet" href="../../../_static/pygments.css" type="text/css" />
+      <link rel="stylesheet" href="../../../_static/css/theme.css" type="text/css" />
+  <!--[if lt IE 9]>
+    <script src="../../../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script data-url_root="../../../" id="documentation_options" src="../../../_static/documentation_options.js"></script>
+        <script src="../../../_static/jquery.js"></script>
+        <script src="../../../_static/underscore.js"></script>
+        <script src="../../../_static/_sphinx_javascript_frameworks_compat.js"></script>
+        <script src="../../../_static/doctools.js"></script>
+        <script src="../../../_static/sphinx_highlight.js"></script>
+        <script src="https://unpkg.com/mermaid@9.4.0/dist/mermaid.min.js"></script>
+        <script>mermaid.initialize({startOnLoad:true});</script>
+    <script src="../../../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../../../genindex.html" />
+    <link rel="search" title="Search" href="../../../search.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="../../../index.html" class="icon icon-home">
+            mwutils
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">Contents:</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../README.html">About the Package</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../Documentation.html">Documentation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../Logging.html">Logging</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../modules.html">mwutils</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../../index.html">mwutils</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../../../index.html" class="icon icon-home" aria-label="Home"></a></li>
+          <li class="breadcrumb-item"><a href="../../index.html">Module code</a></li>
+      <li class="breadcrumb-item active">mwutils.command_and_control.helper</li>
+      <li class="wy-breadcrumbs-aside">
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <h1>Source code for mwutils.command_and_control.helper</h1><div class="highlight"><pre>
+<span></span><span class="sd">&quot;&quot;&quot;Helper</span>
+
+<span class="sd">A module intended to help with communication related tasks.</span>
+<span class="sd">This module allows to split data into chunks (packets) and also assemble them back together. </span>
+<span class="sd">To simplify working with data chunks this module provides uses a Packet dataclass as output.</span>
+<span class="sd">This matches the MITRE technique `T1030 &lt;https://attack.mitre.org/techniques/T1030/&gt;`_ .</span>
+
+<span class="sd">This module also provides functions to decode / encode Base64 in a url-safe way.</span>
+
+<span class="sd">.. code:: python</span>
+
+<span class="sd">    packets = build_packets(&quot;prefix&quot;, &quot;This is the message 👋.&quot;.encode(&quot;utf-8&quot;), 20)</span>
+<span class="sd">    message = b&quot;&quot;</span>
+<span class="sd">    for packet in packets:</span>
+<span class="sd">        chunk = unpack_packet(packet)</span>
+<span class="sd">        print(chunk)</span>
+<span class="sd">        message += chunk.message_chunk</span>
+<span class="sd">    print(message.decode(&quot;utf-8&quot;))</span>
+
+<span class="sd">&quot;&quot;&quot;</span>
+<span class="kn">from</span> <span class="nn">base64</span> <span class="kn">import</span> <span class="n">urlsafe_b64decode</span><span class="p">,</span> <span class="n">urlsafe_b64encode</span>
+<span class="kn">import</span> <span class="nn">binascii</span>
+<span class="kn">import</span> <span class="nn">logging</span>
+<span class="kn">from</span> <span class="nn">dataclasses</span> <span class="kn">import</span> <span class="n">dataclass</span>
+<span class="kn">from</span> <span class="nn">io</span> <span class="kn">import</span> <span class="n">BufferedRandom</span><span class="p">,</span> <span class="n">BufferedReader</span><span class="p">,</span> <span class="n">BufferedWriter</span><span class="p">,</span> <span class="n">BytesIO</span>
+<span class="kn">from</span> <span class="nn">typing</span> <span class="kn">import</span> <span class="n">List</span><span class="p">,</span> <span class="n">Union</span>
+
+<span class="n">logger</span> <span class="o">=</span> <span class="n">logging</span><span class="o">.</span><span class="n">getLogger</span><span class="p">(</span><span class="vm">__name__</span><span class="p">)</span>
+
+
+<span class="n">PACKET_NUMBER_SIZE_IN_BYTES</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">1</span>
+<span class="n">EOF</span><span class="p">:</span> <span class="nb">bytes</span> <span class="o">=</span> <span class="s2">&quot;_EOF_&quot;</span><span class="o">.</span><span class="n">encode</span><span class="p">(</span><span class="s2">&quot;utf-8&quot;</span><span class="p">)</span>
+<span class="c1"># The delimiter separating prefix and message</span>
+<span class="n">PREFIX_DELIMITER</span><span class="p">:</span> <span class="nb">bytes</span> <span class="o">=</span> <span class="s2">&quot;::&quot;</span><span class="o">.</span><span class="n">encode</span><span class="p">(</span><span class="s2">&quot;utf-8&quot;</span><span class="p">)</span>
+<span class="n">TYP_SIZE_IN_BYTES</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">1</span>  <span class="c1"># Number of bytes to use for the typ</span>
+
+
+<div class="viewcode-block" id="Packet"><a class="viewcode-back" href="../../../mwutils.command_and_control.helper.html#mwutils.command_and_control.helper.Packet">[docs]</a><span class="nd">@dataclass</span>
+<span class="k">class</span> <span class="nc">Packet</span><span class="p">:</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Datastructure for Packets&quot;&quot;&quot;</span>
+
+    <span class="n">prefix</span><span class="p">:</span> <span class="nb">str</span>
+    <span class="n">typ</span><span class="p">:</span> <span class="nb">str</span>
+    <span class="n">number</span><span class="p">:</span> <span class="nb">int</span>
+    <span class="n">message_chunk</span><span class="p">:</span> <span class="nb">bytes</span>
+    <span class="n">eof</span><span class="p">:</span> <span class="nb">bool</span></div>
+
+
+<div class="viewcode-block" id="build_packets"><a class="viewcode-back" href="../../../mwutils.command_and_control.helper.html#mwutils.command_and_control.helper.build_packets">[docs]</a><span class="k">def</span> <span class="nf">build_packets</span><span class="p">(</span>
+    <span class="n">prefix</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span>
+    <span class="n">message</span><span class="p">:</span> <span class="n">Union</span><span class="p">[</span><span class="nb">bytes</span><span class="p">,</span> <span class="nb">str</span><span class="p">,</span> <span class="n">BufferedRandom</span><span class="p">,</span> <span class="n">BufferedReader</span><span class="p">,</span> <span class="n">BufferedWriter</span><span class="p">,</span> <span class="n">BytesIO</span><span class="p">],</span>
+    <span class="n">packet_size</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span>
+    <span class="n">eof</span><span class="p">:</span> <span class="nb">bytes</span> <span class="o">=</span> <span class="n">EOF</span><span class="p">,</span>
+    <span class="n">packet_number_size_in_bytes</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="n">PACKET_NUMBER_SIZE_IN_BYTES</span><span class="p">,</span>
+    <span class="n">typ_size_in_bytes</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="n">TYP_SIZE_IN_BYTES</span><span class="p">,</span>
+    <span class="n">prefix_delimiter</span><span class="p">:</span> <span class="nb">bytes</span> <span class="o">=</span> <span class="n">PREFIX_DELIMITER</span><span class="p">,</span>
+<span class="p">)</span> <span class="o">-&gt;</span> <span class="n">List</span><span class="p">[</span><span class="nb">bytes</span><span class="p">]:</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Converts the message to the packets of the specified size.</span>
+
+<span class="sd">    Converts the message into packets of the specified size.</span>
+<span class="sd">    These (binary) packets have the structure &lt;prefix&gt;&lt;typ&gt;&lt;ctr&gt;&lt;delimiter&gt;&lt;message&gt;.</span>
+<span class="sd">    The typ represents the type of the message.</span>
+<span class="sd">    The ctr is the counter starting at 0 up to the maximum possible value</span>
+<span class="sd">    (packet_number_size_in_bytes). When maximal value in the ctr is reached it starts again at 0.</span>
+
+
+<span class="sd">    Args:</span>
+<span class="sd">        prefix (str): Is included in all packets.</span>
+<span class="sd">        message (Union[bytes, str, BufferedRandom, BufferedReader, BufferedWriter, BytesIO]):</span>
+<span class="sd">            The actual data to be used.</span>
+<span class="sd">        packet_size (int): The number of bytes the packet can have at maximum.</span>
+<span class="sd">        eof (bytes, optional): The bytes used as a signal for beeing the last package.</span>
+<span class="sd">            Defaults to EOF.</span>
+<span class="sd">        packet_number_size_in_bytes (int, optional): The number of bytes used for the counter.</span>
+<span class="sd">            Defaults to PACKET_NUMBER_SIZE_IN_BYTES.</span>
+<span class="sd">        typ_size_in_bytes (int, optional): The number of bytes used for the typ.</span>
+<span class="sd">            Defaults to TYP_SIZE_IN_BYTES.</span>
+<span class="sd">        prefix_delimiter (bytes, optional): The delimiter separating the header and the message.</span>
+<span class="sd">            Defaults to PREFIX_DELIMITER.</span>
+
+<span class="sd">    Raises:</span>
+<span class="sd">        NotImplementedError: If the message can&#39;t be encoded into a packet.</span>
+
+<span class="sd">    Returns:</span>
+<span class="sd">        List[bytes]: List of packets.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">message</span><span class="p">,</span> <span class="nb">bytes</span><span class="p">):</span>
+        <span class="n">typ</span> <span class="o">=</span> <span class="mi">0</span>
+        <span class="n">stream</span> <span class="o">=</span> <span class="n">BytesIO</span><span class="p">(</span><span class="n">message</span><span class="p">)</span>
+    <span class="k">elif</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">message</span><span class="p">,</span> <span class="nb">str</span><span class="p">):</span>
+        <span class="n">typ</span> <span class="o">=</span> <span class="mi">1</span>
+        <span class="n">stream</span> <span class="o">=</span> <span class="n">BytesIO</span><span class="p">(</span><span class="n">message</span><span class="o">.</span><span class="n">encode</span><span class="p">(</span><span class="s2">&quot;utf-8&quot;</span><span class="p">))</span>
+    <span class="k">elif</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">message</span><span class="p">,</span> <span class="p">(</span><span class="n">BufferedRandom</span><span class="p">,</span> <span class="n">BufferedReader</span><span class="p">,</span> <span class="n">BufferedWriter</span><span class="p">,</span> <span class="n">BytesIO</span><span class="p">)):</span>
+        <span class="n">typ</span> <span class="o">=</span> <span class="mi">2</span>
+        <span class="n">stream</span> <span class="o">=</span> <span class="n">message</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="c1"># Tipp: when implementing a new type</span>
+        <span class="c1"># 1 byte is used to encode the type of the message</span>
+        <span class="k">raise</span> <span class="ne">NotImplementedError</span><span class="p">(</span><span class="n">typ</span><span class="p">,</span> <span class="s2">&quot;If you try to pass a file use binary mode &#39;b&#39;&quot;</span><span class="p">)</span>
+
+    <span class="n">encoded_typ</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">typ</span><span class="p">)</span><span class="o">.</span><span class="n">to_bytes</span><span class="p">(</span><span class="n">typ_size_in_bytes</span><span class="p">,</span> <span class="s2">&quot;big&quot;</span><span class="p">,</span> <span class="n">signed</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+    <span class="n">ctr</span> <span class="o">=</span> <span class="mi">0</span>
+    <span class="n">encoded_prefix</span> <span class="o">=</span> <span class="n">prefix</span><span class="o">.</span><span class="n">encode</span><span class="p">(</span><span class="s2">&quot;utf-8&quot;</span><span class="p">)</span>
+
+    <span class="n">result</span> <span class="o">=</span> <span class="p">[]</span>
+    <span class="n">size</span> <span class="o">=</span> <span class="p">(</span>
+        <span class="n">packet_size</span>
+        <span class="o">-</span> <span class="nb">len</span><span class="p">(</span><span class="n">encoded_prefix</span><span class="p">)</span>
+        <span class="o">-</span> <span class="nb">len</span><span class="p">(</span><span class="n">encoded_typ</span><span class="p">)</span>
+        <span class="o">-</span> <span class="n">packet_number_size_in_bytes</span>
+        <span class="o">-</span> <span class="nb">len</span><span class="p">(</span><span class="n">prefix_delimiter</span><span class="p">)</span>
+    <span class="p">)</span>
+
+    <span class="k">if</span> <span class="n">size</span> <span class="o">&lt;</span> <span class="nb">len</span><span class="p">(</span><span class="n">eof</span><span class="p">):</span>
+        <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span>
+            <span class="sa">f</span><span class="s2">&quot;&quot;&quot;</span>
+<span class="s2">            The package size is </span><span class="si">{</span><span class="n">packet_size</span><span class="si">}</span><span class="s2"> byte(s): </span>
+<span class="s2">            </span><span class="si">{</span><span class="nb">len</span><span class="p">(</span><span class="n">encoded_prefix</span><span class="p">)</span><span class="si">}</span><span class="s2"> byte(s) for encoded prefix</span>
+<span class="s2">            </span><span class="si">{</span><span class="nb">len</span><span class="p">(</span><span class="n">encoded_typ</span><span class="p">)</span><span class="si">}</span><span class="s2"> byte(s) for encoded typ</span>
+<span class="s2">            </span><span class="si">{</span><span class="n">packet_number_size_in_bytes</span><span class="si">}</span><span class="s2"> byte(s) for packet number</span>
+<span class="s2">            </span><span class="si">{</span><span class="nb">len</span><span class="p">(</span><span class="n">prefix_delimiter</span><span class="p">)</span><span class="si">}</span><span class="s2"> byte(s) delimiter</span>
+<span class="s2">            there is no space for the actual message!</span>
+<span class="s2">            The EOF with </span><span class="si">{</span><span class="nb">len</span><span class="p">(</span><span class="n">eof</span><span class="p">)</span><span class="si">}</span><span class="s2"> byte(s) must also fit!</span>
+<span class="s2">            &quot;&quot;&quot;</span>
+        <span class="p">)</span>
+
+    <span class="k">while</span> <span class="kc">True</span><span class="p">:</span>
+        <span class="c1"># convert counter to bytes</span>
+        <span class="n">packet_number</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">ctr</span> <span class="o">%</span> <span class="mi">2</span> <span class="o">**</span> <span class="p">(</span><span class="mi">8</span> <span class="o">*</span> <span class="n">packet_number_size_in_bytes</span><span class="p">))</span><span class="o">.</span><span class="n">to_bytes</span><span class="p">(</span>
+            <span class="n">packet_number_size_in_bytes</span><span class="p">,</span> <span class="s2">&quot;big&quot;</span><span class="p">,</span> <span class="n">signed</span><span class="o">=</span><span class="kc">False</span>
+        <span class="p">)</span>
+        <span class="c1"># build header</span>
+        <span class="n">encoded_header</span> <span class="o">=</span> <span class="n">encoded_prefix</span> <span class="o">+</span> <span class="n">encoded_typ</span> <span class="o">+</span> <span class="n">packet_number</span> <span class="o">+</span> <span class="n">prefix_delimiter</span>
+        <span class="c1"># get a chunk of data</span>
+        <span class="n">chunk</span> <span class="o">=</span> <span class="n">stream</span><span class="o">.</span><span class="n">read</span><span class="p">(</span><span class="n">size</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">chunk</span> <span class="o">==</span> <span class="sa">b</span><span class="s2">&quot;&quot;</span><span class="p">:</span>  <span class="c1"># Send EOF</span>
+            <span class="n">result</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">encoded_header</span> <span class="o">+</span> <span class="n">eof</span><span class="p">)</span>
+            <span class="k">break</span>
+        <span class="c1"># Send data</span>
+        <span class="n">result</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">encoded_header</span> <span class="o">+</span> <span class="n">chunk</span><span class="p">)</span>
+        <span class="n">ctr</span> <span class="o">+=</span> <span class="mi">1</span>
+
+    <span class="k">return</span> <span class="n">result</span></div>
+
+
+<div class="viewcode-block" id="unpack_packet"><a class="viewcode-back" href="../../../mwutils.command_and_control.helper.html#mwutils.command_and_control.helper.unpack_packet">[docs]</a><span class="k">def</span> <span class="nf">unpack_packet</span><span class="p">(</span>
+    <span class="n">packet</span><span class="p">:</span> <span class="nb">bytes</span><span class="p">,</span>
+    <span class="n">eof</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="n">EOF</span><span class="p">,</span>
+    <span class="n">prefix_delimiter</span><span class="p">:</span> <span class="nb">bytes</span> <span class="o">=</span> <span class="n">PREFIX_DELIMITER</span><span class="p">,</span>
+    <span class="n">packet_number_size_in_bytes</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="n">PACKET_NUMBER_SIZE_IN_BYTES</span><span class="p">,</span>
+    <span class="n">typ_size_in_bytes</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="n">TYP_SIZE_IN_BYTES</span><span class="p">,</span>
+<span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Packet</span><span class="p">:</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Convert/decode bytes to a packet dataclass object.</span>
+
+<span class="sd">    Note that the prefix can&#39;t contain the prefix delimiter!</span>
+
+<span class="sd">    Args:</span>
+<span class="sd">        packet (bytes): The bytes to decode and convert to the package dataclass.</span>
+<span class="sd">        eof (str, optional): The bytes used as a signal for beeing the last package.</span>
+<span class="sd">            Defaults to EOF.</span>
+<span class="sd">        prefix_delimiter (bytes, optional): The delimiter separating the header and the message.</span>
+<span class="sd">            Defaults to PREFIX_DELIMITER.</span>
+<span class="sd">        packet_number_size_in_bytes (int, optional): The number of bytes used for the counter.</span>
+<span class="sd">            Defaults to PACKET_NUMBER_SIZE_IN_BYTES.</span>
+<span class="sd">        typ_size_in_bytes (int, optional): The number of bytes used for the typ.</span>
+<span class="sd">            Defaults to TYP_SIZE_IN_BYTES.</span>
+
+<span class="sd">    Raises:</span>
+<span class="sd">        NotImplementedError: If the message contains a unknown typ.</span>
+
+<span class="sd">    Returns:</span>
+<span class="sd">        Packet: The destructed message as a dataclass packet.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="c1"># separate prefix with typ from data</span>
+    <span class="n">prefix_typ_ctr</span><span class="p">,</span> <span class="n">data</span> <span class="o">=</span> <span class="n">packet</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="n">prefix_delimiter</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span>
+
+    <span class="c1"># separate prefix and typ, ctr</span>
+    <span class="n">prefix</span> <span class="o">=</span> <span class="n">prefix_typ_ctr</span><span class="p">[:</span> <span class="o">-</span><span class="p">(</span><span class="n">typ_size_in_bytes</span> <span class="o">+</span> <span class="n">packet_number_size_in_bytes</span><span class="p">)]</span>
+
+    <span class="n">packet_typ</span> <span class="o">=</span> <span class="n">prefix_typ_ctr</span><span class="p">[</span>
+        <span class="o">-</span><span class="p">(</span>
+            <span class="n">typ_size_in_bytes</span> <span class="o">+</span> <span class="n">packet_number_size_in_bytes</span>
+        <span class="p">)</span> <span class="p">:</span> <span class="o">-</span><span class="n">packet_number_size_in_bytes</span>
+    <span class="p">]</span>
+    <span class="n">packet_number</span> <span class="o">=</span> <span class="n">prefix_typ_ctr</span><span class="p">[</span><span class="o">-</span><span class="n">packet_number_size_in_bytes</span><span class="p">:]</span>
+
+    <span class="c1"># convert typ to int</span>
+    <span class="n">typ</span> <span class="o">=</span> <span class="nb">int</span><span class="o">.</span><span class="n">from_bytes</span><span class="p">(</span><span class="n">packet_typ</span><span class="p">,</span> <span class="s2">&quot;big&quot;</span><span class="p">,</span> <span class="n">signed</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+
+    <span class="c1"># separate and convert packet number and data</span>
+    <span class="n">packet_number</span> <span class="o">=</span> <span class="nb">int</span><span class="o">.</span><span class="n">from_bytes</span><span class="p">(</span><span class="n">packet_number</span><span class="p">,</span> <span class="s2">&quot;big&quot;</span><span class="p">,</span> <span class="n">signed</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+
+    <span class="n">prefix</span> <span class="o">=</span> <span class="n">prefix</span><span class="o">.</span><span class="n">decode</span><span class="p">(</span><span class="s2">&quot;utf-8&quot;</span><span class="p">)</span>
+    <span class="k">if</span> <span class="n">data</span> <span class="o">==</span> <span class="n">eof</span><span class="p">:</span>
+        <span class="n">data</span> <span class="o">=</span> <span class="sa">b</span><span class="s2">&quot;&quot;</span>
+        <span class="n">eof_flag</span> <span class="o">=</span> <span class="kc">True</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="n">eof_flag</span> <span class="o">=</span> <span class="kc">False</span>
+    <span class="k">if</span> <span class="n">typ</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>  <span class="c1"># bytes</span>
+        <span class="n">typ</span> <span class="o">=</span> <span class="nb">bytes</span>
+    <span class="k">elif</span> <span class="n">typ</span> <span class="o">==</span> <span class="mi">1</span><span class="p">:</span>  <span class="c1"># str</span>
+        <span class="n">typ</span> <span class="o">=</span> <span class="nb">str</span>
+    <span class="k">elif</span> <span class="n">typ</span> <span class="o">==</span> <span class="mi">2</span><span class="p">:</span>  <span class="c1"># stream</span>
+        <span class="n">typ</span> <span class="o">=</span> <span class="n">BytesIO</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="c1"># Tipp: when implementing a new type</span>
+        <span class="c1"># 1 byte is used to encode the type of the message</span>
+        <span class="k">raise</span> <span class="ne">NotImplementedError</span><span class="p">(</span><span class="n">typ</span><span class="p">)</span>
+
+    <span class="k">return</span> <span class="n">Packet</span><span class="p">(</span>
+        <span class="n">prefix</span><span class="o">=</span><span class="n">prefix</span><span class="p">,</span> <span class="n">typ</span><span class="o">=</span><span class="n">typ</span><span class="p">,</span> <span class="n">number</span><span class="o">=</span><span class="n">packet_number</span><span class="p">,</span> <span class="n">message_chunk</span><span class="o">=</span><span class="n">data</span><span class="p">,</span> <span class="n">eof</span><span class="o">=</span><span class="n">eof_flag</span>
+    <span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="domainsafe_b64encode"><a class="viewcode-back" href="../../../mwutils.command_and_control.helper.html#mwutils.command_and_control.helper.domainsafe_b64encode">[docs]</a><span class="k">def</span> <span class="nf">domainsafe_b64encode</span><span class="p">(</span><span class="n">data</span><span class="p">:</span><span class="nb">bytes</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Encodes the bytes using base64 but removes the padding (= and ==).</span>
+
+<span class="sd">    Args:</span>
+<span class="sd">        data (bytes): The bytes to encode.</span>
+
+<span class="sd">    Returns:</span>
+<span class="sd">        str: The encoded bytes.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">return</span> <span class="n">urlsafe_b64encode</span><span class="p">(</span><span class="n">data</span><span class="p">)</span><span class="o">.</span><span class="n">decode</span><span class="p">(</span><span class="s2">&quot;ascii&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">rstrip</span><span class="p">(</span><span class="s2">&quot;=&quot;</span><span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="domainsafe_b64decode"><a class="viewcode-back" href="../../../mwutils.command_and_control.helper.html#mwutils.command_and_control.helper.domainsafe_b64decode">[docs]</a><span class="k">def</span> <span class="nf">domainsafe_b64decode</span><span class="p">(</span><span class="n">data</span><span class="p">:</span><span class="nb">str</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">bytes</span><span class="p">:</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Base64 decodes a string without the padding (= and ==) to bytes.</span>
+
+<span class="sd">    Args:</span>
+<span class="sd">        data (str): The base64 string.</span>
+
+<span class="sd">    Returns:</span>
+<span class="sd">        bytes: Decoded string.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">try</span><span class="p">:</span>
+        <span class="n">data</span> <span class="o">=</span> <span class="n">urlsafe_b64decode</span><span class="p">(</span><span class="n">data</span><span class="p">)</span>
+    <span class="k">except</span> <span class="n">binascii</span><span class="o">.</span><span class="n">Error</span><span class="p">:</span>
+        <span class="k">try</span><span class="p">:</span>
+            <span class="n">data</span> <span class="o">=</span> <span class="n">urlsafe_b64decode</span><span class="p">(</span><span class="n">data</span> <span class="o">+</span> <span class="s2">&quot;=&quot;</span><span class="p">)</span>
+        <span class="k">except</span> <span class="n">binascii</span><span class="o">.</span><span class="n">Error</span><span class="p">:</span>
+            <span class="n">data</span> <span class="o">=</span> <span class="n">urlsafe_b64decode</span><span class="p">(</span><span class="n">data</span> <span class="o">+</span> <span class="s2">&quot;==&quot;</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">data</span></div>
+</pre></div>
+
+           </div>
+          </div>
+          <footer>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2023, wenzelfe.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

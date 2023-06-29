@@ -1,0 +1,4 @@
+.. automodule:: mwutils.impact.internal_defacement
+   :members:
+   :undoc-members:
+   :show-inheritance:

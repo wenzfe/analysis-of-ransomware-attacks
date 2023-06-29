@@ -1,0 +1,23 @@
+cff-version: 1.2.0
+date-released: 2023-04-01
+title: "Analyse aktueller Ransomware-Angriffe"
+version: 1.0.0
+message: "If you use this software, please cite it using these metadata."
+url: "https://github.com/wenzfe/analysis-of-ransomware-attacks"
+abstract: "This software implements methods to do things."
+authors:
+  - given-names: Félix
+    family-names: Wenzel
+    email: wenzelfe@hs-albsig.da
+keywords:
+  - Malware
+  - Ransomware
+  - "Cyber Kill Chain"
+  - "MITRE ATT&CK"
+  - "Malware Behavior Catalog (MBC)"
+  - Python
+  - "Supply chain attack"
+  - "LockBit 3.0"
+  - Conti
+  - "Ransomware analysis"
+repository-code: "https://github.com/wenzfe/analysis-of-ransomware-attacks"

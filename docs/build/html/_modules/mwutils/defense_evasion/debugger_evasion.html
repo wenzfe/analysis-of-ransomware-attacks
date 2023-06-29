@@ -1,0 +1,202 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>mwutils.defense_evasion.debugger_evasion &mdash; mwutils 1.0 documentation</title>
+      <link rel="stylesheet" href="../../../_static/pygments.css" type="text/css" />
+      <link rel="stylesheet" href="../../../_static/css/theme.css" type="text/css" />
+  <!--[if lt IE 9]>
+    <script src="../../../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script data-url_root="../../../" id="documentation_options" src="../../../_static/documentation_options.js"></script>
+        <script src="../../../_static/jquery.js"></script>
+        <script src="../../../_static/underscore.js"></script>
+        <script src="../../../_static/_sphinx_javascript_frameworks_compat.js"></script>
+        <script src="../../../_static/doctools.js"></script>
+        <script src="../../../_static/sphinx_highlight.js"></script>
+        <script src="https://unpkg.com/mermaid@9.4.0/dist/mermaid.min.js"></script>
+        <script>mermaid.initialize({startOnLoad:true});</script>
+    <script src="../../../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../../../genindex.html" />
+    <link rel="search" title="Search" href="../../../search.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="../../../index.html" class="icon icon-home">
+            mwutils
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">Contents:</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../README.html">About the Package</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../Documentation.html">Documentation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../Logging.html">Logging</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../modules.html">mwutils</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../../index.html">mwutils</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../../../index.html" class="icon icon-home" aria-label="Home"></a></li>
+          <li class="breadcrumb-item"><a href="../../index.html">Module code</a></li>
+      <li class="breadcrumb-item active">mwutils.defense_evasion.debugger_evasion</li>
+      <li class="wy-breadcrumbs-aside">
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <h1>Source code for mwutils.defense_evasion.debugger_evasion</h1><div class="highlight"><pre>
+<span></span><span class="sd">&quot;&quot;&quot;Debugger Evasion</span>
+
+<span class="sd">Adversaries may employ various means to detect and avoid debuggers. </span>
+<span class="sd">Debuggers are typically used by defenders to trace and/or analyze the </span>
+<span class="sd">execution of potential malware payloads.</span>
+
+<span class="sd">Debugger evasion may include changing behaviors based on the results of </span>
+<span class="sd">the checks for the presence of artifacts indicative of a debugged environment. </span>
+<span class="sd">Similar to Virtualization/Sandbox Evasion, if the adversary detects a debugger, </span>
+<span class="sd">they may alter their malware to disengage from the victim or conceal the core </span>
+<span class="sd">functions of the implant. </span>
+<span class="sd">They may also search for debugger artifacts before dropping secondary or additional payloads.</span>
+
+<span class="sd">Mitre: `T1622 &lt;https://attack.mitre.org/techniques/T1622/&gt;`_</span>
+<span class="sd">&quot;&quot;&quot;</span>
+
+<span class="kn">import</span> <span class="nn">inspect</span>
+<span class="kn">import</span> <span class="nn">logging</span>
+<span class="kn">import</span> <span class="nn">sys</span>
+<span class="kn">from</span> <span class="nn">ctypes</span> <span class="kn">import</span> <span class="n">windll</span>
+
+<span class="n">logger</span> <span class="o">=</span> <span class="n">logging</span><span class="o">.</span><span class="n">getLogger</span><span class="p">(</span><span class="vm">__name__</span><span class="p">)</span>
+
+
+<span class="c1"># https://stackoverflow.com/questions/38634988/check-if-program-runs-in-debug-mode</span>
+<span class="c1"># https://www.adamsmith.haus/python/answers/how-to-determine-if-code-is-being-run-inside-a-virtual-machine-in-python</span>
+<div class="viewcode-block" id="detect_debugger_gettrace"><a class="viewcode-back" href="../../../mwutils.defense_evasion.debugger_evasion.html#mwutils.defense_evasion.debugger_evasion.detect_debugger_gettrace">[docs]</a><span class="k">def</span> <span class="nf">detect_debugger_gettrace</span><span class="p">()</span> <span class="o">-&gt;</span> <span class="nb">bool</span><span class="p">:</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Detect debugger via gettrace.</span>
+
+<span class="sd">    Returns:</span>
+<span class="sd">        bool: True if a debugger is detectet. Otherwise False.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">if</span> <span class="n">sys</span><span class="o">.</span><span class="n">gettrace</span><span class="p">():</span>
+        <span class="n">logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s2">&quot;Found debugger&quot;</span><span class="p">)</span>
+        <span class="k">return</span> <span class="kc">True</span>
+    <span class="n">logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s2">&quot;Found no debugger&quot;</span><span class="p">)</span>
+    <span class="k">return</span> <span class="kc">False</span></div>
+
+
+<span class="c1"># https://stackoverflow.com/questions/1871549/determine-if-python-is-running-inside-virtualenv</span>
+<div class="viewcode-block" id="detect_venv"><a class="viewcode-back" href="../../../mwutils.defense_evasion.debugger_evasion.html#mwutils.defense_evasion.debugger_evasion.detect_venv">[docs]</a><span class="k">def</span> <span class="nf">detect_venv</span><span class="p">()</span> <span class="o">-&gt;</span> <span class="nb">bool</span><span class="p">:</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Detect debugger via venv.</span>
+
+<span class="sd">    Returns:</span>
+<span class="sd">        bool: True if a debugger is detectet. Otherwise False.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">if</span> <span class="nb">hasattr</span><span class="p">(</span><span class="n">sys</span><span class="p">,</span> <span class="s2">&quot;real_prefix&quot;</span><span class="p">):</span>
+        <span class="n">logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s2">&quot;Found virtual env&quot;</span><span class="p">)</span>
+        <span class="k">return</span> <span class="kc">True</span>
+    <span class="n">logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s2">&quot;Found no virtual env&quot;</span><span class="p">)</span>
+    <span class="k">return</span> <span class="kc">False</span></div>
+
+
+<span class="c1"># https://stackoverflow.com/questions/333995/how-to-detect-that-python-code-is-being-executed-through-the-debugger</span>
+<div class="viewcode-block" id="detect_debugger_stack"><a class="viewcode-back" href="../../../mwutils.defense_evasion.debugger_evasion.html#mwutils.defense_evasion.debugger_evasion.detect_debugger_stack">[docs]</a><span class="k">def</span> <span class="nf">detect_debugger_stack</span><span class="p">()</span> <span class="o">-&gt;</span> <span class="nb">bool</span><span class="p">:</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Detect debugger via stack.</span>
+
+<span class="sd">    Returns:</span>
+<span class="sd">        bool: True if a debugger is detectet. Otherwise False.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">debuggers</span> <span class="o">=</span> <span class="p">(</span><span class="s2">&quot;pydevd&quot;</span><span class="p">,</span> <span class="s2">&quot;pdb&quot;</span><span class="p">)</span>
+    <span class="k">for</span> <span class="n">frame</span> <span class="ow">in</span> <span class="n">inspect</span><span class="o">.</span><span class="n">stack</span><span class="p">():</span>
+        <span class="k">for</span> <span class="n">debugger</span> <span class="ow">in</span> <span class="n">debuggers</span><span class="p">:</span>
+            <span class="k">if</span> <span class="n">debugger</span> <span class="ow">in</span> <span class="n">frame</span><span class="p">[</span><span class="mi">1</span><span class="p">]:</span>
+                <span class="n">logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s2">&quot;Found debugger: </span><span class="si">%s</span><span class="s2">&quot;</span><span class="p">,</span> <span class="n">debugger</span><span class="p">)</span>
+                <span class="k">return</span> <span class="kc">True</span>
+    <span class="n">logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s2">&quot;Found no debugger&quot;</span><span class="p">)</span>
+    <span class="k">return</span> <span class="kc">False</span></div>
+
+
+<div class="viewcode-block" id="Windows"><a class="viewcode-back" href="../../../mwutils.defense_evasion.debugger_evasion.html#mwutils.defense_evasion.debugger_evasion.Windows">[docs]</a><span class="k">class</span> <span class="nc">Windows</span><span class="p">:</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Windows specific methods.&quot;&quot;&quot;</span>
+
+    <span class="c1"># https://learn.microsoft.com/en-us/windows/win32/api/debugapi/nf-debugapi-isdebuggerpresent</span>
+<div class="viewcode-block" id="Windows.is_debugger_present"><a class="viewcode-back" href="../../../mwutils.defense_evasion.debugger_evasion.html#mwutils.defense_evasion.debugger_evasion.Windows.is_debugger_present">[docs]</a>    <span class="nd">@staticmethod</span>
+    <span class="k">def</span> <span class="nf">is_debugger_present</span><span class="p">()</span> <span class="o">-&gt;</span> <span class="nb">bool</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Useint the Native Windows API to check if the</span>
+<span class="sd">        current process is running in the context of the debugger.</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            bool: True if a debugger is detectet. Otherwise False.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">found_debugger</span> <span class="o">=</span> <span class="n">windll</span><span class="o">.</span><span class="n">kernel32</span><span class="o">.</span><span class="n">IsDebuggerPresent</span><span class="p">()</span> <span class="o">!=</span> <span class="mi">0</span>
+        <span class="n">logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s2">&quot;Detected debugger: </span><span class="si">%s</span><span class="s2">&quot;</span><span class="p">,</span> <span class="n">found_debugger</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">found_debugger</span></div></div>
+
+
+<span class="k">if</span> <span class="vm">__name__</span> <span class="o">==</span> <span class="s2">&quot;__main__&quot;</span><span class="p">:</span>
+    <span class="c1"># FORMAT = &#39;[%(asctime)s] [%(funcName)-30s] [%(levelname)-8s] [%(message)s]&#39;</span>
+    <span class="c1"># logging.basicConfig(filename=&#39;malware.log&#39;, encoding=&#39;utf-8&#39;, format=FORMAT, level=0)</span>
+    <span class="c1"># logging.basicConfig(stream=sys.stdout, format=FORMAT, level=0)</span>
+
+    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;is debugger: </span><span class="si">{</span><span class="n">detect_debugger_gettrace</span><span class="p">()</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;is debugger: </span><span class="si">{</span><span class="n">detect_venv</span><span class="p">()</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;is debugger: </span><span class="si">{</span><span class="n">detect_debugger_stack</span><span class="p">()</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+</pre></div>
+
+           </div>
+          </div>
+          <footer>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2023, wenzelfe.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

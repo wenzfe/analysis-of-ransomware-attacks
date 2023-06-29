@@ -1,0 +1,4 @@
+.. automodule:: mwutils.gui.playaudio
+   :members:
+   :undoc-members:
+   :show-inheritance:

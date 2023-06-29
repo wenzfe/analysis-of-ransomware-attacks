@@ -1,0 +1,19 @@
+mwutils.command\_and\_control package
+=====================================
+
+.. automodule:: mwutils.command_and_control
+   :members:
+   :undoc-members:
+   :show-inheritance:
+
+Submodules
+----------
+
+.. toctree::
+   :maxdepth: 4
+
+   mwutils.command_and_control.asymmetric_cryptography
+   mwutils.command_and_control.dns
+   mwutils.command_and_control.helper
+   mwutils.command_and_control.symmetric_cryptography
+   mwutils.command_and_control.web_protocols

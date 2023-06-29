@@ -1,0 +1,31 @@
+mwutils package
+===============
+
+.. automodule:: mwutils
+   :members:
+   :undoc-members:
+   :show-inheritance:
+
+Subpackages
+-----------
+
+.. toctree::
+   :maxdepth: 4
+
+   mwutils.collection
+   mwutils.command_and_control
+   mwutils.credential_access
+   mwutils.defense_evasion
+   mwutils.discovery
+   mwutils.execution
+   mwutils.exfiltration
+   mwutils.gui
+   mwutils.impact
+   mwutils.initial_access
+   mwutils.lateral_movement
+   mwutils.persistence
+   mwutils.privilege_escalation
+   mwutils.reconnaissance
+   mwutils.resource_development
+   mwutils.server
+   mwutils.utils

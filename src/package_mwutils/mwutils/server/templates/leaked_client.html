@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Leaked Data</title>
+</head>
+<body>
+    <div class="main">
+        <h1>Leaked Data</h1>
+        <h3>Last fetched at {{ dt|datetime }}</h3>
+
+        {% if publish == False %}
+        <h3>File will be published at </br>{{ client.release_date_of_data|date }}</h3>
+        {% else %}
+        <h3>Files are published!</h3>
+        {% endif %}
+
+        <div class="logo-container">
+            <img class="logo" src="/static/ransomware.png" alt="Logo">
+        </div>
+
+        <div class="information">
+            <div>{{ client.guid }}</div>
+            <div>{{ client.description }}</div>
+            <div>{{ client.info }}</div>
+        </div>
+
+        <!-- when payed disable download -->
+
+        
+        {% if publish == True and data != "" %}
+        <div style="text-align: center; padding: 10px;">
+            <textarea readonly wrap="off" rows="11">{{ data }}</textarea>
+        </div>
+
+        <div style="text-align: center;">
+            <button onclick="location.href='/api/leak-file/{{ client.guid }}'" type="button" class="download-btn" >Download data</button>
+        </div>
+        {% endif %}
+
+    </div>
+    <script lang="js">
+        (function() {
+            // your page initialization code here
+            // the DOM will be available here
+        })();
+        
+    </script>
+    <style>
+        body {
+            font-size: 2em;
+            color: rgb(255, 255, 255);
+            background-color: rgb(21, 32, 43);
+        }
+
+        .main {
+            background-color: rgb(25, 39, 52);
+            border-radius: 10px;
+            margin: 20px;
+            padding: 20px;            
+        }
+
+        h1,h2,h3 {
+            text-align: center;
+        }
+        
+        .download-btn {
+            background-color: rgb(130, 183, 75);
+            padding: 15px 32px;
+            border-radius: 5px;
+            font-size: 1em;
+        }
+        textarea {
+            background-color: rgb(136, 153, 166);
+            border-radius: 5px;
+            width: 100%;
+            resize: none;
+            padding: 10px;
+            font-size: 1em;
+        }
+
+        .information {
+            text-align: center;
+        }
+        
+        .logo-container {
+            text-align: center;
+        }
+
+        .logo {
+            height: 150px;
+        }
+    </style>
+</body>
+</html>

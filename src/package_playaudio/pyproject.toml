@@ -1,0 +1,37 @@
+[project]
+name = "playaudio"
+version = "1.0.0"
+authors = [
+  { name="wenzfe", email="wenzfe@noreply.com" },
+]
+description = "A small package to listen to your audio files"
+readme = "README.md"
+requires-python = ">=3.10"
+classifiers = [
+    "Programming Language :: Python :: 3.10",
+    "License :: OSI Approved :: MIT License",
+    "Operating System :: OS Independent",
+    "Development Status :: 3 - Alpha",
+    "Intended Audience :: Education",
+    "Operating System :: POSIX",
+    "Operating System :: Microsoft :: Windows",
+]
+dependencies = [
+    "mwutils",
+    "updater",
+]
+
+[project.urls]
+"Homepage" = "https://github.com/wenzfe/sampleproject"
+"Bug Tracker" = "https://github.com/pypa/sampleproject/issues"
+
+
+[build-system]
+requires = ["setuptools>=61.0"]
+build-backend = "setuptools.build_meta"
+
+[tool.setuptools.package-data]
+mypkg = [""]
+
+[project.gui-scripts]
+playaudio = "playaudio.app:run"

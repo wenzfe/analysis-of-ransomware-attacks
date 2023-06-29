@@ -1,0 +1,15 @@
+mwutils.persistence package
+===========================
+
+.. automodule:: mwutils.persistence
+   :members:
+   :undoc-members:
+   :show-inheritance:
+
+Submodules
+----------
+
+.. toctree::
+   :maxdepth: 4
+
+   mwutils.persistence.registry_run_keys_startup_folder

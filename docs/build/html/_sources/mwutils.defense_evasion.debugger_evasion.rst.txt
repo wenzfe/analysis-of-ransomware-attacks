@@ -1,0 +1,4 @@
+.. automodule:: mwutils.defense_evasion.debugger_evasion
+   :members:
+   :undoc-members:
+   :show-inheritance:

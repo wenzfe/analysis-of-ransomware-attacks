@@ -1,0 +1,4 @@
+.. automodule:: mwutils.defense_evasion.indicator_removal
+   :members:
+   :undoc-members:
+   :show-inheritance:

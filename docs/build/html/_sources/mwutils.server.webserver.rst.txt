@@ -1,0 +1,4 @@
+.. automodule:: mwutils.server.webserver
+   :members:
+   :undoc-members:
+   :show-inheritance:

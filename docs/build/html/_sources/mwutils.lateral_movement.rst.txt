@@ -1,0 +1,7 @@
+mwutils.lateral\_movement package
+=================================
+
+.. automodule:: mwutils.lateral_movement
+   :members:
+   :undoc-members:
+   :show-inheritance:

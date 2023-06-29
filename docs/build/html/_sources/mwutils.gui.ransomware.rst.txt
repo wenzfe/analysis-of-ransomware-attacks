@@ -1,0 +1,4 @@
+.. automodule:: mwutils.gui.ransomware
+   :members:
+   :undoc-members:
+   :show-inheritance:

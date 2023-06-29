@@ -1,0 +1,4 @@
+.. automodule:: mwutils.command_and_control.symmetric_cryptography
+   :members:
+   :undoc-members:
+   :show-inheritance:
